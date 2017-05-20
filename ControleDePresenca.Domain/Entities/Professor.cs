@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControleDePresenca.Domain.Entities
 {
-    public class Professor 
+    public class Professor : Pessoa
     {
 
         public Professor()
