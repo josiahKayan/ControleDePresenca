@@ -1,28 +1,19 @@
-﻿using System;
+﻿using ControleDePresenca.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace ControleDePresenca.Domain.Entities
+namespace ControleDePresenca.API.ViewModels
 {
-
-    /// <summary>
-    /// Entidade Presença
-    /// </summary>
-    public class Presenca
+    public class PresencaViewModel
     {
-
-        public Presenca()
-        {
-            this.TurmaLista = new List<Turma>();
-        }
 
         public int PresencaId { get; set; }
         /// <summary>
         /// Marca a Hora de Entrada
         /// </summary>
-        public DateTime HoraEntrada { get; set;}
+        public DateTime HoraEntrada { get; set; }
         /// <summary>
         /// Marca o mes
         /// </summary>
@@ -36,5 +27,6 @@ namespace ControleDePresenca.Domain.Entities
         /// Lista de Turmas
         /// </summary>
         public virtual ICollection<Turma> TurmaLista { get; set; }
+
     }
 }

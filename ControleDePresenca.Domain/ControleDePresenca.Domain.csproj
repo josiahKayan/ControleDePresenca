@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,10 +53,14 @@
     <Compile Include="Interfaces\Repositories\IPresencaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IProfessorRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryBase.cs" />
+    <Compile Include="Interfaces\Repositories\IAlunoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITurmaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITagRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioRepository.cs" />
     <Compile Include="Interfaces\Services\ICursoService.cs" />
     <Compile Include="Interfaces\Services\IProfessorService.cs" />
+    <Compile Include="Interfaces\Services\ITurmaService.cs" />
+    <Compile Include="Interfaces\Services\IAlunoService .cs" />
     <Compile Include="Interfaces\Services\ITagService.cs" />
     <Compile Include="Interfaces\Services\IUsuarioService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,6 +70,8 @@
     <Compile Include="Services\PresencaService.cs" />
     <Compile Include="Services\ProfessorService.cs" />
     <Compile Include="Services\ServiceBase.cs" />
+    <Compile Include="Services\AlunoService.cs" />
+    <Compile Include="Services\TurmaService.cs" />
     <Compile Include="Services\TagService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
   </ItemGroup>

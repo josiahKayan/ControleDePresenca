@@ -25,6 +25,11 @@ namespace ControleDePresenca.API.Controllers
             _professor = new ProfessorRepository();
         }
 
+        /// <summary>
+        ///  Get all professores
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200"></response>
         [HttpGet]
         [Route("professores")]
         public HttpResponseMessage GetProfessores()

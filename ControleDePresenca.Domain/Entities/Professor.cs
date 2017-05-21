@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ControleDePresenca.Domain.Entities
 {
+    /// <summary>
+    /// Entidade Professor
+    /// </summary>
     public class Professor : Pessoa
     {
 
@@ -16,7 +19,13 @@ namespace ControleDePresenca.Domain.Entities
         }
 
         public int ProfessorId { get; set; }
+        /// <summary>
+        /// Lista de Cursos
+        /// </summary>
         public virtual ICollection<Curso> CursoLista { get; set; }
+        /// <summary>
+        /// Lista de Turmas
+        /// </summary>
         public virtual ICollection<Turma> TurmaLista { get; set; }
 
     }

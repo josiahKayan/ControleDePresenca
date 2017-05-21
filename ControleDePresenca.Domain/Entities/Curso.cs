@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ControleDePresenca.Domain.Entities
 {
+    /// <summary>
+    /// Entidade Curso
+    /// </summary>
     public class Curso
     {
 
@@ -16,9 +19,21 @@ namespace ControleDePresenca.Domain.Entities
         }
 
         public int CursoId { get; set; }
+        /// <summary>
+        /// Nome do Curso
+        /// </summary>
         public string Nome { get; set; }
+        /// <summary>
+        /// Descrição
+        /// </summary>
         public string Descricao { get; set; }
+        /// <summary>
+        /// Ativo
+        /// </summary>
         public bool Ativo { get; set; }
+        /// <summary>
+        /// Lista de Professores
+        /// </summary>
         public virtual ICollection<Professor> ProfessorLista { get; set; }
     
     }

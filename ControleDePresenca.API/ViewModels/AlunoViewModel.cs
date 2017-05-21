@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ControleDePresenca.API.ViewModels
 {
-    public class ProfessorViewModel
+    public class AlunoViewModel
     {
 
         public string Nome { get; set; }
@@ -17,14 +17,19 @@ namespace ControleDePresenca.API.ViewModels
 
         public int Idade { get; set; }
 
-        public int ProfessorId { get; set; }
+        public int AlunoId { get; set; }
         /// <summary>
-        /// Lista de Cursos
+        /// atributo da classe Tag
         /// </summary>
-        public virtual ICollection<Curso> CursoLista { get; set; }
+        public virtual Tag Tag { get; set; }
         /// <summary>
-        /// Lista de Turmas
+        /// atributo da classe Usuario
         /// </summary>
-        public virtual ICollection<Turma> TurmaLista { get; set; }
+        public virtual Usuario Usuario { get; set; }
+        /// <summary>
+        /// atributo da classe Turma
+        /// </summary>
+        public virtual Turma Turma { get; set; }
+
     }
 }

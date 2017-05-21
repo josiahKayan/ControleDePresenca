@@ -1,24 +1,20 @@
-﻿using System;
+﻿using ControleDePresenca.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace ControleDePresenca.Domain.Entities
+namespace ControleDePresenca.API.ViewModels
 {
-    /// <summary>
-    /// Entidade Turma
-    /// </summary>
-    public class Turma
+    public class TurmaViewModel
     {
 
-        public Turma()
-        {
-            this.AlunoLista = new List<Aluno>();
-            this.PresencaLista = new List<Presenca>();
-        }
+        //public Turma()
+        //{
+        //    this.AlunoLista = new List<Aluno>();
+        //    this.PresencaLista = new List<Presenca>();
+        //}
 
-        public int TurmaId { get; set; }
         /// <summary>
         /// Data de Início da Turma
         /// </summary>
