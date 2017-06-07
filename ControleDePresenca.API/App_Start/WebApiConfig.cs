@@ -10,8 +10,8 @@ namespace ControleDePresenca.API
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-            //var formatters = GlobalConfiguration.Configuration.Formatters;
-            //formatters.Remove(formatters.XmlFormatter);
+            var formatters = GlobalConfiguration.Configuration.Formatters;
+            formatters.Remove(formatters.XmlFormatter);
 
 
             // Web API routes
