@@ -26,6 +26,7 @@ namespace ControleDePresenca.Domain.Entities
         /// atributo da classe Usuario
         /// </summary>
         public virtual Usuario Usuario { get; set; }
+
         /// <summary>
         /// atributo da classe Turma
         /// </summary>

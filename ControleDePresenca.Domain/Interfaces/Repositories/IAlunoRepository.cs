@@ -10,7 +10,7 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
     public interface IAlunoRepository : IRepositoryBase<Aluno>
     {
 
-
+        IEnumerable<Aluno> GetAllAlunos();
 
     }
 }

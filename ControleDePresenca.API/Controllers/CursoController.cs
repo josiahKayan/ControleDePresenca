@@ -42,7 +42,6 @@ namespace ControleDePresenca.API.Controllers
             {
 
                 var listCursos = _curso.GetAll();
-
                 return Request.CreateResponse(HttpStatusCode.OK, listCursos);
 
             }
@@ -70,16 +69,32 @@ namespace ControleDePresenca.API.Controllers
 
             try
             {
+                Curso cursoFound;
+                if (cursoVm.CursoId != 0)
+                {
+                    cursoFound = _curso.GetEntityById(cursoVm.CursoId);
 
-                Curso curso = new Curso();
+                    if (cursoFound != null)
+                    {
 
-                curso.Nome = cursoVm.Nome;
-                curso.Descricao = cursoVm.Descricao;
-                curso.Ativo = cursoVm.Ativo;
-                curso.ProfessorLista = cursoVm.ProfessorLista;
-                _curso.Add(curso);
+                        cursoFound.Nome = cursoVm.Nome;
+                        cursoFound.Descricao = cursoVm.Descricao;
+                        cursoFound.Ativo = cursoVm.Ativo;
+                        cursoFound.ProfessorLista = cursoVm.ProfessorLista;
+                        _curso.Update(cursoFound);
+                        return Request.CreateResponse(HttpStatusCode.OK, cursoFound);
+                    }
+                }
 
-                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
+                cursoFound = new Curso();
+                cursoFound.Nome = cursoVm.Nome;
+                cursoFound.Descricao = cursoVm.Descricao;
+                cursoFound.Ativo = cursoVm.Ativo;
+                cursoFound.ProfessorLista = cursoVm.ProfessorLista;
+                _curso.Add(cursoFound);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, cursoFound);
 
             }
             catch (Exception e)
@@ -129,24 +144,25 @@ namespace ControleDePresenca.API.Controllers
         /// <returns></returns>
         /// <response code="200">Curso found</response>
         /// <response code="404">Curso not foundd</response>
-        [HttpDelete]
+        [HttpPost]
         [Route("delete/{id}")]
         public HttpResponseMessage DeleteCurso(string id)
         {
+            Curso curso = new Curso();
 
             try
             {
 
-                var curso = _curso.GetEntityById(int.Parse(id));
+                var cursoFounded = _curso.GetEntityById(int.Parse(id));
 
-                _curso.Remove(curso);
+                _curso.Remove(cursoFounded);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "The course was removed");
+                return Request.CreateResponse(HttpStatusCode.OK, curso);
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                return Request.CreateResponse(HttpStatusCode.OK, curso);
             }
 
         }

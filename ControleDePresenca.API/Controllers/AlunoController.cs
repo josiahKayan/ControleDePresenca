@@ -38,7 +38,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                var listAlunos = _aluno.GetAll();
+                var listAlunos = _aluno.GetAllAlunos();
 
                 return Request.CreateResponse(HttpStatusCode.OK, listAlunos);
 
@@ -137,7 +137,7 @@ namespace ControleDePresenca.API.Controllers
                 aluno.Idade = alunoVm.Idade;
                 aluno.DataNascimento = alunoVm.DataNascimento;
                 aluno.Tag = alunoVm.Tag;
-                aluno.Turma = alunoVm.Turma;
+                //aluno.Turma = alunoVm.Turma;
                 aluno.Usuario = alunoVm.Usuario;
 
 

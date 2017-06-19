@@ -37,6 +37,25 @@ namespace ControleDePresenca.API.Controllers
 
             try
             {
+                //List<Professor> listProfessores = new List<Professor>();
+                //Professor professor1 = new Professor();
+                //professor1.Nome = "Ismael";
+                //professor1.NomeCompleto = "Ismael Ismael";
+                //professor1.ProfessorId = 1;
+                //professor1.DataNascimento = DateTime.Now;
+                //professor1.Idade = 25;
+
+
+                //Professor professor2 = new Professor();
+                //professor2.Nome = "Patrícia";
+                //professor2.NomeCompleto = "Patrícia PATT";
+                //professor2.ProfessorId = 2;
+                //professor2.DataNascimento = DateTime.Now;
+                //professor2.Idade = 23;
+
+                //listProfessores.Add(professor1);
+                //listProfessores.Add(professor2);
+
 
                 var listProfessores = _professor.GetAll();
 
@@ -54,21 +73,37 @@ namespace ControleDePresenca.API.Controllers
         [Route("addprofessor")]
         public HttpResponseMessage NewUser([FromBody] ProfessorViewModel professorVm)
         {
+            Professor professor ;
 
             try
             {
+                if (professorVm.ProfessorId != 0)
+                {
+                    professor = _professor.GetEntityById(professorVm.ProfessorId);
 
-                Professor professor = new Professor();
+                    if (professor != null)
+                    {
 
+                        professor.Nome = professorVm.Nome;
+                        professor.NomeCompleto = professorVm.NomeCompleto;
+                        professor.Idade = int.Parse(professorVm.Idade);
+                        professor.DataNascimento = DateTime.Now;
+                        _professor.Update(professor);
+                        return Request.CreateResponse(HttpStatusCode.OK, professor);
+                    }
+                }
+
+                professor = new Professor();
                 professor.Nome = professorVm.Nome;
                 professor.NomeCompleto = professorVm.NomeCompleto;
-                professor.Idade = professorVm.Idade;
-                professor.DataNascimento = professorVm.DataNascimento;
+                professor.Idade = int.Parse( professorVm.Idade);
+                professor.DataNascimento = DateTime.Now;
 
                 _professor.Add(professor);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
+                return Request.CreateResponse(HttpStatusCode.OK, professor);
 
+                  
             }
             catch (Exception e)
             {
@@ -97,19 +132,21 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Route("delete/{id}")]
         public HttpResponseMessage DeleteProfessor(string id)
         {
 
+            Professor pf = new Professor();
+
             try
             {
 
-                var professor = _professor.GetEntityById(int.Parse(id));
+                Professor professor = _professor.GetEntityById(int.Parse(id));
 
                 _professor.Remove(professor);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "The teacher was removed");
+                return Request.CreateResponse(HttpStatusCode.OK, pf);
 
             }
             catch (Exception e)
@@ -124,6 +161,8 @@ namespace ControleDePresenca.API.Controllers
         public HttpResponseMessage UpdateProfessor([FromBody] ProfessorViewModel professorVm, string id)
         {
 
+            Professor pf = new Professor();
+
             try
             {
 
@@ -131,13 +170,13 @@ namespace ControleDePresenca.API.Controllers
 
                 professor.Nome = professorVm.Nome;
                 professor.NomeCompleto = professorVm.NomeCompleto;
-                professor.Idade = professorVm.Idade;
-                professor.DataNascimento = professorVm.DataNascimento;
+                professor.Idade = int.Parse( professorVm.Idade);
+                professor.DataNascimento = DateTime.Now;
 
 
                 _professor.Update(professor);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "The teacher was updated");
+                return Request.CreateResponse(HttpStatusCode.OK, pf);
 
             }
             catch (Exception e)
