@@ -2,6 +2,7 @@
 using ControleDePresenca.Domain.Entities;
 using ControleDePresenca.Domain.Interfaces.Repositories;
 using ControleDePresenca.Infra.Data.Repositories;
+using ControleDePresenca.Library.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace ControleDePresenca.API.Controllers
     {
 
         ICursoRepository _curso;
+        Log log;
 
         public CursoController()
         {
@@ -82,7 +84,11 @@ namespace ControleDePresenca.API.Controllers
                         cursoFound.Ativo = cursoVm.Ativo;
                         cursoFound.ProfessorLista = cursoVm.ProfessorLista;
                         _curso.Update(cursoFound);
-                        return Request.CreateResponse(HttpStatusCode.OK, cursoFound);
+                        log = new Log();
+                        log.Message = "The object was updated";
+                        log.Status = 1;
+                        log.Type = "success";
+                        return Request.CreateResponse(HttpStatusCode.OK, log);
                     }
                 }
 
@@ -92,14 +98,20 @@ namespace ControleDePresenca.API.Controllers
                 cursoFound.Ativo = cursoVm.Ativo;
                 cursoFound.ProfessorLista = cursoVm.ProfessorLista;
                 _curso.Add(cursoFound);
-
-
-                return Request.CreateResponse(HttpStatusCode.OK, cursoFound);
+                log = new Log();
+                log.Message = "The object was added";
+                log.Status = 1;
+                log.Type = "success";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                log = new Log();
+                log.Message = e.Message;
+                log.Status = 0;
+                log.Type = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }
@@ -156,13 +168,20 @@ namespace ControleDePresenca.API.Controllers
                 var cursoFounded = _curso.GetEntityById(int.Parse(id));
 
                 _curso.Remove(cursoFounded);
-
+                log = new Log();
+                log.Message = "The object was removed";
+                log.Status = 1;
+                log.Type = "success";
                 return Request.CreateResponse(HttpStatusCode.OK, curso);
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, curso);
+                log = new Log();
+                log.Message = e.Message;
+                log.Status = 0;
+                log.Type = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }
@@ -193,13 +212,20 @@ namespace ControleDePresenca.API.Controllers
                 curso.Ativo = cursoVm.Ativo;
                 curso.ProfessorLista = cursoVm.ProfessorLista;
                 _curso.Update(curso);
-
-                return Request.CreateResponse(HttpStatusCode.OK, "The course was updated");
+                log = new Log();
+                log.Message = "The object was updated";
+                log.Status = 1;
+                log.Type = "success";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                log = new Log();
+                log.Message = e.Message;
+                log.Status = 0;
+                log.Type = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }

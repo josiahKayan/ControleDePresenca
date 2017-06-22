@@ -2,6 +2,7 @@
 using ControleDePresenca.Domain.Entities;
 using ControleDePresenca.Domain.Interfaces.Repositories;
 using ControleDePresenca.Infra.Data.Repositories;
+using ControleDePresenca.Library.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace ControleDePresenca.API.Controllers
     {
 
         IProfessorRepository _professor;
+        Log log;
 
         public ProfessorController()
         {
@@ -73,7 +75,7 @@ namespace ControleDePresenca.API.Controllers
         [Route("addprofessor")]
         public HttpResponseMessage NewUser([FromBody] ProfessorViewModel professorVm)
         {
-            Professor professor ;
+            Professor professor;
 
             try
             {
@@ -89,25 +91,36 @@ namespace ControleDePresenca.API.Controllers
                         professor.Idade = int.Parse(professorVm.Idade);
                         professor.DataNascimento = DateTime.Now;
                         _professor.Update(professor);
-                        return Request.CreateResponse(HttpStatusCode.OK, professor);
+                        log = new Log();
+                        log.Message = "The object was updated";
+                        log.Status = 1;
+                        log.Type = "success";
+                        return Request.CreateResponse(HttpStatusCode.OK, log);
                     }
                 }
 
                 professor = new Professor();
                 professor.Nome = professorVm.Nome;
                 professor.NomeCompleto = professorVm.NomeCompleto;
-                professor.Idade = int.Parse( professorVm.Idade);
+                professor.Idade = int.Parse(professorVm.Idade);
                 professor.DataNascimento = DateTime.Now;
 
                 _professor.Add(professor);
+                log = new Log();
+                log.Message = "The object was added";
+                log.Status = 1;
+                log.Type = "success";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
 
-                return Request.CreateResponse(HttpStatusCode.OK, professor);
 
-                  
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                log = new Log();
+                log.Message = e.Message;
+                log.Status = 0;
+                log.Type = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }
@@ -145,13 +158,20 @@ namespace ControleDePresenca.API.Controllers
                 Professor professor = _professor.GetEntityById(int.Parse(id));
 
                 _professor.Remove(professor);
-
-                return Request.CreateResponse(HttpStatusCode.OK, pf);
+                log = new Log();
+                log.Message = "The object was removed";
+                log.Status = 1;
+                log.Type = "success";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                log = new Log();
+                log.Message = e.Message;
+                log.Status = 0;
+                log.Type = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }
@@ -170,7 +190,7 @@ namespace ControleDePresenca.API.Controllers
 
                 professor.Nome = professorVm.Nome;
                 professor.NomeCompleto = professorVm.NomeCompleto;
-                professor.Idade = int.Parse( professorVm.Idade);
+                professor.Idade = int.Parse(professorVm.Idade);
                 professor.DataNascimento = DateTime.Now;
 
 

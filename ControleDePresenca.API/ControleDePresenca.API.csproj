@@ -191,6 +191,10 @@
       <Project>{FDC931A2-CEAD-4E4F-8AFF-153CA54DE7E5}</Project>
       <Name>ControleDePresenca.Infra.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ControleDePresenca.Library.Log\ControleDePresenca.Library.Log.csproj">
+      <Project>{6A40B333-1ACA-4280-AD88-473C30E33DBC}</Project>
+      <Name>ControleDePresenca.Library.Log</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

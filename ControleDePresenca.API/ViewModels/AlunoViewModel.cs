@@ -15,7 +15,7 @@ namespace ControleDePresenca.API.ViewModels
 
         public DateTime DataNascimento { get; set; }
 
-        public int Idade { get; set; }
+        public string Idade { get; set; }
 
         public int AlunoId { get; set; }
         /// <summary>

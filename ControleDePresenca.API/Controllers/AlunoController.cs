@@ -2,6 +2,7 @@
 using ControleDePresenca.Domain.Entities;
 using ControleDePresenca.Domain.Interfaces.Repositories;
 using ControleDePresenca.Infra.Data.Repositories;
+using ControleDePresenca.Library.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace ControleDePresenca.API.Controllers
     {
 
         IAlunoRepository _aluno;
+        Log log;
 
         public AlunoController()
         {
@@ -60,22 +62,56 @@ namespace ControleDePresenca.API.Controllers
 
                 Aluno aluno = new Aluno();
 
+                if (alunoVm.AlunoId != 0)
+                {
+                    aluno = _aluno.GetEntityById(alunoVm.AlunoId);
+
+                    if (aluno != null)
+                    {
+
+                        aluno.Nome = alunoVm.Nome;
+                        aluno.NomeCompleto = alunoVm.NomeCompleto;
+                        aluno.Idade = int.Parse(alunoVm.Idade);
+                        aluno.DataNascimento = alunoVm.DataNascimento;
+                        aluno.Tag = alunoVm.Tag;
+                        aluno.Turma = alunoVm.Turma;
+                        aluno.Usuario.Email = alunoVm.Usuario.Email;
+                        aluno.Usuario.Senha= alunoVm.Usuario.Senha.GetHashCode().ToString();
+                        aluno.Usuario.UsuarioId = alunoVm.Usuario.UsuarioId;
+                        _aluno.Update(aluno);
+                        log = new Log();
+                        log.Message = "The object was updated";
+                        log.Status = 1;
+                        log.Type = "success";
+                        return Request.CreateResponse(HttpStatusCode.OK, log);
+                    }
+                }
+
                 aluno.Nome = alunoVm.Nome;
                 aluno.NomeCompleto = alunoVm.NomeCompleto;
-                aluno.Idade = alunoVm.Idade;
+                aluno.Idade = int.Parse(alunoVm.Idade);
                 aluno.DataNascimento = alunoVm.DataNascimento;
                 aluno.Tag = alunoVm.Tag;
                 aluno.Turma = alunoVm.Turma;
-                aluno.Usuario = alunoVm.Usuario;
-                
-                _aluno.Add(aluno);
+                aluno.Usuario.Email = alunoVm.Usuario.Email;
+                aluno.Usuario.Senha = alunoVm.Usuario.Senha.GetHashCode().ToString();
+                aluno.Usuario.UsuarioId = alunoVm.Usuario.UsuarioId;
 
-                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
+                _aluno.Add(aluno);
+                log = new Log();
+                log.Message = "The object was added";
+                log.Status = 1;
+                log.Type = "success";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                log = new Log();
+                log.Message = e.Message;
+                log.Status = 0;
+                log.Type = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }
@@ -100,7 +136,7 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("delete/{id}")]
         public HttpResponseMessage DeleteAluno(string id)
         {
@@ -111,13 +147,20 @@ namespace ControleDePresenca.API.Controllers
                 var aluno = _aluno.GetEntityById(int.Parse(id));
 
                 _aluno.Remove(aluno);
-
-                return Request.CreateResponse(HttpStatusCode.OK, "The object was removed");
+                log = new Log();
+                log.Message = "The object was removed";
+                log.Status = 1;
+                log.Type = "success";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                log = new Log();
+                log.Message = e.Message;
+                log.Status = 0;
+                log.Type = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }
@@ -134,7 +177,7 @@ namespace ControleDePresenca.API.Controllers
 
                 aluno.Nome = alunoVm.Nome;
                 aluno.NomeCompleto = alunoVm.NomeCompleto;
-                aluno.Idade = alunoVm.Idade;
+                //aluno.Idade = alunoVm.Idade;
                 aluno.DataNascimento = alunoVm.DataNascimento;
                 aluno.Tag = alunoVm.Tag;
                 //aluno.Turma = alunoVm.Turma;
