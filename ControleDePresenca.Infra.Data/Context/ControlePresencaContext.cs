@@ -18,11 +18,26 @@ namespace ControleDePresenca.Infra.Data.Context
             Configuration.ProxyCreationEnabled = false;
         }
 
+        public void SetLazyLoading(bool check)
+        {
+            if (check)
+            {
+                Configuration.LazyLoadingEnabled = true;
+                Configuration.ProxyCreationEnabled = true;
+            }
+            else
+            {
+                Configuration.LazyLoadingEnabled = false;
+                Configuration.ProxyCreationEnabled = false;
+            }
+           
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
             modelBuilder.Configurations.Add(new AlunoMap());
             modelBuilder.Configurations.Add(new CursoMap());
@@ -36,9 +51,9 @@ namespace ControleDePresenca.Infra.Data.Context
             modelBuilder.Properties().Where(p => p.Name == p.ReflectedType.Name + "Id").Configure(p => p.IsKey());
             modelBuilder.Properties<string>().Configure( p => p.HasColumnType("varchar") );
 
-
-
         }
+
+
 
         public DbSet<Presenca> Presencas { get; set; }
 

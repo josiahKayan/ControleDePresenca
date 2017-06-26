@@ -2,6 +2,7 @@
 using ControleDePresenca.Domain.Entities;
 using ControleDePresenca.Domain.Interfaces.Repositories;
 using ControleDePresenca.Infra.Data.Repositories;
+using ControleDePresenca.Library.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace ControleDePresenca.API.Controllers
     {
 
         ITagRepository _tag;
+        Log log;
 
         public TagController()
         {
@@ -59,13 +61,13 @@ namespace ControleDePresenca.API.Controllers
         /// <remarks>
         /// Método que adiciona
         /// </remarks>
-        /// <param name="tagVm">CursoViewModel</param>
+        /// <param name="tagVm">TagViewModel</param>
         /// <returns></returns>
-        /// <response code="200">Curso</response>
-        /// <response code="404">Curso not foundd</response>
+        /// <response code="200">Tag</response>
+        /// <response code="404">Tag not foundd</response>
         [HttpPost]
         [Route("addtag")]
-        public HttpResponseMessage NewCurso([FromBody] TagViewModel tagVm)
+        public HttpResponseMessage NewTag([FromBody] TagViewModel tagVm)
         {
 
             try
@@ -76,13 +78,20 @@ namespace ControleDePresenca.API.Controllers
                 tag.Code = tagVm.Code;
                 tag.Status = tagVm.Status;
                 _tag.Add(tag);
-
-                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
+                log = new Log();
+                log.Message = "The object was added";
+                log.Status = 1;
+                log.Type = "success";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                log = new Log();
+                log.Message = e.Message;
+                log.Status = 0;
+                log.Type = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }
@@ -129,7 +138,7 @@ namespace ControleDePresenca.API.Controllers
         /// <response code="404">Tag not foundd</response>
         [HttpDelete]
         [Route("delete/{id}")]
-        public HttpResponseMessage DeleteCurso(string id)
+        public HttpResponseMessage DeleteTag(string id)
         {
 
             try
@@ -137,14 +146,30 @@ namespace ControleDePresenca.API.Controllers
 
                 var tag = _tag.GetEntityById(int.Parse(id));
 
+                if (tag==null)
+                {
+
+                    Exception e = new Exception("The tag was not finded");
+                    throw e;
+
+                }
+
                 _tag.Remove(tag);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "The tag was removed");
+                log = new Log();
+                log.Message = "The object was removed";
+                log.Status = 1;
+                log.Type = "success";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                log = new Log();
+                log.Message = e.Message;
+                log.Status = 0;
+                log.Type = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }
@@ -153,16 +178,16 @@ namespace ControleDePresenca.API.Controllers
         /// Get curso by id
         /// </summary>
         /// <remarks>
-        /// Get a Curso by id
+        /// Get a Tag by id
         /// </remarks>
         /// <param name="id">Id of course</param>
         /// <param name="tagVm">Id of course</param>
         /// <returns></returns>
-        /// <response code="200">Curso found</response>
-        /// <response code="404">Curso not foundd</response>
+        /// <response code="200">Tag found</response>
+        /// <response code="404">Tag not foundd</response>
         [HttpPut]
         [Route("update/{id}")]
-        public HttpResponseMessage UpdateCurso([FromBody] TagViewModel tagVm, string id)
+        public HttpResponseMessage UpdateTag([FromBody] TagViewModel tagVm, string id)
         {
 
             try

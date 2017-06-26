@@ -17,6 +17,9 @@ namespace ControleDePresenca.Infra.Data.Map
 
             HasKey(x => x.ProfessorId);
 
+            //Exemplo de 1:1
+            //HasRequired(x => x.Usuario)
+            // .WithRequiredPrincipal();
         }
 
     }

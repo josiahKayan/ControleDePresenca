@@ -16,9 +16,9 @@ namespace ControleDePresenca.Infra.Data.Map
             ToTable("Aluno");
             HasKey( x => x.AlunoId );
 
-            //HasRequired(x => x.Turma)
-            //    .WithMany(x => x.AlunoLista)
-            //    .Map(m => m.MapKey("TurmaId"));
+            ////Exemplo de 1:1
+            //HasRequired(x => x.Usuario)
+            // .WithRequiredPrincipal();
 
 
 

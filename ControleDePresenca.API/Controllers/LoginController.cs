@@ -40,7 +40,12 @@ namespace ControleDePresenca.API.Controllers
 
                 var usuarioLogado = _usuario.Login(newUsuario);
 
-                return Request.CreateResponse(HttpStatusCode.OK, usuarioLogado);
+                usuarioViewModel.Email = usuarioLogado.Email;
+                usuarioViewModel.Senha = usuarioLogado.Senha;
+                usuarioViewModel.UsuarioId = usuarioLogado.UsuarioId;
+                usuarioViewModel.Perfil = ""+usuarioLogado.Perfil;
+
+                return Request.CreateResponse(HttpStatusCode.OK, usuarioViewModel);
 
             }
             catch (Exception e)

@@ -72,12 +72,11 @@ namespace ControleDePresenca.API.Controllers
                         aluno.Nome = alunoVm.Nome;
                         aluno.NomeCompleto = alunoVm.NomeCompleto;
                         aluno.Idade = int.Parse(alunoVm.Idade);
-                        aluno.DataNascimento = alunoVm.DataNascimento;
+                        aluno.DataNascimento = DateTime.Now;
                         aluno.Tag = alunoVm.Tag;
                         aluno.Turma = alunoVm.Turma;
                         aluno.Usuario.Email = alunoVm.Usuario.Email;
                         aluno.Usuario.Senha= alunoVm.Usuario.Senha.GetHashCode().ToString();
-                        aluno.Usuario.UsuarioId = alunoVm.Usuario.UsuarioId;
                         _aluno.Update(aluno);
                         log = new Log();
                         log.Message = "The object was updated";
@@ -90,12 +89,11 @@ namespace ControleDePresenca.API.Controllers
                 aluno.Nome = alunoVm.Nome;
                 aluno.NomeCompleto = alunoVm.NomeCompleto;
                 aluno.Idade = int.Parse(alunoVm.Idade);
-                aluno.DataNascimento = alunoVm.DataNascimento;
+                aluno.DataNascimento = DateTime.Now;
                 aluno.Tag = alunoVm.Tag;
                 aluno.Turma = alunoVm.Turma;
                 aluno.Usuario.Email = alunoVm.Usuario.Email;
                 aluno.Usuario.Senha = alunoVm.Usuario.Senha.GetHashCode().ToString();
-                aluno.Usuario.UsuarioId = alunoVm.Usuario.UsuarioId;
 
                 _aluno.Add(aluno);
                 log = new Log();
@@ -143,10 +141,17 @@ namespace ControleDePresenca.API.Controllers
 
             try
             {
+                AlunoRepository _aluno = new AlunoRepository();
+                var aluno = _aluno.GetAlunoByIdIncludes(int.Parse(id));
 
-                var aluno = _aluno.GetEntityById(int.Parse(id));
+                if (aluno==null)
+                {
+                    Exception e = new Exception("The object was not found");
+                    throw e;
+                }
 
-                _aluno.Remove(aluno);
+                _aluno.RemoveComUsuario(aluno);
+
                 log = new Log();
                 log.Message = "The object was removed";
                 log.Status = 1;

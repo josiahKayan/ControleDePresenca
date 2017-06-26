@@ -39,27 +39,8 @@ namespace ControleDePresenca.API.Controllers
 
             try
             {
-                //List<Professor> listProfessores = new List<Professor>();
-                //Professor professor1 = new Professor();
-                //professor1.Nome = "Ismael";
-                //professor1.NomeCompleto = "Ismael Ismael";
-                //professor1.ProfessorId = 1;
-                //professor1.DataNascimento = DateTime.Now;
-                //professor1.Idade = 25;
 
-
-                //Professor professor2 = new Professor();
-                //professor2.Nome = "Patrícia";
-                //professor2.NomeCompleto = "Patrícia PATT";
-                //professor2.ProfessorId = 2;
-                //professor2.DataNascimento = DateTime.Now;
-                //professor2.Idade = 23;
-
-                //listProfessores.Add(professor1);
-                //listProfessores.Add(professor2);
-
-
-                var listProfessores = _professor.GetAll();
+                var listProfessores = _professor.GetAllProfessors();
 
                 return Request.CreateResponse(HttpStatusCode.OK, listProfessores);
 
@@ -90,6 +71,9 @@ namespace ControleDePresenca.API.Controllers
                         professor.NomeCompleto = professorVm.NomeCompleto;
                         professor.Idade = int.Parse(professorVm.Idade);
                         professor.DataNascimento = DateTime.Now;
+                        professor.Usuario.Email = professorVm.Usuario.Email;
+                        professor.Usuario.Senha = professorVm.Usuario.Senha.GetHashCode().ToString();
+                        professor.Usuario.UsuarioId = professorVm.Usuario.UsuarioId;
                         _professor.Update(professor);
                         log = new Log();
                         log.Message = "The object was updated";
@@ -104,7 +88,8 @@ namespace ControleDePresenca.API.Controllers
                 professor.NomeCompleto = professorVm.NomeCompleto;
                 professor.Idade = int.Parse(professorVm.Idade);
                 professor.DataNascimento = DateTime.Now;
-
+                professor.Usuario.Email = professorVm.Usuario.Email;
+                professor.Usuario.Senha = professorVm.Usuario.Senha.GetHashCode().ToString();
                 _professor.Add(professor);
                 log = new Log();
                 log.Message = "The object was added";
@@ -133,7 +118,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                var professor = _professor.GetEntityById(int.Parse(id));
+                var professor = _professor.GetProfessorByIdIncludes(int.Parse(id));
 
                 return Request.CreateResponse(HttpStatusCode.OK, professor);
 
@@ -150,14 +135,20 @@ namespace ControleDePresenca.API.Controllers
         public HttpResponseMessage DeleteProfessor(string id)
         {
 
-            Professor pf = new Professor();
+            ProfessorRepository _professor = new ProfessorRepository();
 
             try
             {
 
                 Professor professor = _professor.GetEntityById(int.Parse(id));
 
-                _professor.Remove(professor);
+                if (professor == null)
+                {
+                    Exception e = new Exception("The object was not found");
+                    throw e;
+                }
+
+                _professor.RemoveComUsuario(professor);
                 log = new Log();
                 log.Message = "The object was removed";
                 log.Status = 1;
