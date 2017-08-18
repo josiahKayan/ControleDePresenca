@@ -17,7 +17,6 @@ namespace ControleDePresenca.Domain.Entities
         {
             this.CursoLista = new List<Curso>();
             this.TurmaLista = new List<Turma>();
-            this.Usuario = new Usuario();
         }
 
         public int ProfessorId { get; set; }
@@ -30,8 +29,10 @@ namespace ControleDePresenca.Domain.Entities
         /// </summary>
         public virtual ICollection<Turma> TurmaLista { get; set; }
 
+        public int UsuarioId { get; set; }
 
-        public Usuario Usuario { get; set; }
+        [ForeignKey("UsuarioId")]
+        public virtual Usuario Usuario { get; set; }
       
 
 

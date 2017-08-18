@@ -13,8 +13,8 @@ namespace ControleDePresenca.Infra.Data.Map
 
         public AlunoMap()
         {
-            ToTable("Aluno");
-            HasKey( x => x.AlunoId );
+            //ToTable("Aluno");
+            //HasKey( x => x.AlunoId );
 
             ////Exemplo de 1:1
             //HasRequired(x => x.Usuario)

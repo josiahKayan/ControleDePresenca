@@ -43,6 +43,8 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
+
+
                 var listCursos = _curso.GetAll();
                 return Request.CreateResponse(HttpStatusCode.OK, listCursos);
 
@@ -83,6 +85,7 @@ namespace ControleDePresenca.API.Controllers
                         cursoFound.Descricao = cursoVm.Descricao;
                         cursoFound.Ativo = cursoVm.Ativo;
                         cursoFound.ProfessorLista = cursoVm.ProfessorLista;
+                        cursoFound.TurmaLista = cursoVm.TurmaLista;
                         _curso.Update(cursoFound);
                         log = new Log();
                         log.Message = "The object was updated";
@@ -211,6 +214,7 @@ namespace ControleDePresenca.API.Controllers
                 curso.Descricao = cursoVm.Descricao;
                 curso.Ativo = cursoVm.Ativo;
                 curso.ProfessorLista = cursoVm.ProfessorLista;
+                curso.TurmaLista = cursoVm.TurmaLista;
                 _curso.Update(curso);
                 log = new Log();
                 log.Message = "The object was updated";

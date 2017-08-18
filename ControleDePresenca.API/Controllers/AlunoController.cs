@@ -5,6 +5,7 @@ using ControleDePresenca.Infra.Data.Repositories;
 using ControleDePresenca.Library.Log;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -40,9 +41,13 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
+                AlunoViewModel alunoVm = new AlunoViewModel();
+
                 var listAlunos = _aluno.GetAllAlunos();
 
-                return Request.CreateResponse(HttpStatusCode.OK, listAlunos);
+                var list = alunoVm.ParserAluno(listAlunos.ToList());
+
+                return Request.CreateResponse(HttpStatusCode.OK, list);
 
             }
             catch (Exception e)
@@ -72,11 +77,14 @@ namespace ControleDePresenca.API.Controllers
                         aluno.Nome = alunoVm.Nome;
                         aluno.NomeCompleto = alunoVm.NomeCompleto;
                         aluno.Idade = int.Parse(alunoVm.Idade);
-                        aluno.DataNascimento = DateTime.Now;
-                        aluno.Tag = alunoVm.Tag;
-                        aluno.Turma = alunoVm.Turma;
+                        aluno.DataNascimento = DateTime.ParseExact(alunoVm.DataNascimento.Replace("/", ""), "ddMMyyyy", CultureInfo.InvariantCulture);
+                        aluno.TagId = alunoVm.TagId;
+                        aluno.Turma = alunoVm.Turmas;
+                        aluno.Usuario = new Usuario();
+                        aluno.Usuario = new Usuario();
                         aluno.Usuario.Email = alunoVm.Usuario.Email;
-                        aluno.Usuario.Senha= alunoVm.Usuario.Senha.GetHashCode().ToString();
+                        aluno.Usuario.Senha = alunoVm.Usuario.Senha.GetHashCode().ToString();
+                        aluno.Usuario.Perfil = alunoVm.Usuario.Perfil;
                         _aluno.Update(aluno);
                         log = new Log();
                         log.Message = "The object was updated";
@@ -86,14 +94,26 @@ namespace ControleDePresenca.API.Controllers
                     }
                 }
 
+                EscreveDadosAluno(alunoVm);
+
                 aluno.Nome = alunoVm.Nome;
                 aluno.NomeCompleto = alunoVm.NomeCompleto;
                 aluno.Idade = int.Parse(alunoVm.Idade);
-                aluno.DataNascimento = DateTime.Now;
-                aluno.Tag = alunoVm.Tag;
-                aluno.Turma = alunoVm.Turma;
+                aluno.DataNascimento = DateTime.ParseExact(alunoVm.DataNascimento.Replace("/", ""), "ddMMyyyy", CultureInfo.InvariantCulture);
+                aluno.Tag = new Tag();
+                aluno.Tag.Code = new Guid().ToString();
+                aluno.Tag.Status = 1;
+                aluno.Turma = alunoVm.Turmas;
+
+                aluno.Usuario = new Usuario();
                 aluno.Usuario.Email = alunoVm.Usuario.Email;
                 aluno.Usuario.Senha = alunoVm.Usuario.Senha.GetHashCode().ToString();
+
+               
+
+                aluno.Usuario.Perfil = 0;
+
+                //aluno.UsuarioId = alunoVm.UsuarioId;
 
                 _aluno.Add(aluno);
                 log = new Log();
@@ -114,17 +134,73 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
+        public void EscreveDadosAluno(AlunoViewModel aluno)
+        {
+            // Compose a string that consists of three lines.
+            string lines = "Escrevendo no arquivo txt o que foi recebido";
+
+            lines = lines + "\n" + aluno.Usuario.Email;
+
+            lines = lines + "\n" + aluno.Usuario.Perfil;
+
+            lines = lines + "\n" + aluno.Usuario.Senha;
+
+            lines = lines + "\n" + aluno.DataNascimento;
+
+            lines = lines + "\n" + aluno.Idade;
+
+            lines = lines + "\n" + aluno.Nome;
+
+            lines = lines + "\n" + aluno.NomeCompleto;
+
+            lines = lines + "\n" + aluno.Tag;
+
+            lines = lines + "\n" + aluno.TagId;
+
+            lines = lines + "\n" + aluno.Turmas;
+
+            lines = lines + "\n" + aluno.Usuario;
+
+
+
+
+
+
+
+
+
+
+            // Write the string to a file.
+            System.IO.StreamWriter file = new System.IO.StreamWriter("C:\\Temp\\test.txt");
+            file.WriteLine(lines);
+
+            file.Close();
+        }
+
+
         [HttpGet]
         [Route("{id}")]
         public HttpResponseMessage GetAluno(string id)
         {
-
             try
             {
+                var aluno = _aluno.GetAlunoByIdIncludes(int.Parse(id));
 
-                var aluno = _aluno.GetEntityById(int.Parse(id));
+                AlunoViewModel alunoVm = new AlunoViewModel();
+                alunoVm.Nome = aluno.Nome;
+                alunoVm.NomeCompleto = aluno.NomeCompleto;
+                alunoVm.Idade = ""+aluno.Idade;
+                alunoVm.DataNascimento = aluno.DataNascimento.ToString("dd/MM/yyyy");
+                alunoVm.AlunoId = aluno.AlunoId;
+                alunoVm.Usuario = new Usuario();
+                alunoVm.Usuario.Email = aluno.Usuario.Email;
+                alunoVm.Usuario.Senha = null;
+                alunoVm.Usuario.Perfil = aluno.Usuario.Perfil;
+                alunoVm.Usuario.UsuarioId = aluno.Usuario.UsuarioId;
+                alunoVm.UsuarioId = aluno.UsuarioId;
+                alunoVm.Turmas = aluno.Turma;
+                return Request.CreateResponse(HttpStatusCode.OK, alunoVm);
 
-                return Request.CreateResponse(HttpStatusCode.OK, aluno);
 
             }
             catch (Exception e)
@@ -183,7 +259,7 @@ namespace ControleDePresenca.API.Controllers
                 aluno.Nome = alunoVm.Nome;
                 aluno.NomeCompleto = alunoVm.NomeCompleto;
                 //aluno.Idade = alunoVm.Idade;
-                aluno.DataNascimento = alunoVm.DataNascimento;
+                //aluno.DataNascimento = alunoVm.DataNascimento;
                 aluno.Tag = alunoVm.Tag;
                 //aluno.Turma = alunoVm.Turma;
                 aluno.Usuario = alunoVm.Usuario;

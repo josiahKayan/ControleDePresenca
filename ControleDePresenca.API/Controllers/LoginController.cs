@@ -27,11 +27,28 @@ namespace ControleDePresenca.API.Controllers
 
         [HttpPost]
         [Route("logar")]
-        public HttpResponseMessage Logar([FromBody] UsuarioViewModel usuarioViewModel)
+        public UsuarioViewModel Logar([FromBody] UsuarioViewModel usuarioViewModel)
         {
 
             try
             {
+
+                //// Compose a string that consists of three lines.
+                //string lines = "Escrevendo no arquivo txt o que foi recebido";
+
+                //lines = lines + "\n" + usuarioViewModel.Email;
+
+                //lines = lines + "\n" + usuarioViewModel.Perfil;
+
+                //lines = lines + "\n" + usuarioViewModel.Senha;
+
+                //lines = lines + "\n" + usuarioViewModel.UsuarioId;
+
+                //// Write the string to a file.
+                //System.IO.StreamWriter file = new System.IO.StreamWriter("C:\\Temp\\test.txt");
+                //file.WriteLine(lines);
+
+                //file.Close();
 
                 Usuario newUsuario = new Usuario();
 
@@ -45,8 +62,8 @@ namespace ControleDePresenca.API.Controllers
                 usuarioViewModel.UsuarioId = usuarioLogado.UsuarioId;
                 usuarioViewModel.Perfil = ""+usuarioLogado.Perfil;
 
-                return Request.CreateResponse(HttpStatusCode.OK, usuarioViewModel);
-
+                // return Request.CreateResponse(HttpStatusCode.OK, usuarioViewModel);
+                return usuarioViewModel;
             }
             catch (Exception e)
             {
@@ -55,7 +72,7 @@ namespace ControleDePresenca.API.Controllers
                 log.Message = e.Message;
                 log.Status = "error";
 
-                return Request.CreateResponse(HttpStatusCode.OK, log);
+                return usuarioViewModel;
             }
 
         }

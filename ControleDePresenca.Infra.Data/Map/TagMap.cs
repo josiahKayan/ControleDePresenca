@@ -14,9 +14,9 @@ namespace ControleDePresenca.Infra.Data.Map
         public TagMap()
         {
 
-            ToTable("Tag");
+            //ToTable("Tag");
 
-            HasKey(x => x.TagId);
+            //HasKey(x => x.TagId);
 
             
 

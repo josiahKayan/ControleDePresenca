@@ -13,17 +13,17 @@ namespace ControleDePresenca.Infra.Data.Map
 
         public TurmaMap()
         {
-            ToTable("Turma");
+            //ToTable("Turma");
 
-            HasKey( x => x.TurmaId);
+            //HasKey( x => x.TurmaId);
 
-            HasRequired(x => x.Curso)
-                .WithMany()
-                .Map(m => m.MapKey("CursoId"));//Chave estrangeira em Turmas
+            //HasRequired(x => x.Curso)
+            //    .WithMany()
+            //    .Map(m => m.MapKey("CursoId"));//Chave estrangeira em Turmas
 
-            HasRequired(x => x.Professor)
-                .WithMany(x => x.TurmaLista)
-                .Map(m => m.MapKey("ProfessorId"));
+            //HasRequired(x => x.Professor)
+            //    .WithMany(x => x.TurmaLista)
+            //    .Map(m => m.MapKey("ProfessorId"));
         }
 
     }

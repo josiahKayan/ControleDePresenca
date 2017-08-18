@@ -23,13 +23,22 @@ namespace ControleDePresenca.API.ViewModels
         /// Data de Término da Turma
         /// </summary>
         public DateTime DataTermino { get; set; }
+
+        public int ProfessorId { get; set; }
+
+
         /// <summary>
         /// Entidade Professor
         /// </summary>
         public virtual Professor Professor { get; set; }
+
+        public int CursoId { get; set; }
+
+
         /// <summary>
         /// Entidade Curso
         /// </summary>
+
         public virtual Curso Curso { get; set; }
         /// <summary>
         /// Lista de Alunos

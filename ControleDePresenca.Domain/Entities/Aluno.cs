@@ -15,26 +15,34 @@ namespace ControleDePresenca.Domain.Entities
 
         public Aluno()
         {
-            Usuario = new Usuario();
+            Turma = new List<Turma>();
         }
 
         public int AlunoId { get; set; }
+
+        public int TagId { get; set; }
+
         /// <summary>
         /// atributo da classe Tag
         /// </summary>
+        /// 
+        [ForeignKey("TagId")]
         public virtual Tag Tag { get; set; }
+
+        public int UsuarioId { get; set; }
         /// <summary>
         /// atributo da classe Usuario
         /// </summary>
-        //[ForeignKey("UsuarioId")]
+        [ForeignKey("UsuarioId")]
         public virtual Usuario Usuario { get; set; }
-        
+
         //public virtual int UsuarioId { get; set; }
         /// <summary>
         /// atributo da classe Turma
         /// </summary>
-        public virtual Turma Turma { get; set; }
-
+        /// 
+        public virtual List<Turma> Turma { get; set; }
+    
         //[ForeignKey("UsuarioId")]
         //public int UsuarioId { get; set; }
     }

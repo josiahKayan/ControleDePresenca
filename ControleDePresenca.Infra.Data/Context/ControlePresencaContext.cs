@@ -35,22 +35,25 @@ namespace ControleDePresenca.Infra.Data.Context
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+            Database.SetInitializer<ControlePresencaContext>(null);
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
-            modelBuilder.Configurations.Add(new AlunoMap());
-            modelBuilder.Configurations.Add(new CursoMap());
-            modelBuilder.Configurations.Add(new PresencaMap());
-            modelBuilder.Configurations.Add(new ProfessorMap());
-            modelBuilder.Configurations.Add(new TagMap());
-            modelBuilder.Configurations.Add(new TurmaMap());
-            modelBuilder.Configurations.Add(new UsuarioMap());
+            //modelBuilder.Configurations.Add(new AlunoMap());
+            //modelBuilder.Configurations.Add(new CursoMap());
+            //modelBuilder.Configurations.Add(new PresencaMap());
+            //modelBuilder.Configurations.Add(new ProfessorMap());
+            //modelBuilder.Configurations.Add(new TagMap());
+            //modelBuilder.Configurations.Add(new TurmaMap());
+            //modelBuilder.Configurations.Add(new UsuarioMap());
 
 
-            modelBuilder.Properties().Where(p => p.Name == p.ReflectedType.Name + "Id").Configure(p => p.IsKey());
-            modelBuilder.Properties<string>().Configure( p => p.HasColumnType("varchar") );
-
+            //modelBuilder.Properties().Where(p => p.Name == p.ReflectedType.Name + "Id").Configure(p => p.IsKey());
+            //modelBuilder.Properties<string>().Configure( p => p.HasColumnType("varchar") );
+            
         }
 
 

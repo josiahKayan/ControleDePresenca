@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,7 @@ namespace ControleDePresenca.Domain.Entities
         /// <summary>
         /// Lista de Alunos
         /// </summary>
+        /// 
         public virtual ICollection<Aluno> AlunoLista { get; set; }
         /// <summary>
         /// Lista de Presenças

@@ -13,23 +13,23 @@ namespace ControleDePresenca.Infra.Data.Map
 
         public CursoMap()
         {
-            ToTable("Curso");
+            //ToTable("Curso");
 
-            HasKey( x => x.CursoId );
+            //HasKey( x => x.CursoId );
 
-            Property(x => x.Nome).IsRequired();
+            //Property(x => x.Nome).IsRequired();
 
 
-            //Exemplo de N:N
-            HasMany(x => x.ProfessorLista)
-                .WithMany(x => x.CursoLista)
-                .Map(m =>
-               {
-                   m.MapLeftKey("CursoId");
-                   m.MapRightKey("ProfessorId");
-                   m.ToTable("CursoProfessor");
+            ////Exemplo de N:N
+            //HasMany(x => x.ProfessorLista)
+            //    .WithMany(x => x.CursoLista)
+            //    .Map(m =>
+            //   {
+            //       m.MapLeftKey("CursoId");
+            //       m.MapRightKey("ProfessorId");
+            //       m.ToTable("CursoProfessor");
 
-               });
+            //   });
 
         }
 

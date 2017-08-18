@@ -5,6 +5,7 @@ using ControleDePresenca.Infra.Data.Repositories;
 using ControleDePresenca.Library.Log;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -40,9 +41,13 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                var listProfessores = _professor.GetAllProfessors();
+                ProfessorViewModel prof = new ProfessorViewModel();
 
-                return Request.CreateResponse(HttpStatusCode.OK, listProfessores);
+                var listProfs = _professor.GetAllProfessors();
+
+                var list = prof.ParserProfessor(listProfs.ToList());
+
+                return Request.CreateResponse(HttpStatusCode.OK, list);
 
             }
             catch (Exception e)
@@ -70,10 +75,15 @@ namespace ControleDePresenca.API.Controllers
                         professor.Nome = professorVm.Nome;
                         professor.NomeCompleto = professorVm.NomeCompleto;
                         professor.Idade = int.Parse(professorVm.Idade);
-                        professor.DataNascimento = DateTime.Now;
+                        professor.DataNascimento = DateTime.ParseExact(professorVm.DataNascimento.Replace("/", ""), "ddMMyyyy", CultureInfo.InvariantCulture);
+                        professor.CursoLista = professorVm.CursoLista;
+                        professor.Usuario = new Usuario();
+
                         professor.Usuario.Email = professorVm.Usuario.Email;
                         professor.Usuario.Senha = professorVm.Usuario.Senha.GetHashCode().ToString();
                         professor.Usuario.UsuarioId = professorVm.Usuario.UsuarioId;
+                        professor.CursoLista = professorVm.CursoLista;
+                        professor.TurmaLista = professorVm.TurmaLista;
                         _professor.Update(professor);
                         log = new Log();
                         log.Message = "The object was updated";
@@ -87,9 +97,14 @@ namespace ControleDePresenca.API.Controllers
                 professor.Nome = professorVm.Nome;
                 professor.NomeCompleto = professorVm.NomeCompleto;
                 professor.Idade = int.Parse(professorVm.Idade);
-                professor.DataNascimento = DateTime.Now;
+                
+                professor.DataNascimento = DateTime.ParseExact(professorVm.DataNascimento.Replace("/",""), "ddMMyyyy", CultureInfo.InvariantCulture); 
+                professor.Usuario = new Usuario();
                 professor.Usuario.Email = professorVm.Usuario.Email;
                 professor.Usuario.Senha = professorVm.Usuario.Senha.GetHashCode().ToString();
+                professor.UsuarioId = professorVm.UsuarioId;
+                professor.CursoLista = professorVm.CursoLista;
+                professor.TurmaLista = professorVm.TurmaLista;
                 _professor.Add(professor);
                 log = new Log();
                 log.Message = "The object was added";
@@ -119,8 +134,22 @@ namespace ControleDePresenca.API.Controllers
             {
 
                 var professor = _professor.GetProfessorByIdIncludes(int.Parse(id));
-
-                return Request.CreateResponse(HttpStatusCode.OK, professor);
+                
+                ProfessorViewModel professorVm = new ProfessorViewModel();
+                professorVm.Nome = professor.Nome;
+                professorVm.NomeCompleto = professor.NomeCompleto;
+                professorVm.Idade = ""+professor.Idade;
+                professorVm.DataNascimento = professor.DataNascimento.Date.ToString("dd/MM/yyyy");
+                professorVm.ProfessorId = professor.ProfessorId;
+                professorVm.Usuario = new Usuario();
+                professorVm.Usuario.Email = professor.Usuario.Email;
+                professorVm.Usuario.Senha = null;
+                professorVm.Usuario.Perfil = professor.Usuario.Perfil;
+                professorVm.Usuario.UsuarioId = professor.Usuario.UsuarioId;
+                professorVm.UsuarioId = professor.UsuarioId;
+                professorVm.CursoLista = professor.CursoLista;
+                professorVm.TurmaLista = professor.TurmaLista;
+                return Request.CreateResponse(HttpStatusCode.OK, professorVm);
 
             }
             catch (Exception e)
