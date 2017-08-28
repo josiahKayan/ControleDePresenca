@@ -18,10 +18,12 @@ namespace ControleDePresenca.API.Controllers
     {
 
         ITurmaRepository _turma;
+        IAlunoRepository _aluno;
 
         public TurmaController()
         {
             _turma = new TurmaRepository();
+            _aluno = new AlunoRepository();
         }
 
         /// <summary>
@@ -40,74 +42,11 @@ namespace ControleDePresenca.API.Controllers
 
             try
             {
-                //Presenca p = new Presenca();
-                //p.Ano = 2017;
-                //p.Mes = 6;
-                //p.Dia = 1;
-                //p.PresencaId = 1;
+               
 
-                //Presenca p1 = new Presenca();
-                //p.Ano = 2017;
-                //p.Mes = 7;
-                //p.Dia = 2;
-                //p.PresencaId = 2;
-
-                //List<Presenca> listPresenca = new List<Presenca>();
-                //listPresenca.Add(p);
-                //listPresenca.Add(p1);
-
-                Aluno aluno1 = new Aluno();
-                aluno1.AlunoId = 1;
-                aluno1.DataNascimento = DateTime.Now;
-                aluno1.Idade = 10;
-                aluno1.Nome = "Daniel";
-                aluno1.NomeCompleto = "Daniel da cova dos leões";
-                aluno1.Tag = new Tag { Code = "123", Status = 1, TagId = 1 };
-
-                Aluno aluno2 = new Aluno();
-                aluno2.AlunoId = 2;
-                aluno2.DataNascimento = DateTime.Now;
-                aluno2.Idade = 8;
-                aluno2.Nome = "Josias";
-                aluno2.NomeCompleto = "Rei Josias";
-                aluno2.Tag = new Tag { Code = "123", Status = 1, TagId = 1 };
-
-
-                var listAluno = new List<Aluno>();
-                listAluno.Add(aluno1);
-                listAluno.Add(aluno2);
-
-                Curso curso1 = new Curso();
-                curso1.Ativo = true;
-                curso1.CursoId = 1;
-                curso1.Descricao = "Estudo da Origem da Vida";
-                curso1.Nome = "Origens";
-
-
-                Professor professor1 = new Professor();
-                professor1.Nome = "Ismael";
-                professor1.NomeCompleto = "Ismael Ismael";
-                professor1.ProfessorId = 1;
-                professor1.DataNascimento = DateTime.Now;
-                professor1.Idade = 25;
-
-                List<Turma> listTurmas = new List<Turma>();
-
-                Turma turma1 = new Turma();
-                turma1.TurmaId = 1;
-                turma1.Professor = professor1;
-                turma1.DataInicio = DateTime.Now;
-                turma1.DataTermino = DateTime.Now;
-                turma1.Curso = curso1;
-                turma1.AlunoLista = listAluno;
-                //turma1.PresencaLista = listPresenca;
-
-                listTurmas.Add(turma1);
-
-
-                //var listTurmas = _turma.GetAll();
-
-                return Request.CreateResponse(HttpStatusCode.OK, listTurmas);
+                var listTurma = new List<Turma>();
+               
+                return Request.CreateResponse(HttpStatusCode.OK, listTurma);
 
             }
             catch (Exception e)
@@ -137,8 +76,8 @@ namespace ControleDePresenca.API.Controllers
 
                 Turma turma = new Turma();
 
-                turma.DataInicio = turmaVm.DataInicio;
-                turma.DataTermino = turmaVm.DataTermino;
+                //turma.DataInicio = turmaVm.DataInicio;
+                //turma.DataTermino = turmaVm.DataTermino;
                 turma.Curso = turmaVm.Curso;
                 turma.Professor = turmaVm.Professor;
                 
@@ -237,8 +176,8 @@ namespace ControleDePresenca.API.Controllers
 
                 Turma turma = _turma.GetEntityById(int.Parse(id));
 
-                turma.DataInicio = turmaVm.DataInicio;
-                turma.DataTermino = turmaVm.DataTermino;
+                //turma.DataInicio = turmaVm.DataInicio;
+                //turma.DataTermino = turmaVm.DataTermino;
                 turma.Curso = turmaVm.Curso;
                 turma.Professor = turmaVm.Professor;
 
@@ -254,6 +193,27 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
+        [HttpPost]
+        [Route("{idTurma}/{idAluno}")]
+        public HttpResponseMessage AddAlunoATurma(string idTurma, string idAluno)
+        {
+            try
+            {
+                Turma turma = _turma.GetEntityById(int.Parse(idTurma));
 
+                Aluno aluno = _aluno.GetEntityById(int.Parse(idAluno));
+
+                turma.AlunoLista.Add(aluno);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Aluno adicionadoa turma");
+            }
+            catch(Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+
+            }
+
+
+        }
     }
 }

@@ -76,7 +76,6 @@ namespace ControleDePresenca.API.Controllers
                         professor.NomeCompleto = professorVm.NomeCompleto;
                         professor.Idade = int.Parse(professorVm.Idade);
                         professor.DataNascimento = DateTime.ParseExact(professorVm.DataNascimento.Replace("/", ""), "ddMMyyyy", CultureInfo.InvariantCulture);
-                        professor.CursoLista = professorVm.CursoLista;
                         professor.Usuario = new Usuario();
 
                         professor.Usuario.Email = professorVm.Usuario.Email;
@@ -105,6 +104,8 @@ namespace ControleDePresenca.API.Controllers
                 professor.UsuarioId = professorVm.UsuarioId;
                 professor.CursoLista = professorVm.CursoLista;
                 professor.TurmaLista = professorVm.TurmaLista;
+
+
                 _professor.Add(professor);
                 log = new Log();
                 log.Message = "The object was added";

@@ -73,17 +73,56 @@ namespace ControleDePresenca.API.Controllers
 
                 Presenca presenca = new Presenca();
 
+
+                // Compose a string that consists of three lines.
+                string lines = "Escrevendo no arquivo txt o que foi recebido";
+
+                lines = lines + "\n" + presencaVm.HoraEntrada;
+
+                lines = lines + "\n" + presencaVm.Mes;
+
+                lines = lines + "\n" + presencaVm.Ano;
+
+                lines = lines + "\n" + presencaVm.TurmaId;
+
+                lines = lines + "\n" + presencaVm.Ativo;
+
+                lines = lines + "\n" + presencaVm.Dia;
+
+
+                // Write the string to a file.
+                System.IO.StreamWriter file = new System.IO.StreamWriter("C:\\Temp\\test.txt");
+                file.WriteLine(lines);
+
+                file.Close();
+
                 presenca.HoraEntrada = presencaVm.HoraEntrada;
                 presenca.Mes = presencaVm.Mes;
                 presenca.Ano = presencaVm.Ano;
-                presenca.TurmaLista = presencaVm.TurmaLista;
+                presenca.TurmaId = presencaVm.TurmaId;
+                //presenca.Turma = presencaVm.Turma;
+                presenca.Ativo = presencaVm.Ativo;
+                presenca.Dia = presencaVm.Dia;
                 _presenca.Add(presenca);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
+                return Request.CreateResponse(HttpStatusCode.OK, presenca);
 
             }
             catch (Exception e)
             {
+                // Compose a string that consists of three lines.
+                string lines = "Escrevendo no arquivo txt o que foi recebido";
+
+                
+
+             
+
+
+                // Write the string to a file.
+                System.IO.StreamWriter file = new System.IO.StreamWriter("C:\\Temp\\logg.txt");
+                file.WriteLine(lines);
+
+                file.Close();
                 return Request.CreateResponse(HttpStatusCode.OK, e.Message);
             }
 
@@ -151,43 +190,44 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
-        /// <summary>
-        /// Get curso by id
-        /// </summary>
-        /// <remarks>
-        /// Get a Curso by id
-        /// </remarks>
-        /// <param name="id">Id of course</param>
-        /// <param name="presencaVm">Id of course</param>
-        /// <returns></returns>
-        /// <response code="200">Curso found</response>
-        /// <response code="404">Curso not foundd</response>
-        [HttpPut]
-        [Route("update/{id}")]
-        public HttpResponseMessage UpdateCurso([FromBody] PresencaViewModel presencaVm, string id)
-        {
+        ///// <summary>
+        ///// Get curso by id
+        ///// </summary>
+        ///// <remarks>
+        ///// Get a Curso by id
+        ///// </remarks>
+        ///// <param name="id">Id of course</param>
+        ///// <param name="presencaVm">Id of course</param>
+        ///// <returns></returns>
+        ///// <response code="200">Curso found</response>
+        ///// <response code="404">Curso not foundd</response>
+        //[HttpPut]
+        //[Route("update/{id}")]
+        //public HttpResponseMessage UpdateCurso([FromBody] PresencaViewModel presencaVm, string id)
+        //{
 
-            try
-            {
+        //    try
+        //    {
 
-                Presenca presenca = _presenca.GetEntityById(int.Parse(id));
+        //        Presenca presenca = _presenca.GetEntityById(int.Parse(id));
 
-                presenca.HoraEntrada = presencaVm.HoraEntrada;
-                presenca.Mes = presencaVm.Mes;
-                presenca.Ano = presencaVm.Ano;
-                presenca.TurmaLista = presencaVm.TurmaLista;
+        //        presenca.HoraEntrada = presencaVm.HoraEntrada;
+        //        presenca.Mes = presencaVm.Mes;
+        //        presenca.Ano = presencaVm.Ano;
+        //        presenca.TurmaLista = presencaVm.TurmaLista;
+        //        presenca.Ativo = presencaVm.Ativo;
+        //        presenca.Dia = presencaVm.Dia;
+        //        _presenca.Update(presenca);
 
-                _presenca.Update(presenca);
+        //        return Request.CreateResponse(HttpStatusCode.OK, "The object was updated");
 
-                return Request.CreateResponse(HttpStatusCode.OK, "The object was updated");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+        //    }
 
-            }
-            catch (Exception e)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
-            }
-
-        }
+        //}
 
 
     }

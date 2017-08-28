@@ -13,12 +13,12 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public IEnumerable<Professor> GetAllProfessors()
         {
-            return context.Set<Professor>().Include("Usuario").ToList();
+            return context.Set<Professor>().Include("Usuario").Include("TurmaLista").Include("TurmaLista").ToList();
         }
 
         public Professor GetProfessorByIdIncludes(int id)
         {
-            return context.Set<Professor>().Include("Usuario").ToList().Find(x => x.ProfessorId == id);
+            return context.Set<Professor>().Include("Usuario").Include("TurmaLista").Include("TurmaLista").ToList().Find(x => x.ProfessorId == id);
         }
 
         public void RemoveComUsuario(Professor obj)

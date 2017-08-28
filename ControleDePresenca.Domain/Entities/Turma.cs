@@ -20,6 +20,9 @@ namespace ControleDePresenca.Domain.Entities
         }
 
         public int TurmaId { get; set; }
+
+        public string NomeTurma { get; set; }
+
         /// <summary>
         /// Data de Início da Turma
         /// </summary>
@@ -28,6 +31,12 @@ namespace ControleDePresenca.Domain.Entities
         /// Data de Término da Turma
         /// </summary>
         public DateTime DataTermino { get; set; }
+
+        public DateTime HoraInicial { get; set; }
+
+        public DateTime HoraFinal { get; set; }
+
+
         /// <summary>
         /// Entidade Professor
         /// </summary>

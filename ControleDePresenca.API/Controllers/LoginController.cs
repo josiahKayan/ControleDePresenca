@@ -60,7 +60,7 @@ namespace ControleDePresenca.API.Controllers
                 usuarioViewModel.Email = usuarioLogado.Email;
                 usuarioViewModel.Senha = usuarioLogado.Senha;
                 usuarioViewModel.UsuarioId = usuarioLogado.UsuarioId;
-                usuarioViewModel.Perfil = ""+usuarioLogado.Perfil;
+                usuarioViewModel.Perfil = usuarioLogado.Perfil;
 
                 // return Request.CreateResponse(HttpStatusCode.OK, usuarioViewModel);
                 return usuarioViewModel;

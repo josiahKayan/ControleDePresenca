@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,6 @@ namespace ControleDePresenca.Domain.Entities
 
         public Presenca()
         {
-            this.TurmaLista = new List<Turma>();
         }
 
         public int PresencaId { get; set; }
@@ -34,10 +34,15 @@ namespace ControleDePresenca.Domain.Entities
 
         public int Dia { get; set; }
 
+        public bool Ativo { get; set; }
+
+        public int TurmaId { get; set; }
+
         //public virtual Turma Turma { get; set; }
         /// <summary>
         /// Lista de Turmas
         /// </summary>
-        public virtual ICollection<Turma> TurmaLista { get; set; }
+        //[ForeignKey("TurmaId")]
+        //public virtual Turma Turma { get; set; }
     }
 }
