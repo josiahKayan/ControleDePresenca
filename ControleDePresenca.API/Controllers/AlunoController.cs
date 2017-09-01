@@ -198,7 +198,7 @@ namespace ControleDePresenca.API.Controllers
                 alunoVm.Usuario.Perfil = aluno.Usuario.Perfil;
                 alunoVm.Usuario.UsuarioId = aluno.Usuario.UsuarioId;
                 alunoVm.UsuarioId = aluno.UsuarioId;
-                alunoVm.Turmas = aluno.Turma;
+                alunoVm.Turmas = aluno.Turma.ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, alunoVm);
 
 

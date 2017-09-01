@@ -41,7 +41,7 @@ namespace ControleDePresenca.Domain.Entities
         /// atributo da classe Turma
         /// </summary>
         /// 
-        public virtual List<Turma> Turma { get; set; }
+        public virtual ICollection<Turma> Turma { get; set; }
     
         //[ForeignKey("UsuarioId")]
         //public int UsuarioId { get; set; }

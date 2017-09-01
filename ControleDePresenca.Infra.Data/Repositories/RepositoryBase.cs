@@ -19,7 +19,7 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            context.Dispose();
         }
 
         public IEnumerable<TEntity> GetAll()

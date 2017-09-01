@@ -47,7 +47,7 @@ namespace ControleDePresenca.API.ViewModels
             this.NomeCompleto = aluno.NomeCompleto;
             this.Tag = aluno.Tag;
             this.TagId = aluno.TagId;
-            this.Turmas = aluno.Turma;
+            this.Turmas = aluno.Turma.ToList();
             this.Usuario = aluno.Usuario;
             this.UsuarioId = aluno.UsuarioId;
         }

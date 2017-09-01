@@ -2,6 +2,7 @@
 using ControleDePresenca.Domain.Entities;
 using ControleDePresenca.Domain.Interfaces.Repositories;
 using ControleDePresenca.Infra.Data.Repositories;
+using ControleDePresenca.Library.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -199,17 +200,48 @@ namespace ControleDePresenca.API.Controllers
         {
             try
             {
-                Turma turma = _turma.GetEntityById(int.Parse(idTurma));
 
-                Aluno aluno = _aluno.GetEntityById(int.Parse(idAluno));
 
-                turma.AlunoLista.Add(aluno);
+                // Compose a string that consists of three lines.
+                string lines = "Escrevendo no arquivo txt o que foi recebido";
 
-                return Request.CreateResponse(HttpStatusCode.OK, "Aluno adicionadoa turma");
+                lines = lines + "\n" + idTurma;
+
+                lines = lines + "\n" + idAluno;
+
+               
+                // Write the string to a file.
+                System.IO.StreamWriter file = new System.IO.StreamWriter("C:\\Temp\\Log AddAlunoaTurma.txt");
+                file.WriteLine(lines);
+
+                file.Close();
+
+
+                using(var repositorio = new TurmaRepository())
+                {
+                    Turma turma = repositorio.GetEntityById(int.Parse(idTurma));
+
+                    Aluno aluno = repositorio.GetAlunoByIdIncludesTurma(int.Parse(idAluno));
+
+                    turma.AlunoLista.Add(aluno);
+
+                    repositorio.AddAlunoAturma(turma);
+                }
+
+              
+
+                Log log = new Log();
+                log.Message = "Aluno foi adicionado na turma";
+                log.Status = 1;
+
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
             catch(Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                Log log = new Log();
+                log.Message = "Erro";
+                log.Status = 1;
+                return Request.CreateResponse(HttpStatusCode.OK, log);
 
             }
 
