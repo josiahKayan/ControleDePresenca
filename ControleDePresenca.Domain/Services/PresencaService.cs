@@ -18,5 +18,6 @@ namespace ControleDePresenca.Domain.Services
         {
             _presencaRepository = repository;
         }
+
     }
 }

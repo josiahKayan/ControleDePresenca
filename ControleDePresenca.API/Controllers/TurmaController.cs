@@ -43,9 +43,9 @@ namespace ControleDePresenca.API.Controllers
 
             try
             {
-               
 
-                var listTurma = new List<Turma>();
+
+                var listTurma = _turma.GetAll();
                
                 return Request.CreateResponse(HttpStatusCode.OK, listTurma);
 

@@ -15,8 +15,7 @@ namespace ControleDePresenca.Domain.Entities
     {
 
         public Presenca()
-        {
-        }
+        {}
 
         public int PresencaId { get; set; }
         /// <summary>
@@ -37,6 +36,8 @@ namespace ControleDePresenca.Domain.Entities
         public bool Ativo { get; set; }
 
         public int TurmaId { get; set; }
+
+        public virtual ICollection<Aluno> Alunos { get; set; }
 
         //public virtual Turma Turma { get; set; }
         /// <summary>

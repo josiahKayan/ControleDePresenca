@@ -28,14 +28,8 @@ namespace ControleDePresenca.API.ViewModels
         /// Marca o ano
         /// </summary>
         public int Ano { get; set; }
-        //public virtual Turma Turma { get; set; }
 
-        public int TurmaId { get; set; }
-
-        /// <summary>
-        /// Lista de Turmas
-        /// </summary>
-        //public virtual Turma Turma{ get; set; }
+        public ICollection<Aluno> Alunos { get; set; }
 
     }
 }

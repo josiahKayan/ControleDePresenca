@@ -42,7 +42,10 @@ namespace ControleDePresenca.Domain.Entities
         /// </summary>
         /// 
         public virtual ICollection<Turma> Turma { get; set; }
-    
+
+        public virtual ICollection<Presenca> Presenca { get; set; }
+
+
         //[ForeignKey("UsuarioId")]
         //public int UsuarioId { get; set; }
     }

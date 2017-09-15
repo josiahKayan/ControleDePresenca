@@ -2,6 +2,7 @@
 using ControleDePresenca.Domain.Entities;
 using ControleDePresenca.Domain.Interfaces.Repositories;
 using ControleDePresenca.Infra.Data.Repositories;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,7 +84,7 @@ namespace ControleDePresenca.API.Controllers
 
                 lines = lines + "\n" + presencaVm.Ano;
 
-                lines = lines + "\n" + presencaVm.TurmaId;
+                //lines = lines + "\n" + presencaVm.TurmaId;
 
                 lines = lines + "\n" + presencaVm.Ativo;
 
@@ -99,7 +100,7 @@ namespace ControleDePresenca.API.Controllers
                 presenca.HoraEntrada = presencaVm.HoraEntrada;
                 presenca.Mes = presencaVm.Mes;
                 presenca.Ano = presencaVm.Ano;
-                presenca.TurmaId = presencaVm.TurmaId;
+                //presenca.TurmaId = presencaVm.TurmaId;
                 //presenca.Turma = presencaVm.Turma;
                 presenca.Ativo = presencaVm.Ativo;
                 presenca.Dia = presencaVm.Dia;
@@ -149,6 +150,54 @@ namespace ControleDePresenca.API.Controllers
                 var presenca = _presenca.GetEntityById(int.Parse(id));
 
                 return Request.CreateResponse(HttpStatusCode.OK, presenca);
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
+
+        /// <summary>
+        /// Get presenca by id
+        /// </summary>
+        /// <remarks>
+        /// Get a Presenças by id
+        /// </remarks>
+        /// <param name="id">Id de Presenças</param>
+        /// <returns></returns>
+        /// <response code="200">Presença found</response>
+        /// <response code="404">Presença not foundd</response>
+        [HttpGet]
+        [Route("turma/{idTurma}")]
+        public HttpResponseMessage GetPresencaPorTurma(string idTurma)
+        {
+
+            PresencaViewModel presencaVm = null;
+
+            try
+            {
+                int id = int.Parse(idTurma);
+                var presenca = _presenca.GetListaPresenca(id);
+
+                List<PresencaViewModel> list = new List<PresencaViewModel>();
+
+                foreach (var item in presenca)
+                {
+                    presencaVm = new PresencaViewModel();
+                    presencaVm.Alunos = item.Alunos;
+                    presencaVm.Ano = item.Ano;
+                    presencaVm.Ativo = item.Ativo;
+                    presencaVm.Dia = item.Dia;
+                    presencaVm.HoraEntrada = item.HoraEntrada;
+                    presencaVm.Mes = item.Mes;
+                    presencaVm.PresencaId = item.PresencaId;
+                    list.Add(presencaVm);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, list);
 
             }
             catch (Exception e)
