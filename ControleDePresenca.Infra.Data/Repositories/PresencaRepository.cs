@@ -16,10 +16,7 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public IEnumerable<Presenca> GetListaPresenca(int id)
         {
-            context.SetLazyLoading(false);
-
             return context.Set<Presenca>().Include("Alunos").Where(x => x.TurmaId == id).ToList();
-            //return context.Set<Presenca>().Where(x => x.TurmaId == id).ToList();
 
         }
 
