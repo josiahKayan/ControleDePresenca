@@ -53,7 +53,7 @@ namespace ControleDePresenca.API.Controllers
                 Usuario newUsuario = new Usuario();
 
                 newUsuario.Email = usuarioViewModel.Email;
-                newUsuario.Senha = usuarioViewModel.Senha.GetHashCode().ToString();
+                newUsuario.Senha = usuarioViewModel.Senha.ToString();
 
                 var usuarioLogado = _usuario.Login(newUsuario);
 

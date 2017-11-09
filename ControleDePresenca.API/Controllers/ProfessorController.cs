@@ -79,7 +79,7 @@ namespace ControleDePresenca.API.Controllers
                         professor.Usuario = new Usuario();
 
                         professor.Usuario.Email = professorVm.Usuario.Email;
-                        professor.Usuario.Senha = professorVm.Usuario.Senha.GetHashCode().ToString();
+                        professor.Usuario.Senha = professorVm.Usuario.Senha.ToString();
                         professor.Usuario.UsuarioId = professorVm.Usuario.UsuarioId;
                         professor.CursoLista = professorVm.CursoLista;
                         professor.TurmaLista = professorVm.TurmaLista;
@@ -100,7 +100,7 @@ namespace ControleDePresenca.API.Controllers
                 professor.DataNascimento = DateTime.ParseExact(professorVm.DataNascimento.Replace("/",""), "ddMMyyyy", CultureInfo.InvariantCulture); 
                 professor.Usuario = new Usuario();
                 professor.Usuario.Email = professorVm.Usuario.Email;
-                professor.Usuario.Senha = professorVm.Usuario.Senha.GetHashCode().ToString();
+                professor.Usuario.Senha = professorVm.Usuario.Senha.ToString();
                 professor.UsuarioId = professorVm.UsuarioId;
                 professor.CursoLista = professorVm.CursoLista;
                 professor.TurmaLista = professorVm.TurmaLista;
@@ -170,7 +170,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                Professor professor = _professor.GetEntityById(int.Parse(id));
+                Professor professor = _professor.GetProfessorByIdIncludes(int.Parse(id));
 
                 if (professor == null)
                 {

@@ -18,11 +18,28 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public Professor GetProfessorByIdIncludes(int id)
         {
-            return context.Set<Professor>().Include("Usuario").Include("TurmaLista").Include("TurmaLista").ToList().Find(x => x.ProfessorId == id);
+            return context.Set<Professor>().Include("Usuario").Include("TurmaLista").Include("TurmaLista").Include("CursoLista").ToList().Find(x => x.ProfessorId == id);
         }
 
         public void RemoveComUsuario(Professor obj)
         {
+
+            foreach (var item in obj.CursoLista)
+            {
+                if (item.ProfessorLista.Contains(obj))
+                {
+                    item.ProfessorLista.Remove(obj);
+                }
+            }
+
+            //foreach (var item in obj.TurmaLista)
+            //{
+            //    if (item.Professor.UsuarioId == obj.UsuarioId)
+            //    {
+            //        context.Turmas.Remove(item);
+            //    }
+
+            //}
 
             context.Usuarios.Remove(obj.Usuario);
             context.Set<Professor>().Remove(obj);

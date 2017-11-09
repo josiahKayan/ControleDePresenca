@@ -3,6 +3,7 @@ using ControleDePresenca.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace ControleDePresenca.Infra.Data.Repositories
 {
@@ -38,6 +39,16 @@ namespace ControleDePresenca.Infra.Data.Repositories
             context.Set<TEntity>().Remove(obj);
             context.SaveChanges();
         }
+
+        //public T Buscar<T>(Expression<Func<T, bool>> predicate) where T : DbEntity, new()
+        //{
+        //    return this.context.Find<T>(predicate).FirstOrDefault();
+        //}
+
+        //public List<T> BuscarTodos<T>(Expression<Func<T, bool>> predicate) where T : DbEntity, new()
+        //{
+        //    return this.context.Find<T>(predicate).ToList();
+        //}
 
         public void Update(TEntity obj)
         {

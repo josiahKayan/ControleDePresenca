@@ -83,7 +83,7 @@ namespace ControleDePresenca.API.Controllers
                         aluno.Usuario = new Usuario();
                         aluno.Usuario = new Usuario();
                         aluno.Usuario.Email = alunoVm.Usuario.Email;
-                        aluno.Usuario.Senha = alunoVm.Usuario.Senha.GetHashCode().ToString();
+                        aluno.Usuario.Senha = alunoVm.Usuario.Senha.ToString();
                         aluno.Usuario.Perfil = alunoVm.Usuario.Perfil;
                         _aluno.Update(aluno);
                         log = new Log();
@@ -107,7 +107,7 @@ namespace ControleDePresenca.API.Controllers
 
                 aluno.Usuario = new Usuario();
                 aluno.Usuario.Email = alunoVm.Usuario.Email;
-                aluno.Usuario.Senha = alunoVm.Usuario.Senha.GetHashCode().ToString();
+                aluno.Usuario.Senha = alunoVm.Usuario.Senha.ToString();
 
                
 
@@ -160,14 +160,6 @@ namespace ControleDePresenca.API.Controllers
             lines = lines + "\n" + aluno.Turmas;
 
             lines = lines + "\n" + aluno.Usuario;
-
-
-
-
-
-
-
-
 
 
             // Write the string to a file.
