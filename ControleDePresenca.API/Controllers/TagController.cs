@@ -43,7 +43,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                var listTags = _tag.GetAll();
+                var listTags = _tag.ListaTagNaoArmazenada();
 
                 return Request.CreateResponse(HttpStatusCode.OK, listTags);
 
@@ -114,7 +114,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                var tag = _tag.GetEntityById(int.Parse(id));
+                var tag = _tag.BuscaTag(int.Parse(id));
 
                 return Request.CreateResponse(HttpStatusCode.OK, tag);
 

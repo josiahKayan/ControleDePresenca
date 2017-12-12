@@ -22,6 +22,29 @@ namespace ControleDePresenca.Infra.Data.Repositories
             return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").ToList().Find(x => x.AlunoId == id);
         }
 
+        public List<Turma> GetTurmasPeloCursoId(int id)
+        {
+            return context.Set<Turma>().Include("Curso").Include("Professor").ToList().Where(x => x.Curso.CursoId == id).ToList();
+        }
+
+        public List<Turma> GetTurmaPorProfessorId(int id)
+        {
+            return context.Set<Turma>().Include("Curso").Include("Professor").ToList().Where(x => x.Professor.ProfessorId == id).ToList();
+        }
+
+        public List<Professor> GetTurmasPeloProfessorId(int id)
+        {
+            return context.Set<Professor>().Include("TurmaLista").Include("Usuario").ToList().Where(x => x.ProfessorId == id).ToList();
+        }
+
+        public void UpdateTurmaProfessorCurso(Turma turma, Curso curso , Professor professor)
+        {
+            context.Set<Turma>().Add(turma);
+            context.SaveChanges();
+        }
+
+        
+
     }
 }
 

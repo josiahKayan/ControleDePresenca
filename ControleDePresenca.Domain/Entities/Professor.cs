@@ -15,7 +15,7 @@ namespace ControleDePresenca.Domain.Entities
 
         public Professor()
         {
-            this.CursoLista = new List<Curso>();
+            //this.CursoLista = new List<Curso>();
             this.TurmaLista = new List<Turma>();
         }
 
@@ -23,7 +23,7 @@ namespace ControleDePresenca.Domain.Entities
         /// <summary>
         /// Lista de Cursos
         /// </summary>
-        public virtual ICollection<Curso> CursoLista { get; set; }
+        //public virtual ICollection<Curso> CursoLista { get; set; }
         /// <summary>
         /// Lista de Turmas
         /// </summary>

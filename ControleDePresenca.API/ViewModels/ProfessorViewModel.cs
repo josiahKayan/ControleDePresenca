@@ -42,7 +42,7 @@ namespace ControleDePresenca.API.ViewModels
             this.TurmaLista = professor.TurmaLista;
             this.Usuario = professor.Usuario;
             this.UsuarioId = professor.UsuarioId;
-            this.CursoLista = professor.CursoLista;
+            //this.CursoLista = professor.CursoLista;
         }
 
         public ProfessorViewModel()

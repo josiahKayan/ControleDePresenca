@@ -11,6 +11,19 @@ namespace ControleDePresenca.Infra.Data.Repositories
     public class CursoRepository : RepositoryBase<Curso> , ICursoRepository
     {
 
+        public Curso GetCursoByIdIncludesTurma(int id)
+        {
+            return context.Set<Curso>().Include("TurmaLista").ToList().Find(x => x.CursoId == id);
+        }
+
+
+        public void RemoveCurso(Curso curso)
+        {
+            context.Set<Curso>().Remove(curso);
+            context.SaveChanges();
+        }
 
     }
+
+
 }

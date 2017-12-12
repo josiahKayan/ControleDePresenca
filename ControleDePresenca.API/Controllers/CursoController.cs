@@ -5,6 +5,7 @@ using ControleDePresenca.Infra.Data.Repositories;
 using ControleDePresenca.Library.Log;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -46,7 +47,26 @@ namespace ControleDePresenca.API.Controllers
 
 
                 var listCursos = _curso.GetAll();
-                return Request.CreateResponse(HttpStatusCode.OK, listCursos);
+
+                List<CursoViewModel> curso = new List<CursoViewModel>();
+
+                foreach (var item in listCursos)
+                {
+                    CursoViewModel c = new CursoViewModel();
+
+                    c.Ativo = item.Ativo;
+                    c.CursoId = item.CursoId;
+                    c.Descricao = item.Descricao;
+                    c.Nome = item.Nome;
+                    //c.PeriodoFinal = item.PeriodoFinal.ToString("dd/MM/yyyy"); ;
+                    //c.PeriodoInicial = item.PeriodoInicial.ToString("dd/MM/yyyy"); ;
+                    //c.ProfessorLista = item.ProfessorLista;
+                    c.TurmaLista = item.TurmaLista;
+
+                    curso.Add(c);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, curso);
 
             }
             catch (Exception e)
@@ -84,8 +104,12 @@ namespace ControleDePresenca.API.Controllers
                         cursoFound.Nome = cursoVm.Nome;
                         cursoFound.Descricao = cursoVm.Descricao;
                         cursoFound.Ativo = cursoVm.Ativo;
-                        cursoFound.ProfessorLista = cursoVm.ProfessorLista;
+                        //cursoFound.ProfessorLista = cursoVm.ProfessorLista;
                         cursoFound.TurmaLista = cursoVm.TurmaLista;
+                        //cursoFound.PeriodoInicial = DateTime.ParseExact(cursoVm.PeriodoInicial.Replace("/", ""), "ddMMyyyy", CultureInfo.InvariantCulture);
+                        //cursoFound.PeriodoFinal = DateTime.ParseExact(cursoVm.PeriodoFinal.Replace("/", ""), "ddMMyyyy", CultureInfo.InvariantCulture);
+
+
                         _curso.Update(cursoFound);
                         log = new Log();
                         log.Message = "The object was updated";
@@ -99,7 +123,12 @@ namespace ControleDePresenca.API.Controllers
                 cursoFound.Nome = cursoVm.Nome;
                 cursoFound.Descricao = cursoVm.Descricao;
                 cursoFound.Ativo = cursoVm.Ativo;
-                cursoFound.ProfessorLista = cursoVm.ProfessorLista;
+                //cursoFound.ProfessorLista = cursoVm.ProfessorLista;
+
+                //cursoFound.PeriodoInicial = DateTime.ParseExact(cursoVm.PeriodoInicial.Replace("/", ""), "ddMMyyyy", CultureInfo.InvariantCulture);
+                //cursoFound.PeriodoFinal = DateTime.ParseExact(cursoVm.PeriodoFinal.Replace("/", ""), "ddMMyyyy", CultureInfo.InvariantCulture);
+
+
                 _curso.Add(cursoFound);
                 log = new Log();
                 log.Message = "The object was added";
@@ -149,6 +178,9 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
+
+
+
         /// <summary>
         /// Get curso by id
         /// </summary>
@@ -163,19 +195,27 @@ namespace ControleDePresenca.API.Controllers
         [Route("delete/{id}")]
         public HttpResponseMessage DeleteCurso(string id)
         {
-            Curso curso = new Curso();
-
+            
             try
             {
 
-                var cursoFounded = _curso.GetEntityById(int.Parse(id));
+                Curso cursoFounded = _curso.GetCursoByIdIncludesTurma(int.Parse(id));
 
-                _curso.Remove(cursoFounded);
+                if (cursoFounded.TurmaLista.Count < 1)
+                {
+                    _curso.Remove(cursoFounded);
+                    log = new Log();
+                    log.Message = "O curso foi removido com sucesso";
+                    log.Status = 1;
+                    log.Type = "success";
+                    return Request.CreateResponse(HttpStatusCode.OK, log);
+                }
+
                 log = new Log();
-                log.Message = "The object was removed";
-                log.Status = 1;
-                log.Type = "success";
-                return Request.CreateResponse(HttpStatusCode.OK, curso);
+                log.Message = "Exclua primeiro a turma";
+                log.Status = 0;
+                log.Type = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
 
             }
             catch (Exception e)
@@ -213,8 +253,12 @@ namespace ControleDePresenca.API.Controllers
                 curso.Nome = cursoVm.Nome;
                 curso.Descricao = cursoVm.Descricao;
                 curso.Ativo = cursoVm.Ativo;
-                curso.ProfessorLista = cursoVm.ProfessorLista;
+                //curso.ProfessorLista = cursoVm.ProfessorLista;
                 curso.TurmaLista = cursoVm.TurmaLista;
+                //curso.PeriodoInicial = DateTime.ParseExact(cursoVm.PeriodoInicial.Replace("/", ""), "ddMMyyyy", CultureInfo.InvariantCulture);
+                //curso.PeriodoFinal = DateTime.ParseExact(cursoVm.PeriodoFinal.Replace("/", ""), "ddMMyyyy", CultureInfo.InvariantCulture);
+
+
                 _curso.Update(curso);
                 log = new Log();
                 log.Message = "The object was updated";

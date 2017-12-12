@@ -21,6 +21,8 @@ namespace ControleDePresenca.API.ViewModels
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public bool Ativo { get; set; }
+
+
         [JsonIgnore]
         public virtual ICollection<Professor> ProfessorLista { get; set; }
         public virtual ICollection<Turma> TurmaLista { get; set; }

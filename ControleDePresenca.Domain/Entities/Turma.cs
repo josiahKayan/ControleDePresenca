@@ -37,18 +37,34 @@ namespace ControleDePresenca.Domain.Entities
         public DateTime HoraFinal { get; set; }
 
 
+        public int ProfessorId { get; set; }
+
         /// <summary>
         /// Entidade Professor
         /// </summary>
+        [ForeignKey("ProfessorId")]
         public virtual Professor Professor { get; set; }
+
+        public int CursoId { get; set; }
+
         /// <summary>
         /// Entidade Curso
         /// </summary>
+        [ForeignKey("CursoId")]
         public virtual Curso Curso { get; set; }
+        
+
+
+
         /// <summary>
         /// Lista de Alunos
         /// </summary>
-        /// 
+        ///
+        
+   
+
+
+
         public virtual ICollection<Aluno> AlunoLista { get; set; }
         /// <summary>
         /// Lista de Presenças

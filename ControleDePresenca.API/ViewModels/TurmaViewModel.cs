@@ -15,6 +15,9 @@ namespace ControleDePresenca.API.ViewModels
         //    this.PresencaLista = new List<Presenca>();
         //}
 
+        public int TurmaId { get; set; }
+
+
         public string NomeTurma { get; set; }
 
 

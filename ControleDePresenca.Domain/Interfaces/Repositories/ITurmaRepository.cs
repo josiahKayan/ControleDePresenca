@@ -9,8 +9,13 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
 {
     public interface ITurmaRepository : IRepositoryBase<Turma>
     {
+        List<Turma> GetTurmasPeloCursoId(int id);
 
-        
+        void UpdateTurmaProfessorCurso(Turma turma, Curso curso, Professor professor);
+
+        List<Turma> GetTurmaPorProfessorId(int id);
+
+        List<Professor> GetTurmasPeloProfessorId(int id);
 
     }
 }

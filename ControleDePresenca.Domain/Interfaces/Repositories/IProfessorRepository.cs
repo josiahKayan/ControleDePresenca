@@ -15,7 +15,7 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
         Professor GetProfessorByIdIncludes(int id);
 
         void RemoveComUsuario(Professor obj);
-       
 
+        List<Professor> GetProfessorBy(int id);
     }
 }

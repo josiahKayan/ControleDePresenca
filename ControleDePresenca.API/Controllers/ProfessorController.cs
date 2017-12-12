@@ -77,11 +77,11 @@ namespace ControleDePresenca.API.Controllers
                         professor.Idade = int.Parse(professorVm.Idade);
                         professor.DataNascimento = DateTime.ParseExact(professorVm.DataNascimento.Replace("/", ""), "ddMMyyyy", CultureInfo.InvariantCulture);
                         professor.Usuario = new Usuario();
-
+                        professor.Usuario.Perfil = 1;
                         professor.Usuario.Email = professorVm.Usuario.Email;
                         professor.Usuario.Senha = professorVm.Usuario.Senha.ToString();
                         professor.Usuario.UsuarioId = professorVm.Usuario.UsuarioId;
-                        professor.CursoLista = professorVm.CursoLista;
+                        //professor.CursoLista = professorVm.CursoLista;
                         professor.TurmaLista = professorVm.TurmaLista;
                         _professor.Update(professor);
                         log = new Log();
@@ -102,8 +102,9 @@ namespace ControleDePresenca.API.Controllers
                 professor.Usuario.Email = professorVm.Usuario.Email;
                 professor.Usuario.Senha = professorVm.Usuario.Senha.ToString();
                 professor.UsuarioId = professorVm.UsuarioId;
-                professor.CursoLista = professorVm.CursoLista;
+                //professor.CursoLista = professorVm.CursoLista;
                 professor.TurmaLista = professorVm.TurmaLista;
+                professor.Usuario.Perfil = 1;
 
 
                 _professor.Add(professor);
@@ -148,7 +149,7 @@ namespace ControleDePresenca.API.Controllers
                 professorVm.Usuario.Perfil = professor.Usuario.Perfil;
                 professorVm.Usuario.UsuarioId = professor.Usuario.UsuarioId;
                 professorVm.UsuarioId = professor.UsuarioId;
-                professorVm.CursoLista = professor.CursoLista;
+                //professorVm.CursoLista = professor.CursoLista;
                 professorVm.TurmaLista = professor.TurmaLista;
                 return Request.CreateResponse(HttpStatusCode.OK, professorVm);
 
@@ -226,6 +227,39 @@ namespace ControleDePresenca.API.Controllers
             }
 
         }
+
+        /// <summary>
+        /// Get turma by cursoId
+        /// </summary>
+        /// <remarks>
+        /// Get a Turma by id
+        /// </remarks>
+        /// <param name="id">Id do curso</param>
+        /// <returns></returns>
+        /// <response code="200">Turma found</response>
+        /// <response code="404">Turma not founded</response>
+        [HttpGet]
+        [Route("professores/ordenados/{id}")]
+        public HttpResponseMessage GetTurmaPeloId(int id)
+        {
+
+            try
+            {
+
+                IEnumerable<Professor> listProfessor = _professor.GetProfessorBy(id);
+
+                listProfessor = listProfessor.OrderBy(p => p.ProfessorId == id);
+
+                return Request.CreateResponse(HttpStatusCode.OK, listProfessor);
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
 
     }
 }

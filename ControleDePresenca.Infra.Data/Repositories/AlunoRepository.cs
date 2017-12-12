@@ -21,6 +21,8 @@ namespace ControleDePresenca.Infra.Data.Repositories
             return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").Include("Presenca").ToList().Find(x => x.AlunoId == id);
         }
 
+        
+
         public void RemoveComUsuario(Aluno obj)
         {
 
