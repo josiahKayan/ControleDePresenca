@@ -24,7 +24,7 @@ namespace ControleDePresenca.Infra.Data.Context
             {
                 Configuration.LazyLoadingEnabled = true;
                 Configuration.ProxyCreationEnabled = true;
-            }
+            }   
             else
             {
                 Configuration.LazyLoadingEnabled = false;

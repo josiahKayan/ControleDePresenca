@@ -17,5 +17,6 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
 
         List<Professor> GetTurmasPeloProfessorId(int id);
 
+        IEnumerable<Aluno> GetAlunoByTurmaId(int id);
     }
 }

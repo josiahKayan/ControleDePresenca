@@ -22,6 +22,12 @@ namespace ControleDePresenca.Infra.Data.Repositories
             return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").ToList().Find(x => x.AlunoId == id);
         }
 
+
+        public IEnumerable<Aluno> GetAlunoByTurmaId(int id)
+        {
+            return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").Include("Presenca").ToList().Where( t => t.Turma.Any( a => a.TurmaId == id)    );
+        }
+
         public List<Turma> GetTurmasPeloCursoId(int id)
         {
             return context.Set<Turma>().Include("Curso").Include("Professor").ToList().Where(x => x.Curso.CursoId == id).ToList();

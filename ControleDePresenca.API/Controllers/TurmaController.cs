@@ -278,6 +278,40 @@ namespace ControleDePresenca.API.Controllers
         /// <response code="200">Turma found</response>
         /// <response code="404">Turma not founded</response>
         [HttpGet]
+        [Route("alunos/{id}")]
+        public HttpResponseMessage GetAlunosPeloTurmaId(int id)
+        {
+
+            try
+            {
+
+                List<TurmaViewModel> listaTurmas = new List<TurmaViewModel>();
+
+                var listaAluno = _turma.GetAlunoByTurmaId(id);
+
+                return Request.CreateResponse(HttpStatusCode.OK, listaAluno.ToList());
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// Get turma by cursoId
+        /// </summary>
+        /// <remarks>
+        /// Get a Turma by id
+        /// </remarks>
+        /// <param name="id">Id do curso</param>
+        /// <returns></returns>
+        /// <response code="200">Turma found</response>
+        /// <response code="404">Turma not founded</response>
+        [HttpGet]
         [Route("professores/ordenados/{id}")]
         public HttpResponseMessage GetTurmaPeloId(int id)
         {
