@@ -32,7 +32,6 @@ namespace ControleDePresenca.API.Controllers
         /// </remarks>
         /// <returns> Lista de Cursos</returns>
         /// <response code="200">Lista de Cursos</response>
-        /// <response code="404">Superhero not foundd</response>
         [HttpGet]
         [Route("cursos")]
         public HttpResponseMessage GetCursos()
@@ -129,7 +128,7 @@ namespace ControleDePresenca.API.Controllers
         /// <returns></returns>
         /// <response code="200">Curso found</response>
         /// <response code="404">Curso not foundd</response>
-        [HttpDelete]
+        [HttpGet]
         [Route("delete/{id}")]
         public HttpResponseMessage DeleteCurso(string id)
         {
@@ -162,7 +161,7 @@ namespace ControleDePresenca.API.Controllers
         /// <returns></returns>
         /// <response code="200">Curso found</response>
         /// <response code="404">Curso not foundd</response>
-        [HttpPut]
+        [HttpPost]
         [Route("update/{id}")]
         public HttpResponseMessage UpdateCurso([FromBody] CursoViewModel cursoVm, string id)
         {

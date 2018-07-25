@@ -22,6 +22,11 @@ namespace ControleDePresenca.Domain.Entities
         public string NomeCompleto { get; set; }
 
         /// <summary>
+        /// Foto
+        /// </summary>
+        public string Imagem { get; set; }
+
+        /// <summary>
         /// Data de Nascimento de uma Pessoa
         /// </summary>
         public DateTime DataNascimento { get; set; }

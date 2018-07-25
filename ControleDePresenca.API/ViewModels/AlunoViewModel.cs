@@ -15,21 +15,24 @@ namespace ControleDePresenca.API.ViewModels
 
         public DateTime DataNascimento { get; set; }
 
-        public int Idade { get; set; }
+        public string Idade { get; set; }
 
         public int AlunoId { get; set; }
         /// <summary>
         /// atributo da classe Tag
         /// </summary>
-        public virtual Tag Tag { get; set; }
+        public  Tag Tag { get; set; }
         /// <summary>
         /// atributo da classe Usuario
         /// </summary>
-        public virtual Usuario Usuario { get; set; }
+        public  Usuario Usuario { get; set; }
         /// <summary>
         /// atributo da classe Turma
         /// </summary>
-        public virtual Turma Turma { get; set; }
+        public  Turma Turma { get; set; }
+
+        public string Imagem { get; set; }
+
 
     }
 }

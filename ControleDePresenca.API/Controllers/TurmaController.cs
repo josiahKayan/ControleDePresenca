@@ -130,7 +130,7 @@ namespace ControleDePresenca.API.Controllers
         /// <returns></returns>
         /// <response code="200">Turma found</response>
         /// <response code="404">Turma not founded</response>
-        [HttpDelete]
+        [HttpGet]
         [Route("delete/{id}")]
         public HttpResponseMessage DeleteTurma(string id)
         {
@@ -163,7 +163,7 @@ namespace ControleDePresenca.API.Controllers
         /// <returns></returns>
         /// <response code="200">Curso found</response>
         /// <response code="404">Curso not foundd</response>
-        [HttpPut]
+        [HttpPost]
         [Route("update/{id}")]
         public HttpResponseMessage UpdateCurso([FromBody] TurmaViewModel turmaVm, string id)
         {

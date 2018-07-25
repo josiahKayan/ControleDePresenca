@@ -14,5 +14,6 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
         TEntity GetEntityById(int i);
         IEnumerable<TEntity> GetAll();
         void Update(TEntity obj);
+        void MarkStates(TEntity obj);
     }
 }

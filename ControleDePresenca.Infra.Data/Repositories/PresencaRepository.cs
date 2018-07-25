@@ -2,6 +2,7 @@
 using ControleDePresenca.Domain.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ControleDePresenca.Infra.Data.Repositories
 {
@@ -12,6 +13,13 @@ namespace ControleDePresenca.Infra.Data.Repositories
         {
             throw new NotImplementedException();
         }
+
+        //public IEnumerable<Presenca> GetListaPresenca(int id)
+        //{
+        //    //return context.Set<Presenca>().Include("Alunos").Where(x => x. == id).ToList();
+
+        //}
+
 
     }
 }

@@ -26,5 +26,8 @@ namespace ControleDePresenca.API.ViewModels
         /// Lista de Turmas
         /// </summary>
         public virtual ICollection<Turma> TurmaLista { get; set; }
+
+        public string Imagem { get; set; }
+
     }
 }

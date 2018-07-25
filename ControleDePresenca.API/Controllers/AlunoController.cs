@@ -12,13 +12,12 @@ using System.Web.Http.Cors;
 
 namespace ControleDePresenca.API.Controllers
 {
-
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("aluno")]
     public class AlunoController : ApiController
     {
 
-        IAlunoRepository _aluno;
+        AlunoRepository _aluno;
 
         public AlunoController()
         {
@@ -62,12 +61,14 @@ namespace ControleDePresenca.API.Controllers
 
                 aluno.Nome = alunoVm.Nome;
                 aluno.NomeCompleto = alunoVm.NomeCompleto;
-                aluno.Idade = alunoVm.Idade;
+                aluno.Idade = int.Parse( alunoVm.Idade);
                 aluno.DataNascimento = alunoVm.DataNascimento;
                 aluno.Tag = alunoVm.Tag;
-                aluno.Turma = alunoVm.Turma;
+                //aluno.Turma.aalunoVm.Turma;
                 aluno.Usuario = alunoVm.Usuario;
-                
+                aluno.Imagem = alunoVm.Imagem;
+
+
                 _aluno.Add(aluno);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "Ok");
@@ -88,7 +89,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                var aluno = _aluno.GetEntityById(int.Parse(id));
+                var aluno = _aluno.GetAlunoByIdIncludes(int.Parse(id));
 
                 return Request.CreateResponse(HttpStatusCode.OK, aluno);
 
@@ -100,7 +101,7 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("delete/{id}")]
         public HttpResponseMessage DeleteAluno(string id)
         {
@@ -108,7 +109,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                var aluno = _aluno.GetEntityById(int.Parse(id));
+                var aluno = _aluno.GetAlunoByIdIncludes(int.Parse(id));
 
                 _aluno.Remove(aluno);
 
@@ -122,26 +123,27 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("update/{id}")]
-        public HttpResponseMessage UpdateProfessor([FromBody] AlunoViewModel alunoVm, string id)
+        public HttpResponseMessage UpdateAluno([FromBody] AlunoViewModel alunoVm, string id)
         {
 
             try
             {
 
-                Aluno aluno = _aluno.GetEntityById(int.Parse(id));
+                Aluno aluno = _aluno.GetAlunoByIdIncludes(int.Parse(id));
 
                 aluno.Nome = alunoVm.Nome;
                 aluno.NomeCompleto = alunoVm.NomeCompleto;
-                aluno.Idade = alunoVm.Idade;
+                aluno.Idade = int.Parse( alunoVm.Idade);
                 aluno.DataNascimento = alunoVm.DataNascimento;
                 aluno.Tag = alunoVm.Tag;
-                aluno.Turma = alunoVm.Turma;
+                //aluno.Turma = alunoVm.Turma;
                 aluno.Usuario = alunoVm.Usuario;
-
-
-                _aluno.Update(aluno);
+                aluno.Imagem = alunoVm.Imagem;
+                    
+                
+                _aluno.UpdateAluno(aluno);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "The object was updated");
 

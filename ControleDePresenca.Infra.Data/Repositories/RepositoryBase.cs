@@ -3,6 +3,7 @@ using ControleDePresenca.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace ControleDePresenca.Infra.Data.Repositories
 {
@@ -41,8 +42,29 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public void Update(TEntity obj)
         {
-            context.Entry(obj).State = System.Data.Entity.EntityState.Modified;
-            context.SaveChanges(); 
+
+            using ( var context = new ControlePresencaContext()  )
+            {
+
+                context.Entry(obj).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+
+            }
+
+                 
+        }
+
+        public void MarkStates(System.Data.Entity.EntityState state, params TEntity[] entity)
+        {
+            foreach (var item in entity)
+            {
+                context.Entry(item).State = state;
+            }
+        }
+
+        public void MarkStates(TEntity obj)
+        {
+            MarkStates(System.Data.Entity.EntityState.Modified, obj );
         }
     }
 }

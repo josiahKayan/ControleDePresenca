@@ -129,7 +129,7 @@ namespace ControleDePresenca.API.Controllers
         /// <returns></returns>
         /// <response code="200">Presença found</response>
         /// <response code="404">Presença not foundd</response>
-        [HttpDelete]
+        [HttpGet]
         [Route("delete/{id}")]
         public HttpResponseMessage DeletePresenca(string id)
         {
@@ -162,7 +162,7 @@ namespace ControleDePresenca.API.Controllers
         /// <returns></returns>
         /// <response code="200">Curso found</response>
         /// <response code="404">Curso not foundd</response>
-        [HttpPut]
+        [HttpPost]
         [Route("update/{id}")]
         public HttpResponseMessage UpdateCurso([FromBody] PresencaViewModel presencaVm, string id)
         {

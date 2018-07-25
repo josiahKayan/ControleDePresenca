@@ -127,7 +127,7 @@ namespace ControleDePresenca.API.Controllers
         /// <returns></returns>
         /// <response code="200">Tag found</response>
         /// <response code="404">Tag not foundd</response>
-        [HttpDelete]
+        [HttpGet]
         [Route("delete/{id}")]
         public HttpResponseMessage DeleteCurso(string id)
         {
@@ -160,7 +160,7 @@ namespace ControleDePresenca.API.Controllers
         /// <returns></returns>
         /// <response code="200">Curso found</response>
         /// <response code="404">Curso not foundd</response>
-        [HttpPut]
+        [HttpPost]
         [Route("update/{id}")]
         public HttpResponseMessage UpdateCurso([FromBody] TagViewModel tagVm, string id)
         {

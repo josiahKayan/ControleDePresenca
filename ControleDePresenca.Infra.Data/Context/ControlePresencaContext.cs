@@ -18,6 +18,22 @@ namespace ControleDePresenca.Infra.Data.Context
             Configuration.ProxyCreationEnabled = false;
         }
 
+
+        public void SetLazyLoading(bool check)
+        {
+            if (check)
+            {
+                Configuration.LazyLoadingEnabled = true;
+                Configuration.ProxyCreationEnabled = true;
+            }
+            else
+            {
+                Configuration.LazyLoadingEnabled = false;
+                Configuration.ProxyCreationEnabled = false;
+            }
+
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

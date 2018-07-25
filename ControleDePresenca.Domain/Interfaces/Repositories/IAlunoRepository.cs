@@ -9,8 +9,7 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
 {
     public interface IAlunoRepository : IRepositoryBase<Aluno>
     {
-
-
-
+        Aluno GetAlunoByIdIncludes(int v);
+        void UpdateAluno(Aluno aluno);
     }
 }

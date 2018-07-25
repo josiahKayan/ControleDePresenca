@@ -64,7 +64,7 @@ namespace ControleDePresenca.API.Controllers
                 professor.NomeCompleto = professorVm.NomeCompleto;
                 professor.Idade = professorVm.Idade;
                 professor.DataNascimento = professorVm.DataNascimento;
-
+                professor.Imagem = professorVm.Imagem;
                 _professor.Add(professor);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "Ok");
@@ -97,7 +97,7 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("delete/{id}")]
         public HttpResponseMessage DeleteProfessor(string id)
         {
@@ -119,7 +119,7 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("update/{id}")]
         public HttpResponseMessage UpdateProfessor([FromBody] ProfessorViewModel professorVm, string id)
         {
@@ -133,6 +133,7 @@ namespace ControleDePresenca.API.Controllers
                 professor.NomeCompleto = professorVm.NomeCompleto;
                 professor.Idade = professorVm.Idade;
                 professor.DataNascimento = professorVm.DataNascimento;
+                professor.Imagem = professorVm.Imagem;
 
 
                 _professor.Update(professor);

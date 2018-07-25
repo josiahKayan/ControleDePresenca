@@ -91,7 +91,7 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("delete/{id}")]
         public HttpResponseMessage DeleteUser(string id)
         {
@@ -113,7 +113,7 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("update/{id}")]
         public HttpResponseMessage UpdateUser([FromBody] UsuarioViewModel usuarioVm, string id)
         {
