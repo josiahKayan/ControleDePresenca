@@ -73,8 +73,8 @@ namespace ControleDePresenca.API.Controllers
 
                 Turma turma = new Turma();
 
-                turma.DataInicio = turmaVm.DataInicio;
-                turma.DataTermino = turmaVm.DataTermino;
+                turma.DataInicio = Convert.ToDateTime( turmaVm.DataInicio );
+                turma.DataTermino = Convert.ToDateTime( turmaVm.DataTermino );
                 turma.Curso = turmaVm.Curso;
                 turma.Professor = turmaVm.Professor;
                 
@@ -173,8 +173,8 @@ namespace ControleDePresenca.API.Controllers
 
                 Turma turma = _turma.GetEntityById(int.Parse(id));
 
-                turma.DataInicio = turmaVm.DataInicio;
-                turma.DataTermino = turmaVm.DataTermino;
+                turma.DataInicio = Convert.ToDateTime( turmaVm.DataInicio);
+                turma.DataTermino = Convert.ToDateTime( turmaVm.DataTermino);
                 turma.Curso = turmaVm.Curso;
                 turma.Professor = turmaVm.Professor;
 

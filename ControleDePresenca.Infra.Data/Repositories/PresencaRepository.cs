@@ -14,6 +14,11 @@ namespace ControleDePresenca.Infra.Data.Repositories
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Presenca> GetListaPresenca(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         //public IEnumerable<Presenca> GetListaPresenca(int id)
         //{
         //    //return context.Set<Presenca>().Include("Alunos").Where(x => x. == id).ToList();

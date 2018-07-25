@@ -39,11 +39,11 @@ namespace ControleDePresenca.Domain.Entities
 
         public virtual ICollection<Aluno> Alunos { get; set; }
 
-        //public virtual Turma Turma { get; set; }
+        
         /// <summary>
         /// Lista de Turmas
         /// </summary>
-        //[ForeignKey("TurmaId")]
-        //public virtual Turma Turma { get; set; }
+        [ForeignKey("TurmaId")]
+        public virtual Turma Turma { get; set; }
     }
 }

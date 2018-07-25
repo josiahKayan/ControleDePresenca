@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domain", "2.Domain", "{CED0B61E-DCC0-474A-BC40-2180F42F0D1A}"
 EndProject
@@ -19,11 +19,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Presentation", "1.Present
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDePresenca.API", "ControleDePresenca.API\ControleDePresenca.API.csproj", "{55F21EDE-6100-4762-B67D-1BB75DBEC8EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDePresenca.Library.Log", "ControleDePresenca.Library.Log\ControleDePresenca.Library.Log.csproj", "{6A40B333-1ACA-4280-AD88-473C30E33DBC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Test", "4.Test", "{BD958DB3-7499-408C-9369-6128140E717C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDePresencaTest", "ControleDePresencaTest\ControleDePresencaTest.csproj", "{A99E20D3-4EB8-489E-B16D-EFC63039E5DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleDePresenca.Log", "ControleDePresenca.Log\ControleDePresenca.Log.csproj", "{6BF2F831-8E53-481E-BF85-03B60A0A6265}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +43,14 @@ Global
 		{55F21EDE-6100-4762-B67D-1BB75DBEC8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55F21EDE-6100-4762-B67D-1BB75DBEC8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55F21EDE-6100-4762-B67D-1BB75DBEC8EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6A40B333-1ACA-4280-AD88-473C30E33DBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A40B333-1ACA-4280-AD88-473C30E33DBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A40B333-1ACA-4280-AD88-473C30E33DBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A40B333-1ACA-4280-AD88-473C30E33DBC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A99E20D3-4EB8-489E-B16D-EFC63039E5DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A99E20D3-4EB8-489E-B16D-EFC63039E5DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A99E20D3-4EB8-489E-B16D-EFC63039E5DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A99E20D3-4EB8-489E-B16D-EFC63039E5DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BF2F831-8E53-481E-BF85-03B60A0A6265}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BF2F831-8E53-481E-BF85-03B60A0A6265}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BF2F831-8E53-481E-BF85-03B60A0A6265}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BF2F831-8E53-481E-BF85-03B60A0A6265}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,7 +61,10 @@ Global
 		{2B122E68-D2F4-4D1C-9ED7-FB890E47037D} = {CED0B61E-DCC0-474A-BC40-2180F42F0D1A}
 		{FDC931A2-CEAD-4E4F-8AFF-153CA54DE7E5} = {F4B3E646-1F88-438A-8819-8B0485DB3E65}
 		{55F21EDE-6100-4762-B67D-1BB75DBEC8EF} = {416D3A30-D622-42EE-BC4C-533FF54620B9}
-		{6A40B333-1ACA-4280-AD88-473C30E33DBC} = {CD477CED-B9A4-420C-A973-A310CC8CD8A1}
 		{A99E20D3-4EB8-489E-B16D-EFC63039E5DA} = {BD958DB3-7499-408C-9369-6128140E717C}
+		{6BF2F831-8E53-481E-BF85-03B60A0A6265} = {CD477CED-B9A4-420C-A973-A310CC8CD8A1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {373EE604-EBE5-45F6-AF5C-52D37C44688B}
 	EndGlobalSection
 EndGlobal

@@ -29,12 +29,12 @@ namespace ControleDePresenca.Domain.Entities
         /// </summary>
         public virtual ICollection<Turma> TurmaLista { get; set; }
 
-        public int UsuarioId { get; set; }
+        
 
         [ForeignKey("UsuarioId")]
         public virtual Usuario Usuario { get; set; }
-      
 
+        public int UsuarioId { get; set; }
 
     }
 }

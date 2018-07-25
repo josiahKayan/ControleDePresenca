@@ -30,6 +30,6 @@ namespace ControleDePresenca.API.ViewModels
         public int Ano { get; set; }
 
         public ICollection<Aluno> Alunos { get; set; }
-
+        public object TurmaLista { get; internal set; }
     }
 }

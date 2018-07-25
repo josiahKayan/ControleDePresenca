@@ -1,9 +1,9 @@
-﻿using ControleDePresenca.API.Responses;
-using ControleDePresenca.API.ViewModels;
+﻿using ControleDePresenca.API.ViewModels;
 using ControleDePresenca.Domain.Entities;
 using ControleDePresenca.Domain.Interfaces.Repositories;
 using ControleDePresenca.Domain.Services;
 using ControleDePresenca.Infra.Data.Repositories;
+using ControleDePresenca.LayerLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,9 +42,11 @@ namespace ControleDePresenca.API.Controllers
             }
             catch (Exception e)
             {
-                Log log = new Log();
-                log.Message = e.Message;
-                log.Status = "error";
+                Log log = new Log
+                {
+                    Message = e.Message,
+                    Status = "error"
+                };
 
                 return Request.CreateResponse(HttpStatusCode.OK, log);
             }

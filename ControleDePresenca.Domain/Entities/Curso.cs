@@ -39,7 +39,6 @@ namespace ControleDePresenca.Domain.Entities
         //public virtual ICollection<Professor> ProfessorLista { get; set; }
 
         public virtual ICollection<Turma> TurmaLista { get; set; }
-
-
+        public ICollection<Professor> ProfessorLista { get; set; }
     }
 }

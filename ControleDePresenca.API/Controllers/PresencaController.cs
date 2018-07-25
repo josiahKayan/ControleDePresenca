@@ -76,7 +76,6 @@ namespace ControleDePresenca.API.Controllers
                 presenca.HoraEntrada = presencaVm.HoraEntrada;
                 presenca.Mes = presencaVm.Mes;
                 presenca.Ano = presencaVm.Ano;
-                presenca.TurmaLista = presencaVm.TurmaLista;
                 _presenca.Add(presenca);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "Ok");
@@ -175,7 +174,6 @@ namespace ControleDePresenca.API.Controllers
                 presenca.HoraEntrada = presencaVm.HoraEntrada;
                 presenca.Mes = presencaVm.Mes;
                 presenca.Ano = presencaVm.Ano;
-                presenca.TurmaLista = presencaVm.TurmaLista;
 
                 _presenca.Update(presenca);
 

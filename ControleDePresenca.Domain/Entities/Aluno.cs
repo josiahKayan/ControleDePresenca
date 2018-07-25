@@ -26,14 +26,17 @@ namespace ControleDePresenca.Domain.Entities
         /// atributo da classe Tag
         /// </summary>
         /// 
-        //[ForeignKey("TagId")]
+        [ForeignKey("TagId")]
         public virtual Tag Tag { get; set; }
 
-        //public int UsuarioId { get; set; }
+
+        public int TagId { get; set; }
+
+        public int UsuarioId { get; set; }
         /// <summary>
         /// atributo da classe Usuario
         /// </summary>
-        //[ForeignKey("UsuarioId")]
+        [ForeignKey("UsuarioId")]
         public virtual Usuario Usuario { get; set; }
 
         /// <summary>
