@@ -12,6 +12,7 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
 
         //IEnumerable<Curso> BuscaTag(string code);
 
+        Curso GetCursoByIdIncludesTurma(int id);
 
     }
 }

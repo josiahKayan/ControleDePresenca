@@ -9,5 +9,13 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
 {
     public interface IProfessorRepository : IRepositoryBase<Professor>
     {
+
+        IEnumerable<Professor> GetAllProfessors();
+
+        Professor GetProfessorByIdIncludes(int id);
+
+        void RemoveComUsuario(Professor obj);
+
+        List<Professor> GetProfessorBy(int id);
     }
 }

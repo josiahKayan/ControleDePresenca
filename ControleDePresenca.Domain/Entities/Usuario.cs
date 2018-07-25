@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +13,7 @@ namespace ControleDePresenca.Domain.Entities
     /// </summary>
     public class Usuario
     {
-        
+        //[Key]
         public int UsuarioId { get; set; }
         /// <summary>
         /// Email do usuário
@@ -21,6 +23,9 @@ namespace ControleDePresenca.Domain.Entities
         /// Senha do usuário
         /// </summary>
         public string Senha { get; set; }
+
+        public int Perfil { get; set; }
+
 
     }
 }

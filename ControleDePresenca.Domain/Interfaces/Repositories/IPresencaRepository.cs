@@ -12,5 +12,8 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
 
         IEnumerable<Presenca> BuscaPorMesEAno(int mes, int ano);
 
+        IEnumerable<Presenca> GetListaPresenca(int id);
+
+
     }
 }

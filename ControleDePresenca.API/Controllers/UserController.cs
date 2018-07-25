@@ -1,4 +1,5 @@
-﻿using ControleDePresenca.API.ViewModels;
+﻿using ControleDePresenca.API.Responses;
+using ControleDePresenca.API.ViewModels;
 using ControleDePresenca.Domain.Entities;
 using ControleDePresenca.Domain.Interfaces.Repositories;
 using ControleDePresenca.Domain.Services;
@@ -15,7 +16,7 @@ namespace ControleDePresenca.API.Controllers
 {
 
     [EnableCors(origins:"*",headers:"*",methods:"*")]
-    [RoutePrefix("user")]
+    [RoutePrefix("usuario")]
     public class UserController : ApiController
     {
 
@@ -27,7 +28,7 @@ namespace ControleDePresenca.API.Controllers
         }
 
         [HttpGet]
-        [Route("users")]
+        [Route("usuarios")]
         public HttpResponseMessage GetUsers()
         {
 
@@ -41,13 +42,17 @@ namespace ControleDePresenca.API.Controllers
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                Log log = new Log();
+                log.Message = e.Message;
+                log.Status = "error";
+
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }
 
         [HttpPost]
-        [Route("adduser")]
+        [Route("addusuario")]
         public HttpResponseMessage NewUser([FromBody] UsuarioViewModel usuarioVm)
         {
 
@@ -57,16 +62,23 @@ namespace ControleDePresenca.API.Controllers
                 Usuario usuario = new Usuario();
 
                 usuario.Email = usuarioVm.Email;
-                usuario.Senha = usuarioVm.Senha;
+                usuario.Senha = usuarioVm.Senha.GetHashCode().ToString();
 
                 _usuario.Add(usuario);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
+                Log log = new Log();
+                log.Message = "The object was added";
+                log.Status = "success";
+
+                return Request.CreateResponse(HttpStatusCode.OK, log);
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                Log log = new Log();
+                log.Message = e.Message;
+                log.Status = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }
@@ -86,7 +98,11 @@ namespace ControleDePresenca.API.Controllers
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+
+                Log log = new Log();
+                log.Message = e.Message;
+                log.Status = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }
@@ -103,12 +119,20 @@ namespace ControleDePresenca.API.Controllers
 
                 _usuario.Remove(usuario);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "The user was removed");
+                Log log = new Log();
+                log.Message = "The user was removed";
+                log.Status = "success";
+
+                return Request.CreateResponse(HttpStatusCode.OK, log);
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                Log log = new Log();
+                log.Message = e.Message;
+                log.Status = "error";
+
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }
@@ -124,16 +148,23 @@ namespace ControleDePresenca.API.Controllers
                 var usuario = _usuario.GetEntityById(int.Parse(id));
 
                 usuario.Email = usuarioVm.Email;
-                usuario.Senha = usuarioVm.Senha;
+                usuario.Senha = usuarioVm.Senha.GetHashCode().ToString();
 
                 _usuario.Update(usuario);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "The user was updated");
+                Log log = new Log();
+                log.Message = "The user was updated";
+                log.Status = "success";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                Log log = new Log();
+                log.Message = e.Message;
+                log.Status = "error";
+
+                return Request.CreateResponse(HttpStatusCode.OK, log);
             }
 
         }

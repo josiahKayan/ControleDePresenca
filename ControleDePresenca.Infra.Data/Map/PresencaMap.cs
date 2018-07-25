@@ -14,20 +14,20 @@ namespace ControleDePresenca.Infra.Data.Map
         public PresencaMap()
         {
 
-            ToTable("Presenca");
+            //ToTable("Presenca");
 
-            HasKey(x => x.PresencaId);
+            //HasKey(x => x.PresencaId);
 
-            //Exemplo de N:N
-            HasMany(x => x.TurmaLista)
-                .WithMany(x => x.PresencaLista)
-                .Map(m =>
-                {
-                    m.MapLeftKey("PresencaId");
-                    m.MapRightKey("TurmaId");
-                    m.ToTable("PresencaTurma");
+            ////Exemplo de N:N
+            //HasMany(x => x.TurmaLista)
+            //    .WithMany(x => x.PresencaLista)
+            //    .Map(m =>
+            //    {
+            //        m.MapLeftKey("PresencaId");
+            //        m.MapRightKey("TurmaId");
+            //        m.ToTable("PresencaTurma");
 
-                });
+            //    });
         }
 
     }

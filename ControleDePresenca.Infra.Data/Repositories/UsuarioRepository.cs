@@ -17,6 +17,19 @@ namespace ControleDePresenca.Infra.Data.Repositories
             context.SaveChanges();
         }
 
+        public Usuario Login(Usuario user)
+        {
+            var usuario = context.Usuarios.Where(u => u.Email == user.Email && u.Senha == user.Senha).FirstOrDefault();
+
+            if (usuario!=null)
+            {
+                return usuario;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 
 

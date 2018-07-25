@@ -10,6 +10,11 @@ namespace ControleDePresenca.API.ViewModels
     {
 
         public int PresencaId { get; set; }
+
+        public bool Ativo { get; set; }
+
+        public int Dia { get; set; }
+
         /// <summary>
         /// Marca a Hora de Entrada
         /// </summary>
@@ -17,16 +22,14 @@ namespace ControleDePresenca.API.ViewModels
         /// <summary>
         /// Marca o mes
         /// </summary>
+        /// 
         public int Mes { get; set; }
         /// <summary>
         /// Marca o ano
         /// </summary>
         public int Ano { get; set; }
-        //public virtual Turma Turma { get; set; }
-        /// <summary>
-        /// Lista de Turmas
-        /// </summary>
-        public virtual ICollection<Turma> TurmaLista { get; set; }
+
+        public ICollection<Aluno> Alunos { get; set; }
 
     }
 }

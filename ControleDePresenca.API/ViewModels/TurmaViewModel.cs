@@ -15,21 +15,44 @@ namespace ControleDePresenca.API.ViewModels
         //    this.PresencaLista = new List<Presenca>();
         //}
 
+        public int TurmaId { get; set; }
+
+
+        public string NomeTurma { get; set; }
+
+
         /// <summary>
         /// Data de Início da Turma
         /// </summary>
-        public DateTime DataInicio { get; set; }
+        public string DataInicio { get; set; }
         /// <summary>
         /// Data de Término da Turma
         /// </summary>
-        public DateTime DataTermino { get; set; }
+        public string DataTermino { get; set; }
+
+        public int ProfessorId { get; set; }
+
+        /// <summary>
+        /// Data de Início da Turma
+        /// </summary>
+        public string HoraInicial { get; set; }
+        /// <summary>
+        /// Data de Término da Turma
+        /// </summary>
+        public string HoraFinal { get; set; }
+
         /// <summary>
         /// Entidade Professor
         /// </summary>
         public virtual Professor Professor { get; set; }
+
+        public int CursoId { get; set; }
+
+
         /// <summary>
         /// Entidade Curso
         /// </summary>
+
         public virtual Curso Curso { get; set; }
         /// <summary>
         /// Lista de Alunos

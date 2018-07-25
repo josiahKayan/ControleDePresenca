@@ -10,8 +10,12 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
     public interface ITagRepository : IRepositoryBase<Tag>
     {
 
-        IEnumerable<Tag> BuscaTag(string code);
+        List<Tag> BuscaTag(int id);
 
+        List<Tag> ListaTagNaoArmazenada();
+
+
+        void EditarStatusTag(Tag tag);
 
     }
 }

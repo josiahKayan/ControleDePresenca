@@ -11,6 +11,7 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
     {
 
         void AddUsuario(Usuario user);
-     
+
+        Usuario Login(Usuario user);
     }
 }

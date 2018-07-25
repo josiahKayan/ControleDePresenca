@@ -13,13 +13,13 @@ namespace ControleDePresenca.Infra.Data.Map
 
         public UsuarioMap()
         {
-            ToTable("Usuario");
+            //ToTable("Usuario");
 
-            HasKey( x => x.UsuarioId );
+            //HasKey( x => x.UsuarioId );
 
-            Property(x => x.Email).IsRequired();
+            //Property(x => x.Email).IsRequired();
 
-            Property(x => x.Senha).IsRequired();
+            //Property(x => x.Senha).IsRequired();
 
         }
 

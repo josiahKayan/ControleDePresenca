@@ -13,10 +13,13 @@ namespace ControleDePresenca.Infra.Data.Map
 
         public ProfessorMap()
         {
-            ToTable("Professor");
+            //ToTable("Professor");
 
-            HasKey(x => x.ProfessorId);
+            //HasKey(x => x.ProfessorId);
 
+            //Exemplo de 1:1
+            //HasRequired(x => x.Usuario)
+            // .WithRequiredPrincipal();
         }
 
     }
