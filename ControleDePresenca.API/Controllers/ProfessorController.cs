@@ -65,6 +65,7 @@ namespace ControleDePresenca.API.Controllers
                 professor.Idade = professorVm.Idade;
                 professor.DataNascimento = professorVm.DataNascimento;
                 professor.Imagem = professorVm.Imagem;
+                professor.Usuario = professorVm.Usuario;
                 _professor.Add(professor);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "Ok");
