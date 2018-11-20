@@ -14,8 +14,8 @@ namespace ControleDePresenca.Infra.Data.Context
     {
         public ControlePresencaContext():base("ControlePresencaContext")
         {
-            Configuration.LazyLoadingEnabled = false;
-            Configuration.ProxyCreationEnabled = false;
+            //Configuration.LazyLoadingEnabled = false;
+            //Configuration.ProxyCreationEnabled = false;
         }
 
 
@@ -56,8 +56,7 @@ namespace ControleDePresenca.Infra.Data.Context
 
         }
 
-        public DbSet<Presenca> Presencas { get; set; }
-
+        
         public DbSet<Usuario> Usuarios { get; set; }
 
         public DbSet<Tag> Tags { get; set; }
@@ -69,6 +68,11 @@ namespace ControleDePresenca.Infra.Data.Context
         public DbSet<Professor> Professor { get; set; }
 
         public DbSet<Aluno> Aluno { get; set; }
+
+        public DbSet<ListaPresenca> ListaPresenca { get; set; }
+
+        public DbSet<Presenca> Presenca { get; set; }
+
 
     }
 }

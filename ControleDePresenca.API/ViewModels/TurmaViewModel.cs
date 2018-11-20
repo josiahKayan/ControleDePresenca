@@ -61,7 +61,7 @@ namespace ControleDePresenca.API.ViewModels
         /// <summary>
         /// Lista de Presenças
         /// </summary>
-        public virtual ICollection<Presenca> PresencaLista { get; set; }
+        public virtual ICollection<ListaPresenca> PresencaLista { get; set; }
 
 
     }

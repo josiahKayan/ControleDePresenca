@@ -1,5 +1,6 @@
 ﻿using ControleDePresenca.Domain.Entities;
 using ControleDePresenca.Domain.Interfaces.Repositories;
+using ControleDePresenca.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,46 @@ namespace ControleDePresenca.Infra.Data.Repositories
             return context.Set<Professor>().Include("Usuario").Include("TurmaLista").ToList().Find(x => x.ProfessorId == id);
         }
 
+        public Professor GetProfessorByIdIncludesUserId(int id)
+        {
+            return context.Set<Professor>().Include("Usuario").Include("TurmaLista").ToList().Find(x => x.UsuarioId == id);
+        }
+
         public List<Professor> GetProfessorBy(int id)
         {
             return context.Set<Professor>().Include("Usuario").Include("TurmaLista").OrderBy(x => x.ProfessorId == id).ToList();
+        }
+
+        public void UpdateTeacher(Professor p)
+        {
+
+            using (var context = new ControlePresencaContext())
+
+            {
+
+                int id = p.ProfessorId;
+
+                Professor professor = context.Professor.Where(x => x.ProfessorId == p.ProfessorId).FirstOrDefault();
+
+                //Professor professor = context.Professor.Where(pr => pr.ProfessorId == p.ProfessorId).FirstOrDefault();
+
+                //Professor professor = context.Professor.Where(pf => pf.ProfessorId == p.ProfessorId).FirstOrDefault();
+
+
+                professor.Nome = p.Nome;
+                professor.NomeCompleto = p.NomeCompleto;
+                professor.Idade = p.Idade;
+                professor.DataNascimento = p.DataNascimento;
+                professor.Imagem = p.Imagem;
+                professor.TurmaLista = p.TurmaLista;
+
+                context.SaveChanges();
+
+                //return professor;
+
+
+
+            }
         }
 
         public void RemoveComUsuario(Professor obj)
@@ -50,6 +88,9 @@ namespace ControleDePresenca.Infra.Data.Repositories
             context.SaveChanges();
         }
 
-
+        Professor IProfessorRepository.UpdateTeacher(Professor professor)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

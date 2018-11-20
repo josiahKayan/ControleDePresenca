@@ -18,7 +18,7 @@ namespace ControleDePresenca.API.Controllers
     public class ProfessorController : ApiController
     {
 
-        IProfessorRepository _professor;
+        ProfessorRepository _professor;
 
         public ProfessorController()
         {
@@ -122,32 +122,38 @@ namespace ControleDePresenca.API.Controllers
 
         [HttpPost]
         [Route("update/{id}")]
-        public HttpResponseMessage UpdateProfessor([FromBody] ProfessorViewModel professorVm, string id)
+        public HttpResponseMessage UpdateProfessor( [FromBody] ProfessorViewModel professorVm, string id)
         {
 
             try
             {
 
-                Professor professor = _professor.GetEntityById(int.Parse(id));
+                Professor professor = new Professor();
 
+                professor.ProfessorId = professorVm.ProfessorId;
                 professor.Nome = professorVm.Nome;
                 professor.NomeCompleto = professorVm.NomeCompleto;
                 professor.Idade = professorVm.Idade;
                 professor.DataNascimento = professorVm.DataNascimento;
                 professor.Imagem = professorVm.Imagem;
+                professor.TurmaLista = professorVm.TurmaLista;
 
 
-                _professor.Update(professor);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "The teacher was updated");
+                _professor.UpdateTeacher(professor);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                return Request.CreateResponse(HttpStatusCode.OK, e.InnerException.Message);
             }
 
         }
+
+
+        
 
     }
 }

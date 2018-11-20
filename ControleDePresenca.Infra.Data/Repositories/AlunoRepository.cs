@@ -15,15 +15,52 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public void addAluno(Aluno aluno)
         {
-            MarkStates(aluno);
+            //MarkStates(aluno);
+
+            using ( var context = new ControlePresencaContext()  )
+            {
+
+                //context.Entry(aluno).State = System.Data.Entity.EntityState.Modified;
+
+
+                //context.Entry(aluno.Tag).State = System.Data.Entity.EntityState.Unchanged;
+
+                //context.Entry(aluno).State = System.Data.Entity.EntityState.Added;
+
+                aluno.Tag.Status = 1;
+                context.Tags.Attach(aluno.Tag);
+                context.Aluno.Add(aluno);
+
+                //context.Usuarios.Attach(aluno.Usuario);
+                //context.Aluno.Add(aluno);
+
+                context.SaveChanges();
+            }
+
+           
+
+            //context.Aluno.Add(aluno);
+            ////context.Tags.Attach(aluno.Tag);
+
+            //context.SaveChanges();
+
+
         }
 
-        public void MarkStates(System.Data.Entity.EntityState state, params object[] entity)
+        public void MarkStates(System.Data.Entity.EntityState state,object entity)
         {
-            foreach (var item in entity)
+            
+
+            PropertyInfo[] t = entity.GetType().GetProperties();
+
+            foreach (var item in t)
             {
-                context.Entry(item).State = state;
+
+                if ( item.Name.Equals("Tag")  ) {
+                    context.Entry(item).State = state;
+                }
             }
+            
             context.SaveChanges();
         }
 
@@ -66,21 +103,31 @@ namespace ControleDePresenca.Infra.Data.Repositories
         //}
 
 
-        public void UpdateAluno(Aluno aluno)
+        public void UpdateAluno(Aluno a)
         {
 
-            //context.SetLazyLoading(true);
-
-            //context.Entry(aluno).State = System.Data.Entity.EntityState.Modified;
-            //context.SaveChanges();
-            using ( var context = new ControlePresencaContext()  )
+         using ( var context = new ControlePresencaContext()  )
             {
-                context.Entry(aluno).State = System.Data.Entity.EntityState.Modified;
+
+                
+                Aluno aluno = context.Aluno.Where(x => x.AlunoId == a.AlunoId ).FirstOrDefault();
+                
+
+                aluno.Nome = a.Nome;
+                aluno.NomeCompleto = a.NomeCompleto;
+                aluno.Idade = a.Idade;
+                aluno.DataNascimento = a.DataNascimento;
+                aluno.Tag = a.Tag;
+                //aluno.Turma = alunoVm.Turma;
+                aluno.Usuario = a.Usuario;
+                aluno.Imagem = a.Imagem;
+                
                 context.SaveChanges();
             }
 
         }
 
+        
 
         public void RemoveComUsuario(Aluno obj)
         {

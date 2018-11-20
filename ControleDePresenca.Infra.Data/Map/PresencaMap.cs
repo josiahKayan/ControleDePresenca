@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ControleDePresenca.Infra.Data.Map
 {
-    public class PresencaMap : EntityTypeConfiguration<Presenca>
+    public class PresencaMap : EntityTypeConfiguration<ListaPresenca>
     {
 
         public PresencaMap()

@@ -16,7 +16,7 @@ namespace ControleDePresenca.Domain.Entities
         public Turma()
         {
             this.AlunoLista = new List<Aluno>();
-            this.PresencaLista = new List<Presenca>();
+            this.PresencaLista = new List<ListaPresenca>();
         }
 
         public int TurmaId { get; set; }
@@ -69,7 +69,7 @@ namespace ControleDePresenca.Domain.Entities
         /// <summary>
         /// Lista de Presenças
         /// </summary>
-        public virtual ICollection<Presenca> PresencaLista { get; set; }
+        public virtual ICollection<ListaPresenca> PresencaLista { get; set; }
 
 
     }

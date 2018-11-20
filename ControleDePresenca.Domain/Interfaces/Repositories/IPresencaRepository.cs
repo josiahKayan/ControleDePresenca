@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace ControleDePresenca.Domain.Interfaces.Repositories
 {
-    public interface IPresencaRepository : IRepositoryBase<Presenca>
+    public interface IPresencaRepository : IRepositoryBase<ListaPresenca>
     {
 
-        IEnumerable<Presenca> BuscaPorMesEAno(int mes, int ano);
+        IEnumerable<ListaPresenca> BuscaPorMesEAno(int mes, int ano);
 
-        IEnumerable<Presenca> GetListaPresenca(int id);
+        IEnumerable<ListaPresenca> GetListaPresenca(int id);
 
 
     }

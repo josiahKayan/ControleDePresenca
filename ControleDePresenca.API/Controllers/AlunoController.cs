@@ -18,10 +18,12 @@ namespace ControleDePresenca.API.Controllers
     {
 
         AlunoRepository _aluno;
+        TagRepository _tag;
 
         public AlunoController()
         {
             _aluno = new AlunoRepository();
+
         }
 
         /// <summary>
@@ -53,6 +55,8 @@ namespace ControleDePresenca.API.Controllers
         [Route("addaluno")]
         public HttpResponseMessage NewAluno([FromBody] AlunoViewModel alunoVm)
         {
+            Tag tag = null;
+            _tag = new TagRepository();
 
             try
             {
@@ -61,22 +65,27 @@ namespace ControleDePresenca.API.Controllers
 
                 aluno.Nome = alunoVm.Nome;
                 aluno.NomeCompleto = alunoVm.NomeCompleto;
-                aluno.Idade = int.Parse( alunoVm.Idade);
+                aluno.Idade = int.Parse(alunoVm.Idade);
                 aluno.DataNascimento = alunoVm.DataNascimento;
                 aluno.Tag = alunoVm.Tag;
                 //aluno.Turma.aalunoVm.Turma;
                 aluno.Usuario = alunoVm.Usuario;
-                aluno.Imagem = alunoVm.Imagem;
+                //aluno.Imagem = alunoVm.Imagem;
 
+                tag = _tag.SearchTagByCode(alunoVm.Tag.Code);
 
-                _aluno.Add(aluno);
+                aluno.Tag = tag;
 
-                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
+                aluno.Tag.Status = 1;
+
+                _aluno.addAluno(aluno);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                return Request.CreateResponse(HttpStatusCode.OK, e.InnerException.Message);
             }
 
         }
@@ -131,7 +140,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                Aluno aluno = _aluno.GetAlunoByIdIncludes(int.Parse(id));
+                Aluno aluno = new Aluno();
 
                 aluno.Nome = alunoVm.Nome;
                 aluno.NomeCompleto = alunoVm.NomeCompleto;

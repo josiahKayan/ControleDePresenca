@@ -67,18 +67,25 @@ namespace ControleDePresenca.API.Controllers
         [Route("addturma")]
         public HttpResponseMessage NewTurma([FromBody] TurmaViewModel turmaVm)
         {
+            var _professor = new ProfessorRepository();
+            var _curso = new CursoRepository();
 
             try
             {
 
                 Turma turma = new Turma();
 
+                turma.NomeTurma = turmaVm.NomeTurma;
                 turma.DataInicio = Convert.ToDateTime( turmaVm.DataInicio );
                 turma.DataTermino = Convert.ToDateTime( turmaVm.DataTermino );
-                turma.Curso = turmaVm.Curso;
-                turma.Professor = turmaVm.Professor;
+
+                turma.HoraFinal = Convert.ToDateTime(turmaVm.HoraFinal);
+                turma.HoraInicial = Convert.ToDateTime(turmaVm.HoraInicial);
+
+                turma.CursoId = turmaVm.CursoId;
+                turma.ProfessorId = turmaVm.ProfessorId;
                 
-                _turma.Add(turma);
+                _turma.AddTurmaNoCurso(turma);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "Ok");
 
@@ -119,6 +126,59 @@ namespace ControleDePresenca.API.Controllers
             }
 
         }
+
+
+        /// <summary>
+        /// Get turma by id
+        /// </summary>
+        /// <remarks>
+        /// Get a Turma by id
+        /// </remarks>
+        /// <param name="id">Id da turma</param>
+        /// <returns></returns>
+        /// <response code="200">Turma found</response>
+        /// <response code="404">Turma not founded</response>
+        [HttpGet]
+        [Route("GetTurmasPeloCursoId/{id}")]
+        public HttpResponseMessage GetTurmaPeloId(string id)
+        {
+
+            try
+            {
+
+                var turma = _turma.GetTurmasPeloCursoId(int.Parse(id));
+
+                return Request.CreateResponse(HttpStatusCode.OK, turma);
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
+        [HttpGet]
+        [Route("GetTurmasPeloUsuarioId/{id}")]
+        public HttpResponseMessage GetTurmasPeloUsuarioId(string id)
+        {
+
+            try
+            {
+
+                var turma = _turma.GetTurmasPeloUsuarioId(int.Parse(id));
+
+                return Request.CreateResponse(HttpStatusCode.OK, turma);
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
+        
 
         /// <summary>
         /// Get turma by id
@@ -165,20 +225,33 @@ namespace ControleDePresenca.API.Controllers
         /// <response code="404">Curso not foundd</response>
         [HttpPost]
         [Route("update/{id}")]
-        public HttpResponseMessage UpdateCurso([FromBody] TurmaViewModel turmaVm, string id)
+        public HttpResponseMessage UpdateTurma([FromBody] TurmaViewModel turmaVm, string id)
         {
+
+            var _professor = new ProfessorRepository();
+            var _curso = new CursoRepository();
 
             try
             {
 
-                Turma turma = _turma.GetEntityById(int.Parse(id));
+                Turma turma = new Turma();
 
-                turma.DataInicio = Convert.ToDateTime( turmaVm.DataInicio);
-                turma.DataTermino = Convert.ToDateTime( turmaVm.DataTermino);
-                turma.Curso = turmaVm.Curso;
-                turma.Professor = turmaVm.Professor;
+                turma.TurmaId = int.Parse( id );
 
-                _turma.Update(turma);
+                turma.NomeTurma = turmaVm.NomeTurma;
+
+                turma.DataInicio = Convert.ToDateTime(turmaVm.DataInicio);
+                turma.DataTermino = Convert.ToDateTime(turmaVm.DataTermino);
+
+                turma.HoraFinal = Convert.ToDateTime(turmaVm.HoraFinal);
+                turma.HoraInicial = Convert.ToDateTime(turmaVm.HoraInicial);
+
+                turma.CursoId = turmaVm.CursoId;
+                turma.ProfessorId = turmaVm.ProfessorId;
+
+                //_turma.UpdateTurmaNoCurso(turma);
+                _turma.UpdateTurmaNoCurso(turma);
+
 
                 return Request.CreateResponse(HttpStatusCode.OK, "The course was updated");
 

@@ -11,12 +11,20 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
     {
         List<Turma> GetTurmasPeloCursoId(int id);
 
+        List<Turma> GetTurmaByProfessorId(int id);
+
         void UpdateTurmaProfessorCurso(Turma turma, Curso curso, Professor professor);
 
-        List<Turma> GetTurmaPorProfessorId(int id);
 
         List<Professor> GetTurmasPeloProfessorId(int id);
 
+        List<Turma> GetTurmasPeloUsuarioId(int id);
+
         IEnumerable<Aluno> GetAlunoByTurmaId(int id);
+
+        void AddTurmaNoCurso(Turma turma);
+
+        void UpdateTurmaNoCurso(Turma turma);
+
     }
 }

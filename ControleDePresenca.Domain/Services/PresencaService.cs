@@ -9,7 +9,7 @@ using ControleDePresenca.Domain.Interfaces.Repositories;
 
 namespace ControleDePresenca.Domain.Services
 {
-    public class PresencaService : ServiceBase<Presenca>, IPresencaService
+    public class PresencaService : ServiceBase<ListaPresenca>, IPresencaService
     {
 
         private readonly IPresencaRepository _presencaRepository;

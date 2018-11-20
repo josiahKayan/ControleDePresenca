@@ -6,15 +6,15 @@ using System.Linq;
 
 namespace ControleDePresenca.Infra.Data.Repositories
 {
-    public class PresencaRepository : RepositoryBase<Presenca> , IPresencaRepository
+    public class PresencaRepository : RepositoryBase<ListaPresenca> , IPresencaRepository
     {
 
-        public IEnumerable<Presenca> BuscaPorMesEAno(int mes, int ano)
+        public IEnumerable<ListaPresenca> BuscaPorMesEAno(int mes, int ano)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Presenca> GetListaPresenca(int id)
+        public IEnumerable<ListaPresenca> GetListaPresenca(int id)
         {
             throw new NotImplementedException();
         }

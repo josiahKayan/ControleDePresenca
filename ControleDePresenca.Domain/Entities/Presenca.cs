@@ -7,43 +7,26 @@ using System.Threading.Tasks;
 
 namespace ControleDePresenca.Domain.Entities
 {
-
-    /// <summary>
-    /// Entidade Presença
-    /// </summary>
     public class Presenca
     {
-
-        public Presenca()
-        {}
+        
 
         public int PresencaId { get; set; }
-        /// <summary>
-        /// Marca a Hora de Entrada
-        /// </summary>
-        public DateTime HoraEntrada { get; set;}
-        /// <summary>
-        /// Marca o mes
-        /// </summary>
-        public int Mes { get; set; }
-        /// <summary>
-        /// Marca o ano
-        /// </summary>
-        public int Ano { get; set; }
 
-        public int Dia { get; set; }
+        public string NomeDia { get; set; }
 
-        public bool Ativo { get; set; }
-
-        public int TurmaId { get; set; }
-
-        public virtual ICollection<Aluno> Alunos { get; set; }
-
+        public string NomeMes { get; set; }
         
-        /// <summary>
-        /// Lista de Turmas
-        /// </summary>
-        [ForeignKey("TurmaId")]
-        public virtual Turma Turma { get; set; }
+
+        public DateTime HoraChegada { get; set; }
+
+       
+        [ForeignKey("AlunoId")]
+        public virtual Aluno Aluno{ get; set; }
+
+        public int AlunoId { get; set; }
+
+
+
     }
 }

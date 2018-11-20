@@ -71,7 +71,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                Presenca presenca = new Presenca();
+                ListaPresenca presenca = new ListaPresenca();
 
                 presenca.HoraEntrada = presencaVm.HoraEntrada;
                 presenca.Mes = presencaVm.Mes;
@@ -169,7 +169,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                Presenca presenca = _presenca.GetEntityById(int.Parse(id));
+                ListaPresenca presenca = _presenca.GetEntityById(int.Parse(id));
 
                 presenca.HoraEntrada = presencaVm.HoraEntrada;
                 presenca.Mes = presencaVm.Mes;

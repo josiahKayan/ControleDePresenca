@@ -16,6 +16,14 @@ namespace ControleDePresenca.Infra.Data.Repositories
             return context.Set<Tag>().Where(i => i.TagId == id).ToList();
         }
 
+
+        public Tag SearchTagByCode(string code)
+        {
+            return context.Tags.Where(c => c.Code == code).FirstOrDefault();
+            //return context.Set<TEntity>().Find(id);
+
+        }
+
         public List<Tag> ListaTagNaoArmazenada()
         {
             return context.Set<Tag>().Where(st => st.Status != 1).ToList();

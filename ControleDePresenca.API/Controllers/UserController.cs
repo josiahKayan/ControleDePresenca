@@ -20,11 +20,36 @@ namespace ControleDePresenca.API.Controllers
     public class UserController : ApiController
     {
 
-        IUsuarioRepository _usuario;
+        UsuarioRepository _usuario;
 
         public UserController()
         {
             _usuario = new UsuarioRepository();
+        }
+
+
+        [HttpPost]
+        [Route("upload")]
+        public HttpResponseMessage UploadFile()
+        {
+            try
+            {
+
+                var listUsuarios = _usuario.GetAll();
+
+                return Request.CreateResponse(HttpStatusCode.OK, listUsuarios);
+
+            }
+            catch (Exception e)
+            {
+                Log log = new Log
+                {
+                    Message = e.Message,
+                    Status = "error"
+                };
+
+                return Request.CreateResponse(HttpStatusCode.OK, log);
+            }
         }
 
         [HttpGet]
@@ -110,6 +135,66 @@ namespace ControleDePresenca.API.Controllers
         }
 
         [HttpGet]
+        [Route("GetPerfil/{id}")]
+        public HttpResponseMessage GetUserPerfil(string id)
+        {
+
+            try
+            {
+
+                var _professor = new ProfessorRepository();
+                var _aluno = new AlunoRepository();
+
+
+
+                var usuario = _usuario.GetEntityById(int.Parse(id));
+
+                if(  usuario.Perfil == 0 )
+                {
+                    var aluno = _aluno.GetEntityById( usuario.UsuarioId  );
+
+                    var perfil = new PerfilViewModel();
+                    perfil.UserId = aluno.UsuarioId;
+                    perfil.Nome = aluno.Nome;
+                    perfil.NomeCompleto = aluno.NomeCompleto;
+                    perfil.DataNascimento = aluno.DataNascimento;
+
+                    return Request.CreateResponse(HttpStatusCode.OK, perfil);
+
+                }
+                else if (  usuario.Perfil == 1 )
+                {
+                    var professor = _professor.GetProfessorByIdIncludesUserId(usuario.UsuarioId);
+
+                    var perfil = new PerfilViewModel();
+                    perfil.UserId = professor.UsuarioId;
+                    perfil.Nome = professor.Nome;
+                    perfil.NomeCompleto = professor.NomeCompleto;
+                    perfil.DataNascimento = professor.DataNascimento;
+
+                    return Request.CreateResponse(HttpStatusCode.OK, perfil);
+
+
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, usuario);
+
+
+            }
+            catch (Exception e)
+            {
+
+                Log log = new Log();
+                log.Message = e.Message;
+                log.Status = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
+            }
+
+        }
+
+
+
+        [HttpGet]
         [Route("delete/{id}")]
         public HttpResponseMessage DeleteUser(string id)
         {
@@ -158,6 +243,75 @@ namespace ControleDePresenca.API.Controllers
                 log.Message = "The user was updated";
                 log.Status = "success";
                 return Request.CreateResponse(HttpStatusCode.OK, log);
+
+            }
+            catch (Exception e)
+            {
+                Log log = new Log();
+                log.Message = e.Message;
+                log.Status = "error";
+
+                return Request.CreateResponse(HttpStatusCode.OK, log);
+            }
+
+        }
+
+        //[HttpPost]
+        //[Route("updateDados/{id}")]
+        //public HttpResponseMessage UpdateDados([FromBody] UsuarioDadosViewModel usuarioVm, string id)
+        //{
+
+        //    try
+        //    {
+
+        //        var pr ofes= _usuario.GetEntityById(int.Parse(id));
+
+        //        usuario.Email = usuarioVm.Email;
+        //        usuario.Senha = usuarioVm.Senha.GetHashCode().ToString();
+
+        //        _usuario.Update(usuario);
+
+        //        Log log = new Log();
+        //        log.Message = "The user was updated";
+        //        log.Status = "success";
+        //        return Request.CreateResponse(HttpStatusCode.OK, log);
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Log log = new Log();
+        //        log.Message = e.Message;
+        //        log.Status = "error";
+
+        //        return Request.CreateResponse(HttpStatusCode.OK, log);
+        //    }
+
+        //}
+
+
+        [HttpPost]
+        [Route("login")]
+        public HttpResponseMessage Login([FromBody] UsuarioViewModel usuarioVm)
+        {
+
+            try
+            {
+
+                Usuario usuario = new Usuario();
+
+                usuario.Email = usuarioVm.Email;
+                usuario.Senha = usuarioVm.Senha;
+
+                Usuario user = _usuario.Login(usuario);
+
+                if (user != null) {
+                    return Request.CreateResponse(HttpStatusCode.OK, user);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, "Error");
+
+                }
 
             }
             catch (Exception e)

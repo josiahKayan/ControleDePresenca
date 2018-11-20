@@ -53,6 +53,36 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
+
+        /// <summary>
+        /// Lista de Tags
+        /// </summary>
+        /// <remarks>
+        /// Exibe uma lista de tag
+        /// </remarks>
+        /// <returns> Lista de Tags</returns>
+        /// <response code="200">Lista de Tag</response>
+        /// <response code="404">Tag not founded</response>
+        [HttpGet]
+        [Route("tags-free")]
+        public HttpResponseMessage GetTagsNoChecked()
+        {
+
+            try
+            {
+
+                var listTags = _tag.ListaTagNaoArmazenada();
+
+                return Request.CreateResponse(HttpStatusCode.OK, listTags);
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
         /// <summary>
         /// Método para adicionar uma tag
         /// </summary>

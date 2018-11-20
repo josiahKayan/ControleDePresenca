@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ControleDePresenca.Domain.Interfaces.Services
 {
-    public interface IPresencaService : IServiceBase<Presenca> 
+    public interface IPresencaService : IServiceBase<ListaPresenca> 
     {
     }
 }
