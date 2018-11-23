@@ -14,6 +14,8 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
 
         IEnumerable<ListaPresenca> GetListaPresenca(int id);
 
+        List<Presenca> GetResumoListaPresencaByIdPresencalista(int id);
+        
 
     }
 }

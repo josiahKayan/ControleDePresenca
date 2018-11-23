@@ -151,6 +151,7 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ListaPresencaController.cs" />
     <Compile Include="Controllers\PresencaController.cs" />
     <Compile Include="Controllers\AlunoController.cs" />
     <Compile Include="Controllers\TagController.cs" />

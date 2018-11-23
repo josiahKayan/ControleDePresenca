@@ -80,8 +80,16 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public IEnumerable<Aluno> GetAlunoByTurmaId(int id)
         {
-            return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").Include("ListaPresenca").ToList().Where(t => t.Turma.Any(a => a.TurmaId == id));
+            return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").ToList().Where(t => t.Turma.Any(a => a.TurmaId == id));
         }
+
+        public List<Turma> GetAlunosByTurmaId(int id)
+        {
+            return context.Set<Turma>().Include("Curso").Include("Professor").Include("AlunoLista").ToList().Where(x => x.TurmaId == id).ToList();
+
+
+        }
+
 
         public List<Turma> GetTurmasPeloCursoId(int id)
         {

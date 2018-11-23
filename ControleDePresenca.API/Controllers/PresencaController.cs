@@ -13,15 +13,19 @@ using System.Web.Http.Cors;
 namespace ControleDePresenca.API.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    [RoutePrefix("presenca")]
+    [RoutePrefix("resumo-presenca")]
     public class PresencaController : ApiController
     {
 
         IPresencaRepository _presenca;
+        ITurmaRepository _turma;
+
 
         public PresencaController()
         {
             _presenca = new PresencaRepository();
+            _turma = new TurmaRepository();
+
         }
 
         /// <summary>
@@ -34,14 +38,14 @@ namespace ControleDePresenca.API.Controllers
         /// <response code="200">Lista de Presenças</response>
         /// <response code="404">Presença not foundd</response>
         [HttpGet]
-        [Route("presencas")]
-        public HttpResponseMessage GetPresencas()
+        [Route("GetResumoListaPresencaByIdPresencalista/{id}")]
+        public HttpResponseMessage GetResumoListaPresencaByIdPresencalista(int id)
         {
 
             try
             {
 
-                var listPresenca = _presenca.GetAll();
+                var listPresenca = _presenca.GetResumoListaPresencaByIdPresencalista(id);
 
                 return Request.CreateResponse(HttpStatusCode.OK, listPresenca);
 
@@ -52,6 +56,55 @@ namespace ControleDePresenca.API.Controllers
             }
 
         }
+
+
+        /// <summary>
+        /// Lista de Presenças
+        /// </summary>
+        /// <remarks>
+        /// Exibe uma lista de presenças
+        /// </remarks>
+        /// <returns> Lista de Presenças</returns>
+        /// <response code="200">Lista de Presenças</response>
+        /// <response code="404">Presença not foundd</response>
+        [HttpGet]
+        [Route("GetResumoListaFaltosos/{id}/{idTurma}")]
+        public HttpResponseMessage GetResumoListaFaltosos(int id, int idTurma)
+        {
+
+            try
+            {
+                //Lista dos alunos presentes
+                List<Aluno> listPresencaAluno = _presenca.GetResumoListaPresencaByIdPresencalista(id).Select( x => x.Aluno).ToList();
+
+                var t = new TurmaRepository();
+
+                var alunosTurma = t.GetAlunosByTurmaId(idTurma);
+
+                //Lista dos alunos da turma
+                var listaAlunoTurma = alunosTurma.Select(x => x.AlunoLista.ToList()).FirstOrDefault().ToList();
+
+                //Lista dos faltosos
+                var listFaltosos = listaAlunoTurma.Where(  x => listPresencaAluno.Select( a => a.AlunoId != x.AlunoId ).FirstOrDefault()     ) ;
+
+                listFaltosos = listFaltosos.ToList();
+
+                if (listPresencaAluno.Count > 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, listFaltosos);
+
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, listaAlunoTurma);
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
 
         /// <summary>
         /// Método para adicionar um curso
@@ -71,7 +124,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                ListaPresenca presenca = new ListaPresenca();
+                Domain.Entities.ListaPresenca presenca = new Domain.Entities.ListaPresenca();
 
                 presenca.HoraEntrada = presencaVm.HoraEntrada;
                 presenca.Mes = presencaVm.Mes;
@@ -169,7 +222,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                ListaPresenca presenca = _presenca.GetEntityById(int.Parse(id));
+                Domain.Entities.ListaPresenca presenca = _presenca.GetEntityById(int.Parse(id));
 
                 presenca.HoraEntrada = presencaVm.HoraEntrada;
                 presenca.Mes = presencaVm.Mes;

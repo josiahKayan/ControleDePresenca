@@ -81,6 +81,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CursoRepository.cs" />
+    <Compile Include="Repositories\ListaPresencaRepository.cs" />
     <Compile Include="Repositories\PresencaRepository.cs" />
     <Compile Include="Repositories\ProfessorRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
