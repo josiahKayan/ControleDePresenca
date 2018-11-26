@@ -26,7 +26,13 @@ namespace ControleDePresenca.Domain.Entities
 
         public int AlunoId { get; set; }
 
+        public int ListaPresencaId { get; set; }
 
+        /// <summary>
+        /// Lista de Turmas
+        /// </summary>
+        [ForeignKey("ListaPresencaId")]
+        public virtual ListaPresenca ListaPresenca { get; set; }
 
     }
 }

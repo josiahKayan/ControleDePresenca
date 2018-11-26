@@ -165,8 +165,20 @@ namespace ControleDePresenca.API.Controllers
 
             try
             {
+                var _usuario = new UsuarioRepository();
 
-                var turma = _turma.GetTurmasPeloUsuarioId(int.Parse(id));
+                List<Turma> turma = null;
+
+                var usuario = _usuario.GetEntityById(int.Parse(id));
+
+                if (usuario.Perfil == 1) {
+                    turma = _turma.GetTurmasPeloUsuarioId(int.Parse(id));
+                }
+                else if (usuario.Perfil == 0)
+                {
+                    turma = _turma.GetTurmasPeloUsuarioAlunoId(int.Parse(id));
+
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, turma);
 

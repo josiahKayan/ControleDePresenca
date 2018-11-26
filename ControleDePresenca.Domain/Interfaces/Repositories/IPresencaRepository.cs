@@ -14,8 +14,10 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
 
         IEnumerable<ListaPresenca> GetListaPresenca(int id);
 
-        List<Presenca> GetResumoListaPresencaByIdPresencalista(int id);
-        
+        List<Presenca> GetResumoListaPresencaByIdPresencalista(int id, int aluno = 0);
+
+        void InsertPresenca(int idPresenca, int idTurma, int idUser);
+
 
     }
 }

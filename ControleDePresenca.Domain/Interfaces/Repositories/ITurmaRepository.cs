@@ -26,5 +26,7 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
 
         void UpdateTurmaNoCurso(Turma turma);
 
+        List<Turma> GetTurmasPeloUsuarioAlunoId(int id);
+
     }
 }

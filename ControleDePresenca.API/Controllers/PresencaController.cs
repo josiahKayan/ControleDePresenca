@@ -38,14 +38,22 @@ namespace ControleDePresenca.API.Controllers
         /// <response code="200">Lista de Presenças</response>
         /// <response code="404">Presença not foundd</response>
         [HttpGet]
-        [Route("GetResumoListaPresencaByIdPresencalista/{id}")]
-        public HttpResponseMessage GetResumoListaPresencaByIdPresencalista(int id)
+        [Route("GetResumoListaPresencaByIdPresencalista/{id}/{aluno}")]
+        public HttpResponseMessage GetResumoListaPresencaByIdPresencalista(int id, int aluno)
         {
 
             try
             {
 
-                var listPresenca = _presenca.GetResumoListaPresencaByIdPresencalista(id);
+                if ( aluno > 0)
+                {
+                    var _aluno = new AlunoRepository();
+
+                    aluno = _aluno.GetAlunoByUsuarioId(aluno).AlunoId;
+
+                }
+
+                var listPresenca = _presenca.GetResumoListaPresencaByIdPresencalista(id,aluno);
 
                 return Request.CreateResponse(HttpStatusCode.OK, listPresenca);
 
@@ -56,6 +64,33 @@ namespace ControleDePresenca.API.Controllers
             }
 
         }
+
+
+        [HttpGet]
+        [Route("InsertPresenca/{idPresenca}/{idTurma}/{idUser}")]
+        public HttpResponseMessage InsertPresenca(int idPresenca, int idTurma, int idUser)
+        {
+            
+
+            try
+            {
+
+                var _aluno = new AlunoRepository();
+
+                var aluno = _aluno.GetAlunoByUsuarioId(idUser);
+
+                _presenca.InsertPresenca( idPresenca,  idTurma, aluno.AlunoId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "OK");
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
 
 
         /// <summary>

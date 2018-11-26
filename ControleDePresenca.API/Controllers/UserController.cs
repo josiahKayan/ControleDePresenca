@@ -151,7 +151,7 @@ namespace ControleDePresenca.API.Controllers
 
                 if(  usuario.Perfil == 0 )
                 {
-                    var aluno = _aluno.GetEntityById( usuario.UsuarioId  );
+                    var aluno = _aluno.GetAlunoByUsuarioId( usuario.UsuarioId  );
 
                     var perfil = new PerfilViewModel();
                     perfil.UserId = aluno.UsuarioId;

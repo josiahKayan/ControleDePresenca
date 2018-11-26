@@ -35,10 +35,9 @@ namespace ControleDePresenca.Domain.Entities
 
         public bool Ativo { get; set; }
 
-        public int TurmaId { get; set; }
-
-        
         public virtual ICollection<Presenca> Presenca { get; set; }
+
+        public int TurmaId { get; set; }
 
         /// <summary>
         /// Lista de Turmas

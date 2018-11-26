@@ -75,6 +75,11 @@ namespace ControleDePresenca.Infra.Data.Repositories
             return context.Set<Aluno>().Include("Usuario").Include("Tag").ToList().Find(x => x.AlunoId == id);
         }
 
+        public Aluno GetAlunoByUsuarioId(int id)
+        {
+            return context.Set<Aluno>().Include("Usuario").Include("Tag").ToList().Find(x => x.UsuarioId == id);
+        }
+
         public IEnumerable<Aluno> GetAllAlunos()
         {
             return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").ToList();
