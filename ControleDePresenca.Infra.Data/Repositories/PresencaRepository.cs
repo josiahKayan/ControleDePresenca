@@ -180,5 +180,21 @@ namespace ControleDePresenca.Infra.Data.Repositories
         }
 
 
+        public List<string> GetListaDatas(IEnumerable<Aluno> lAlunos, int idTurma, int totalDias)
+        {
+            var listaDatas = new List<string>();
+
+            var lp = new List<ListaPresenca>();
+            lp = context.Set<ListaPresenca>().Where(t => t.TurmaId == idTurma).ToList();
+
+            foreach (var item in lp)
+            {
+                listaDatas.Add(item.Dia .ToString() + "-" + item.Mes + "-" + item.Ano);
+            }
+
+            return listaDatas;
+        }
+
+
     }
 }

@@ -12,5 +12,6 @@ namespace ControleDePresenca.Domain.Entities
 
         public List<FrequenciaAlunos> FrequenciaAlunos { get; set; }
 
+        public List<string> Datas {get;set;}
     }
 }

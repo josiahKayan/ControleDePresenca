@@ -109,7 +109,7 @@ namespace ControleDePresenca.API.Controllers
 
                 g.FrequenciaAlunos = _presenca.GetFrequenciaAlunos(  alunosTurma , idTurma, totalDias);
 
-
+                g.Datas = _presenca.GetListaDatas(alunosTurma, idTurma, totalDias);
 
                 //var _aluno = new AlunoRepository();
 
