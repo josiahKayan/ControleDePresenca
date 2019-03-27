@@ -14,11 +14,10 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public List<ListaPresenca> GetListaPresencaByIdTurma(int id)
         {
-            return context.Set<ListaPresenca>().Include("Turma").Where( t => t.Turma.TurmaId == id    ).OrderByDescending(a => a.Ano).OrderByDescending( o => o.Mes  ).OrderByDescending( p => p.Dia ).ToList();
+            return context.Set<ListaPresenca>().Include("Turma").Where( t => t.Turma.TurmaId == id    ).OrderByDescending(a => a.Ano).ThenByDescending( o => o.Mes  ).ThenByDescending( p => p.Dia ).ToList();
         }
 
-
-
+        
 
     }
 }

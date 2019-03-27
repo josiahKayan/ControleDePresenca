@@ -52,6 +52,9 @@
   <ItemGroup>
     <Compile Include="Entities\Aluno.cs" />
     <Compile Include="Entities\Curso.cs" />
+    <Compile Include="Entities\PresencaDia.cs" />
+    <Compile Include="Entities\FrequenciaAlunos.cs" />
+    <Compile Include="Entities\Geral.cs" />
     <Compile Include="Entities\Presenca.cs" />
     <Compile Include="Entities\Pessoa.cs" />
     <Compile Include="Entities\ListaPresenca.cs" />

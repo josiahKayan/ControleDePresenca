@@ -91,6 +91,45 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
+        [HttpGet]
+        [Route("getGeneralList/{idTurma}")]
+        public HttpResponseMessage getGeneralList( int idTurma)
+        {
+
+
+            try
+            {
+
+                int totalDias = _presenca.GetTotalPresenca(idTurma);
+
+                var alunosTurma = _turma.GetAlunoByTurmaId(idTurma);
+
+                Geral g = new Geral();
+
+                g.TotalDias = totalDias;
+
+                g.FrequenciaAlunos = _presenca.GetFrequenciaAlunos(  alunosTurma , idTurma, totalDias);
+
+
+
+                //var _aluno = new AlunoRepository();
+
+                //var aluno = _aluno.GetAlunoByUsuarioId(idUser);
+
+                //_presenca.InsertPresenca(idPresenca, idTurma, aluno.AlunoId);
+
+                //var lista = "{\"totalDias\":4,\"frequencia\":[\"aluno\":{\"strFoto\":\"www.foto.com.br\",\"strNome\":\"Felipe\",\"data\":[\"01-01-2019\",\"02-01-2019\",\"03-01-2019\",\"04-01-2019\"],\"presencas\":3,\"faltas\":0},\"aluno\":{\"strFoto\":\"www.foto.com.br\",            \"strNome\":\"Felipe\",            \"data\":[\"01-01-2019\",\"02-01-2019\",\"03-01-2019\",\"04-01-2019\"],	    \"presencas\":2,	    \"faltas\":1        }        ,        \"aluno\":{              \"strFoto\":\"www.foto.com.br\",\"strNome\":\"Felipe\",\"data\":[\"01-01-2019\",\"02-01-2019\",\"03-01-2019\",\"04-01-2019\"],\"presencas\":0,\"faltas\":3}]}";
+
+                return Request.CreateResponse(HttpStatusCode.OK, g);
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
 
 
         /// <summary>
@@ -117,12 +156,13 @@ namespace ControleDePresenca.API.Controllers
                 var alunosTurma = t.GetAlunosByTurmaId(idTurma);
 
                 //Lista dos alunos da turma
-                var listaAlunoTurma = alunosTurma.Select(x => x.AlunoLista.ToList()).FirstOrDefault().ToList();
+                List<Aluno> listaAlunoTurma = alunosTurma.Select(x => x.AlunoLista.ToList()).FirstOrDefault().ToList();
 
                 //Lista dos faltosos
-                var listFaltosos = listaAlunoTurma.Where(  x => listPresencaAluno.Select( a => a.AlunoId != x.AlunoId ).FirstOrDefault()     ) ;
+                listaAlunoTurma.AddRange(  listPresencaAluno  );
 
-                listFaltosos = listFaltosos.ToList();
+                var listFaltosos = listaAlunoTurma.Distinct().Where(x => !listPresencaAluno.Any(e => x.AlunoId == e.AlunoId)).ToList();
+
 
                 if (listPresencaAluno.Count > 0)
                 {
