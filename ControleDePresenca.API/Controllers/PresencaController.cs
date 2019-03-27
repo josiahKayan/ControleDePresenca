@@ -96,7 +96,6 @@ namespace ControleDePresenca.API.Controllers
         public HttpResponseMessage getGeneralList( int idTurma)
         {
 
-
             try
             {
 
