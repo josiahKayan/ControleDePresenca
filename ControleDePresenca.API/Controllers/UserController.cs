@@ -4,6 +4,7 @@ using ControleDePresenca.Domain.Interfaces.Repositories;
 using ControleDePresenca.Domain.Services;
 using ControleDePresenca.Infra.Data.Repositories;
 using ControleDePresenca.LayerLog;
+using ControleDePresenca.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -289,6 +290,40 @@ namespace ControleDePresenca.API.Controllers
         //}
 
 
+        [HttpGet]
+        [Route("ping")]
+
+        public HttpResponseMessage Ping()
+        {
+
+            try
+            {
+                NotificationFireBase notificationFireBase = new NotificationFireBase();
+
+                NotificationParams notification = new NotificationParams();
+
+                notification.Title = "Testando o ping";
+
+                notification.Body = "Vamos testar se o TESTE conseguiu pingar";
+
+                notificationFireBase.SendMessage( notification , null);
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+            }
+            catch (Exception e)
+            {
+
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+
+
+            }
+
+
+
+
+        }
+
         [HttpPost]
         [Route("login")]
         public HttpResponseMessage Login([FromBody] UsuarioViewModel usuarioVm)
@@ -304,7 +339,15 @@ namespace ControleDePresenca.API.Controllers
 
                 Usuario user = _usuario.Login(usuario);
 
+                if (usuarioVm.NotificacaoId != null || usuarioVm.NotificacaoId != string.Empty ) {
+                    _usuario.UpdateIdNotification(usuarioVm.NotificacaoId, user.UsuarioId);
+                }
+
                 if (user != null) {
+                    
+
+                       
+
                     return Request.CreateResponse(HttpStatusCode.OK, user);
                 }
                 else

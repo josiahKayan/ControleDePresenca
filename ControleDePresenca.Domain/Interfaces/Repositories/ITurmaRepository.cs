@@ -28,5 +28,7 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
 
         List<Turma> GetTurmasPeloUsuarioAlunoId(int id);
 
+        List<Aluno> GetAlunosComUsuarioPorIdTurma( int id);
+
     }
 }

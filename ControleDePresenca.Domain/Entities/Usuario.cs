@@ -26,6 +26,8 @@ namespace ControleDePresenca.Domain.Entities
 
         public int Perfil { get; set; }
 
+        public string NotificacaoId { get; set; }
+
 
     }
 }

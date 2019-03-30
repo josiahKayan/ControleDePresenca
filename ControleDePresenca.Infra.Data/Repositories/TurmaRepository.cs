@@ -90,6 +90,12 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         }
 
+        public List<Aluno> GetAlunosComUsuarioPorIdTurma(int id)
+        {
+            return context.Set<Aluno>().Include("Usuario").Include("Tag").ToList().Where(x => x.Turma.Select(t => t.TurmaId == id).FirstOrDefault()).ToList();  
+
+        }
+
 
         public List<Turma> GetTurmasPeloCursoId(int id)
         {

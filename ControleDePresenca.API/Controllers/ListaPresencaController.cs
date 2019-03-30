@@ -1,5 +1,7 @@
 ﻿using ControleDePresenca.Domain.Entities;
+using ControleDePresenca.Domain.Interfaces.Repositories;
 using ControleDePresenca.Infra.Data.Repositories;
+using ControleDePresenca.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +18,15 @@ namespace ControleDePresenca.API.Controllers
     {
 
         ListaPresencaRepository _listaPresenca;
+ 
+        ITurmaRepository _turma;
+
 
         public ListaPresencaController()
         {
             _listaPresenca = new ListaPresencaRepository();
+            _turma = new TurmaRepository();
+
         }
 
 
@@ -49,7 +56,10 @@ namespace ControleDePresenca.API.Controllers
         [Route("insertListaPresenca/{id}")]
         public HttpResponseMessage insertListaPresenca(int id)
         {
-            
+
+            NotificationFireBase notificationFireBase = null;
+            NotificationParams notification = null;
+
             try
             {
 
@@ -62,8 +72,23 @@ namespace ControleDePresenca.API.Controllers
                 l.HoraEntrada = DateTime.Now;
                 l.TurmaId = id;
 
-
                 _listaPresenca.Add(l);
+
+                //Instancia notificação
+                notificationFireBase = new NotificationFireBase();
+                notification = new NotificationParams();
+
+                //Inicia o objeto
+                notification.Title = "Nova lista de chamada";
+                notification.Body = "Atenção, o seu professor começou uma nova lista de chamada.";
+
+                var alunos = _turma.GetAlunosComUsuarioPorIdTurma(id);
+
+                var listaIdUsuarios = alunos.Select(x => x.Usuario.NotificacaoId).ToList();
+
+                if (listaIdUsuarios.Count > 0) {
+                    notificationFireBase.SendMessage(notification, listaIdUsuarios);
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, "Ok");
 

@@ -1,5 +1,6 @@
 ﻿using ControleDePresenca.Domain.Entities;
 using ControleDePresenca.Domain.Interfaces.Repositories;
+using ControleDePresenca.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ControleDePresenca.Infra.Data.Repositories
 {
-    public class UsuarioRepository : RepositoryBase<Usuario> , IUsuarioRepository
+    public class UsuarioRepository : RepositoryBase<Usuario>, IUsuarioRepository
     {
 
         public void AddUsuario(Usuario user)
@@ -19,9 +20,9 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public Usuario Login(Usuario user)
         {
-            var usuario = context.Usuarios.Where(u => u.Email.Equals( user.Email) && u.Senha.Equals( user.Senha)).FirstOrDefault();
+            var usuario = context.Usuarios.Where(u => u.Email.Equals(user.Email) && u.Senha.Equals(user.Senha)).FirstOrDefault();
 
-            if (usuario!=null)
+            if (usuario != null)
             {
                 return usuario;
             }
@@ -30,8 +31,23 @@ namespace ControleDePresenca.Infra.Data.Repositories
                 return null;
             }
         }
+
+        public void UpdateIdNotification(string idRegister, int idUser)
+        {
+            using (var context = new ControlePresencaContext())
+            {
+
+                var u = context.Usuarios.Find(idUser);
+
+                u.NotificacaoId = idRegister;
+
+                context.Entry(u).State = System.Data.Entity.EntityState.Modified;
+
+                context.SaveChanges();
+            }
+
+        }
+
     }
-
-
     
 }

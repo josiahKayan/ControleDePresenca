@@ -12,6 +12,7 @@ namespace ControleDePresenca.API.ViewModels
         public string Email { get; set; }
         public string Senha { get; set; }
         public int Perfil { get; set; }
+        public string NotificacaoId { get; set; }
 
     }
 }

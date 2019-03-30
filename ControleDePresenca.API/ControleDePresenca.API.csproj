@@ -199,6 +199,10 @@
       <Project>{6BF2F831-8E53-481E-BF85-03B60A0A6265}</Project>
       <Name>ControleDePresenca.Log</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ControleDePresenca.Notifications\ControleDePresenca.Notifications.csproj">
+      <Project>{3828E000-6404-4EC4-81EF-725F27D49F7A}</Project>
+      <Name>ControleDePresenca.Notifications</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
