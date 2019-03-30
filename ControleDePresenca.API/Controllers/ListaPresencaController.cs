@@ -20,12 +20,15 @@ namespace ControleDePresenca.API.Controllers
         ListaPresencaRepository _listaPresenca;
  
         ITurmaRepository _turma;
+        AlunoRepository _aluno;
+
 
 
         public ListaPresencaController()
         {
             _listaPresenca = new ListaPresencaRepository();
             _turma = new TurmaRepository();
+            _aluno = new AlunoRepository();
 
         }
 
@@ -82,9 +85,15 @@ namespace ControleDePresenca.API.Controllers
                 notification.Title = "Nova lista de chamada";
                 notification.Body = "Atenção, o seu professor começou uma nova lista de chamada.";
 
-                var alunos = _turma.GetAlunosComUsuarioPorIdTurma(id);
+                var usuarios = _aluno.GetAlunosComUsuarioPorIdTurma(id);
 
-                var listaIdUsuarios = alunos.Select(x => x.Usuario.NotificacaoId).ToList();
+                var listaIdUsuarios = usuarios.Select(x => x.NotificacaoId).ToList();
+
+                listaIdUsuarios = listaIdUsuarios.Where(x => x != null).ToList();
+
+                //var listaIdUsuarios = usuarios.Select(x => x.Usuario.NotificacaoId).ToList();
+                //var usuarios = _aluno.GetAlunosComUsuarioPorIdTurma(1);
+                //var listaIdUsuarios = usuarios.Select(x => x.NotificacaoId).ToList();
 
                 if (listaIdUsuarios.Count > 0) {
                     notificationFireBase.SendMessage(notification, listaIdUsuarios);

@@ -24,10 +24,10 @@ namespace ControleDePresenca.Notifications
             {
                 var result = "-1";
                 var webAddr = "https://gcm-http.googleapis.com/gcm/send";
-                
-                var regID = registrationId;
 
-                //var regID = registrationIdList.ToArray();
+                //var regID = registrationId;
+
+                var regID = registrationIdList.ToArray();
 
 
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);

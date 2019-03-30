@@ -22,10 +22,17 @@ namespace ControleDePresenca.API.Controllers
     {
 
         UsuarioRepository _usuario;
+        ITurmaRepository _turma;
+        AlunoRepository _aluno;
+
 
         public UserController()
         {
             _usuario = new UsuarioRepository();
+            _turma = new TurmaRepository();
+            _aluno = new AlunoRepository();
+
+
         }
 
 
@@ -298,15 +305,21 @@ namespace ControleDePresenca.API.Controllers
 
             try
             {
-                NotificationFireBase notificationFireBase = new NotificationFireBase();
 
-                NotificationParams notification = new NotificationParams();
+                var usuarios = _aluno.GetAlunosComUsuarioPorIdTurma(1);
 
-                notification.Title = "Testando o ping";
 
-                notification.Body = "Vamos testar se o TESTE conseguiu pingar";
+                var listaIdUsuarios = usuarios.Select(x => x.NotificacaoId).ToList();
 
-                notificationFireBase.SendMessage( notification , null);
+                //NotificationFireBase notificationFireBase = new NotificationFireBase();
+
+                //NotificationParams notification = new NotificationParams();
+
+                //notification.Title = "Testando o ping";
+
+                //notification.Body = "Vamos testar se o TESTE conseguiu pingar";
+
+                //notificationFireBase.SendMessage( notification , null);
 
                 return Request.CreateResponse(HttpStatusCode.OK);
 

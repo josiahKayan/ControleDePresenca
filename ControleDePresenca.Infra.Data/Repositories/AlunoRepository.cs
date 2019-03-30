@@ -90,6 +90,24 @@ namespace ControleDePresenca.Infra.Data.Repositories
             return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").Include("Presenca").ToList().Find(x => x.AlunoId == id);
         }
 
+        public List<Usuario> GetAlunosComUsuarioPorIdTurma(int id)
+        {
+            //var l = context.Set<Aluno>().Include("Usuario").Include("Tag").ToList().Where(x => x.Turma.Select(t => t.TurmaId == id).FirstOrDefault()).ToList();
+            
+            
+
+            var l = context.Aluno.Where(x => x.Turma.Select(t => t.TurmaId == id).FirstOrDefault()).ToList();
+
+            var g = l.Select(x => x.UsuarioId).ToList();
+
+            var h = context.Usuarios.Where(r => g.Contains(r.UsuarioId)).ToList();
+
+            //var listOfRoleId = user.Roles.Select(r => r.RoleId);
+            //var roles = db.Roles.Where(r => listOfRoleId.Contains(r.RoleId));
+
+            return h;
+        }
+
         //public TEntity GetEntityById(int id)
         //{
         //    return context.Set<TEntity>().Find(id);
