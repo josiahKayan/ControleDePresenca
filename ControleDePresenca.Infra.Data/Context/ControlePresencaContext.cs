@@ -57,7 +57,7 @@ namespace ControleDePresenca.Infra.Data.Context
         }
 
         
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
 
         public DbSet<Tag> Tags { get; set; }
 
@@ -72,6 +72,15 @@ namespace ControleDePresenca.Infra.Data.Context
         public DbSet<ListaPresenca> ListaPresenca { get; set; }
 
         public DbSet<Presenca> Presenca { get; set; }
+
+        public DbSet<MensagemPublicacao> MensagemPublicacao { get; set; }
+
+        public DbSet<MensagemRapida> MensagemRapida { get; set; }
+
+
+
+        
+
 
 
     }

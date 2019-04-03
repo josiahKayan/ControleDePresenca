@@ -306,20 +306,28 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                var usuarios = _aluno.GetAlunosComUsuarioPorIdTurma(1);
+                //Instancia notificação
+                var notificationFireBase = new NotificationFireBase();
+                var notification = new NotificationParams();
 
+                //Inicia o objeto
+                notification.Title = "Nova lista de chamada";
+                notification.Body = "Atenção, o seu professor começou uma nova lista de chamada.";
+
+                var usuarios = _aluno.GetAlunosComUsuarioPorIdTurma(1);
 
                 var listaIdUsuarios = usuarios.Select(x => x.NotificacaoId).ToList();
 
-                //NotificationFireBase notificationFireBase = new NotificationFireBase();
+                listaIdUsuarios = listaIdUsuarios.Where(x => x != null).ToList();
 
-                //NotificationParams notification = new NotificationParams();
+                //var listaIdUsuarios = usuarios.Select(x => x.Usuario.NotificacaoId).ToList();
+                //var usuarios = _aluno.GetAlunosComUsuarioPorIdTurma(1);
+                //var listaIdUsuarios = usuarios.Select(x => x.NotificacaoId).ToList();
 
-                //notification.Title = "Testando o ping";
-
-                //notification.Body = "Vamos testar se o TESTE conseguiu pingar";
-
-                //notificationFireBase.SendMessage( notification , null);
+                if (listaIdUsuarios.Count > 0)
+                {
+                    notificationFireBase.SendMessage(notification, listaIdUsuarios);
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK);
 

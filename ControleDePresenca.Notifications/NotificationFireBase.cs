@@ -22,34 +22,41 @@ namespace ControleDePresenca.Notifications
 
             try
             {
-                var result = "-1";
-                var webAddr = "https://gcm-http.googleapis.com/gcm/send";
 
-                //var regID = registrationId;
-
-                var regID = registrationIdList.ToArray();
-
-
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Headers.Add("Authorization:key=" + serverKey);
-                httpWebRequest.Method = "POST";
-
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                foreach (var item in registrationIdList)
                 {
-                    string json = "{\"to\": \"" + regID + "\",\"notification\": {\"title\": \""+notification.Title+"\",\"body\": \""+notification.Body+"\"},\"priority\":10}";
-                    //registration_ids, array of strings -  to, single recipient
-                    streamWriter.Write(json);
-                    streamWriter.Flush();
-                }
 
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    result = streamReader.ReadToEnd();
-                }
 
-                return result;
+
+                    var result = "-1";
+                    var webAddr = "https://gcm-http.googleapis.com/gcm/send";
+
+                    var regID = item;
+
+                    //var regID = string.Join(",", registrationIdList);
+
+
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Headers.Add("Authorization:key=" + serverKey);
+                    httpWebRequest.Method = "POST";
+
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        string json = "{\"to\": \"" + regID.ToString() + "\",\"notification\": {\"title\": \"" + notification.Title + "\",\"body\": \"" + notification.Body + "\"},\"priority\":10}";
+                        //registration_ids, array of strings -  to, single recipient
+                        streamWriter.Write(json);
+                        streamWriter.Flush();
+                    }
+
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        result = streamReader.ReadToEnd();
+                    }
+
+                }
+                return "ok";
             }
             catch (Exception ex)
             {

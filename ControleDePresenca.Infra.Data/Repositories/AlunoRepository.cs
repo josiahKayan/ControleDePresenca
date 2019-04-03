@@ -77,8 +77,9 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public Aluno GetAlunoByUsuarioId(int id)
         {
-            return context.Set<Aluno>().Include("Usuario").Include("Tag").ToList().Find(x => x.UsuarioId == id);
+            return context.Set<Aluno>().Include("Usuario").Include("Tag").Where(x => x.UsuarioId == id).FirstOrDefault();
         }
+
 
         public IEnumerable<Aluno> GetAllAlunos()
         {
@@ -100,7 +101,7 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
             var g = l.Select(x => x.UsuarioId).ToList();
 
-            var h = context.Usuarios.Where(r => g.Contains(r.UsuarioId)).ToList();
+            var h = context.Usuario.Where(r => g.Contains(r.UsuarioId)).ToList();
 
             //var listOfRoleId = user.Roles.Select(r => r.RoleId);
             //var roles = db.Roles.Where(r => listOfRoleId.Contains(r.RoleId));
@@ -170,7 +171,7 @@ namespace ControleDePresenca.Infra.Data.Repositories
                 }
             }
 
-            context.Usuarios.Remove(obj.Usuario);
+            context.Usuario.Remove(obj.Usuario);
 
             context.Set<Aluno>().Remove(obj);
             context.SaveChanges();

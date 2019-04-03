@@ -20,7 +20,7 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public Usuario Login(Usuario user)
         {
-            var usuario = context.Usuarios.Where(u => u.Email.Equals(user.Email) && u.Senha.Equals(user.Senha)).FirstOrDefault();
+            var usuario = context.Usuario.Where(u => u.Email.Equals(user.Email) && u.Senha.Equals(user.Senha)).FirstOrDefault();
 
             if (usuario != null)
             {
@@ -37,7 +37,7 @@ namespace ControleDePresenca.Infra.Data.Repositories
             using (var context = new ControlePresencaContext())
             {
 
-                var u = context.Usuarios.Find(idUser);
+                var u = context.Usuario.Find(idUser);
 
                 u.NotificacaoId = idRegister;
 

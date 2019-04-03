@@ -107,7 +107,7 @@ namespace ControleDePresenca.API.Controllers
 
                 g.TotalDias = totalDias;
 
-                g.FrequenciaAlunos = _presenca.GetFrequenciaAlunos(  alunosTurma , idTurma, totalDias);
+                g.FrequenciaAlunos = _presenca.GetFrequenciaAlunos(  alunosTurma , idTurma, totalDias,0);
 
                 g.Datas = _presenca.GetListaDatas(alunosTurma, idTurma, totalDias);
 
@@ -129,6 +129,43 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
+        [HttpGet]
+        [Route("getGeneralList/{idTurma}/{idUser}")]
+        public HttpResponseMessage getGeneralListIndividual(int idTurma, int iduser)
+        {
+
+            try
+            {
+
+                int totalDias = _presenca.GetTotalPresenca(idTurma);
+
+                var alunosTurma = _turma.GetAlunoByTurmaId(idTurma).Where( a => a.UsuarioId == iduser );
+
+                Geral g = new Geral();
+
+                g.TotalDias = totalDias;
+
+                g.FrequenciaAlunos = _presenca.GetFrequenciaAlunos(alunosTurma, idTurma, totalDias,iduser);
+
+                g.Datas = _presenca.GetListaDatas(alunosTurma, idTurma, totalDias);
+
+                //var _aluno = new AlunoRepository();
+
+                //var aluno = _aluno.GetAlunoByUsuarioId(idUser);
+
+                //_presenca.InsertPresenca(idPresenca, idTurma, aluno.AlunoId);
+
+                //var lista = "{\"totalDias\":4,\"frequencia\":[\"aluno\":{\"strFoto\":\"www.foto.com.br\",\"strNome\":\"Felipe\",\"data\":[\"01-01-2019\",\"02-01-2019\",\"03-01-2019\",\"04-01-2019\"],\"presencas\":3,\"faltas\":0},\"aluno\":{\"strFoto\":\"www.foto.com.br\",            \"strNome\":\"Felipe\",            \"data\":[\"01-01-2019\",\"02-01-2019\",\"03-01-2019\",\"04-01-2019\"],	    \"presencas\":2,	    \"faltas\":1        }        ,        \"aluno\":{              \"strFoto\":\"www.foto.com.br\",\"strNome\":\"Felipe\",\"data\":[\"01-01-2019\",\"02-01-2019\",\"03-01-2019\",\"04-01-2019\"],\"presencas\":0,\"faltas\":3}]}";
+
+                return Request.CreateResponse(HttpStatusCode.OK, g);
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
 
 
         /// <summary>

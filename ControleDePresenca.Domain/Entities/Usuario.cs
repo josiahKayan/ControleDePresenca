@@ -13,6 +13,8 @@ namespace ControleDePresenca.Domain.Entities
     /// </summary>
     public class Usuario
     {
+        
+
         //[Key]
         public int UsuarioId { get; set; }
         /// <summary>
@@ -27,7 +29,8 @@ namespace ControleDePresenca.Domain.Entities
         public int Perfil { get; set; }
 
         public string NotificacaoId { get; set; }
+        
 
-
+        
     }
 }

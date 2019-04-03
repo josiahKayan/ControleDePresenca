@@ -52,6 +52,8 @@
   <ItemGroup>
     <Compile Include="Entities\Aluno.cs" />
     <Compile Include="Entities\Curso.cs" />
+    <Compile Include="Entities\MensagemRapida.cs" />
+    <Compile Include="Entities\MensagemPublicacao.cs" />
     <Compile Include="Entities\PresencaDia.cs" />
     <Compile Include="Entities\FrequenciaAlunos.cs" />
     <Compile Include="Entities\Geral.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="Interfaces\Repositories\ICursoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPresencaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IProfessorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPublicacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryBase.cs" />
     <Compile Include="Interfaces\Repositories\IAlunoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITurmaRepository.cs" />

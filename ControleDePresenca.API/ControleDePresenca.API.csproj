@@ -154,6 +154,7 @@
     <Compile Include="Controllers\ListaPresencaController.cs" />
     <Compile Include="Controllers\PresencaController.cs" />
     <Compile Include="Controllers\AlunoController.cs" />
+    <Compile Include="Controllers\PublicacaoController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\TurmaController.cs" />
     <Compile Include="Controllers\CursoController.cs" />
@@ -163,9 +164,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\MensagemRapidaViewModel.cs" />
     <Compile Include="ViewModels\PerfilViewModel.cs" />
     <Compile Include="ViewModels\PresencaViewModel.cs" />
     <Compile Include="ViewModels\AlunoViewModel.cs" />
+    <Compile Include="ViewModels\PublicacaoViewModel.cs" />
     <Compile Include="ViewModels\TagViewModel.cs" />
     <Compile Include="ViewModels\CursoViewModel.cs" />
     <Compile Include="ViewModels\ProfessorViewModel.cs" />

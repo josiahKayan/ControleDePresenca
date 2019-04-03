@@ -16,7 +16,7 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
 
         int GetTotalPresenca(int idTurma);
 
-        List<FrequenciaAlunos> GetFrequenciaAlunos( IEnumerable<Aluno> lAluno,  int idTurma, int totalDias);
+        List<FrequenciaAlunos> GetFrequenciaAlunos( IEnumerable<Aluno> lAluno,  int idTurma, int totalDias, int idUser);
 
         List<string> GetListaDatas(IEnumerable<Aluno> lAluno, int idTurma, int totalDias);
 

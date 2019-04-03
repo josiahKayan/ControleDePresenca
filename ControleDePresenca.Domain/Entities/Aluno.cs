@@ -44,6 +44,7 @@ namespace ControleDePresenca.Domain.Entities
         /// </summary>
         public virtual ICollection<Turma> Turma { get; set; }
 
+
         public string NotificacaoId { get; set; }
 
     }

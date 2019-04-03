@@ -153,7 +153,25 @@ namespace ControleDePresenca.API.Controllers
         }
 
 
-        
+        [HttpGet]
+        [Route("usuario/{id}")]
+        public HttpResponseMessage GetAlunoByUsuario(string id)
+        {
+
+            try
+            {
+
+                var professor = _professor.GetProfessorByIdIncludesUserId(int.Parse(id));
+
+                return Request.CreateResponse(HttpStatusCode.OK, professor);
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
 
     }
 }

@@ -84,6 +84,7 @@
     <Compile Include="Repositories\ListaPresencaRepository.cs" />
     <Compile Include="Repositories\PresencaRepository.cs" />
     <Compile Include="Repositories\ProfessorRepository.cs" />
+    <Compile Include="Repositories\PublicacaoRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\AlunoRepository.cs" />
     <Compile Include="Repositories\TurmaRepository.cs" />

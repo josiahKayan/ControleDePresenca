@@ -111,6 +111,26 @@ namespace ControleDePresenca.API.Controllers
         }
 
         [HttpGet]
+        [Route("usuario/{id}")]
+        public HttpResponseMessage GetAlunoByUsuario(string id)
+        {
+
+            try
+            {
+
+                var aluno = _aluno.GetAlunoByUsuarioId(int.Parse(id));
+
+                return Request.CreateResponse(HttpStatusCode.OK, aluno);
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
+        [HttpGet]
         [Route("delete/{id}")]
         public HttpResponseMessage DeleteAluno(string id)
         {

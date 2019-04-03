@@ -10,7 +10,7 @@ namespace ControleDePresenca.Domain.Entities
         public int IdAluno { get; set; }
         public string Nome { get; set; }
         public string NomeCompleto { get; set; }
-        //public string Imagem { get; set; }
+        public string Imagem { get; set; }
         //public DateTime DataNascimento { get; set; }
         //public int Idade { get; set; }
 

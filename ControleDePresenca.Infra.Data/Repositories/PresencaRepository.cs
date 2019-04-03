@@ -81,10 +81,16 @@ namespace ControleDePresenca.Infra.Data.Repositories
                 
             };
 
-            
+            var presencaExistente = context.Presenca.Where(x => x.NomeDia == p.NomeDia && x.NomeMes == p.NomeMes && x.ListaPresencaId == idPresenca && x.AlunoId == p.AlunoId &&
+          x.HoraChegada.Hour == p.HoraChegada.Hour).ToList();
 
-            context.Presenca.Add(p);
-            context.SaveChanges();
+            if (presencaExistente.Count <= 0) {
+                context.Presenca.Add(p);
+                context.SaveChanges();
+
+            }
+
+
 
             //var professor = context.Professor.Find(turma.ProfessorId);
             //var curso = context.Cursos.Find(turma.CursoId);
@@ -101,82 +107,167 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         }
 
-        public List<FrequenciaAlunos> GetFrequenciaAlunos(IEnumerable<Aluno> lAlunos, int idTurma, int totalDias)
+        public List<FrequenciaAlunos> GetFrequenciaAlunos(IEnumerable<Aluno> lAlunos, int idTurma, int totalDias, int iduser)
         {
-            var fa = new List<FrequenciaAlunos>();
-            FrequenciaAlunos freq = null;
 
-            var p = new List<Presenca>();
-            p = context.Set<Presenca>().Where(t => t.ListaPresenca.TurmaId == idTurma).ToList();
-
-            var lp = new List<ListaPresenca>();
-            lp = context.Set<ListaPresenca>().Where(t => t.TurmaId == idTurma).ToList();
-
-            foreach (var aluno in lAlunos)
+            if (iduser == 0)
             {
-                freq = new FrequenciaAlunos();
-                freq.IdAluno = aluno.AlunoId;
-                freq.Nome = aluno.Nome;
-                freq.NomeCompleto = aluno.NomeCompleto;
-                freq.PresencasTotal = p.Count( x => x.AlunoId == aluno.AlunoId  )  ;
-                freq.FaltasTotal = totalDias - freq.PresencasTotal;
 
-                //List<ListaPresenca> g = lp.Select(x => x.Presenca.Where(z => z.AlunoId == aluno.AlunoId)).ToList();
+                var fa = new List<FrequenciaAlunos>();
+                FrequenciaAlunos freq = null;
 
-                freq.ListaPresencaDia = new List<PresencaDia>();
+                var p = new List<Presenca>();
+                p = context.Set<Presenca>().Where(t => t.ListaPresenca.TurmaId == idTurma).ToList();
 
-                for (int i = 0; i < lp.Count; i++)
+                var lp = new List<ListaPresenca>();
+                lp = context.Set<ListaPresenca>().Where(t => t.TurmaId == idTurma).ToList();
+
+                foreach (var aluno in lAlunos)
                 {
+                    freq = new FrequenciaAlunos();
+                    freq.IdAluno = aluno.AlunoId;
+                    freq.Nome = aluno.Nome;
+                    freq.NomeCompleto = aluno.NomeCompleto;
+                    freq.PresencasTotal = p.Count(x => x.AlunoId == aluno.AlunoId);
+                    freq.FaltasTotal = totalDias - freq.PresencasTotal;
 
-                    PresencaDia presencaDia = new PresencaDia();
+                    //List<ListaPresenca> g = lp.Select(x => x.Presenca.Where(z => z.AlunoId == aluno.AlunoId)).ToList();
 
-                    try
+                    freq.ListaPresencaDia = new List<PresencaDia>();
+
+                    for (int i = 0; i < lp.Count; i++)
                     {
-                        presencaDia.AlunoId = aluno.AlunoId;
+
+                        PresencaDia presencaDia = new PresencaDia();
+
+                        try
+                        {
+                            presencaDia.AlunoId = aluno.AlunoId;
 
 
-                        presencaDia.Presente =  lp[i].Presenca.Select(x => x).Any(x => x.AlunoId == aluno.AlunoId) == true ? 1: 0;
+                            presencaDia.Presente = lp[i].Presenca.Select(x => x).Any(x => x.AlunoId == aluno.AlunoId) == true ? 1 : 0;
 
-                        Presenca presenca = lp[i].Presenca.Select(x => x).Where(x => x.AlunoId == aluno.AlunoId).FirstOrDefault();
+                            Presenca presenca = lp[i].Presenca.Select(x => x).Where(x => x.AlunoId == aluno.AlunoId).FirstOrDefault();
 
-                        presencaDia.PresencaId = i;
+                            presencaDia.PresencaId = i;
 
-                        presencaDia.Dia = "" + presenca.ListaPresenca.Dia.ToString() + "-" + presenca.ListaPresenca.Mes + "-" + presenca.ListaPresenca.Ano;
+                            presencaDia.Dia = "" + presenca.ListaPresenca.Dia.ToString() + "-" + presenca.ListaPresenca.Mes + "-" + presenca.ListaPresenca.Ano;
 
+
+                        }
+                        catch (Exception e)
+                        {
+                            presencaDia.Dia = "";
+                        }
+
+
+                        freq.ListaPresencaDia.Add(presencaDia);
 
                     }
-                    catch (Exception e)
-                    {
-                        presencaDia.Dia = "";
-                    }
 
-                  
-                    freq.ListaPresencaDia.Add(presencaDia);
+
+
+                    //freq.ListaData.Add();
+
+                    //freq.ListaData = 
+
+                    fa.Add(freq);
+
+                    //var playersPerTeam =
+                    //    from player in players
+                    //    group player by player.Team into playerGroup
+                    //    select new
+                    //    {
+                    //        Team = playerGroup.Key,
+                    //        Count = playerGroup.Count(),
+                    //    };
+
+                    //var t = l.Select(x => x.Presenca.Select(a => a.AlunoId == aluno.AlunoId)).ToList();
 
                 }
 
-
-
-                //freq.ListaData.Add();
-
-                //freq.ListaData = 
-
-                fa.Add(freq);
-
-                //var playersPerTeam =
-                //    from player in players
-                //    group player by player.Team into playerGroup
-                //    select new
-                //    {
-                //        Team = playerGroup.Key,
-                //        Count = playerGroup.Count(),
-                //    };
-
-                //var t = l.Select(x => x.Presenca.Select(a => a.AlunoId == aluno.AlunoId)).ToList();
-
+                return fa;
             }
 
-            return fa;
+            else
+            {
+
+                var fa = new List<FrequenciaAlunos>();
+                FrequenciaAlunos freq = null;
+
+                var p = new List<Presenca>();
+                p = context.Set<Presenca>().Where(t => t.ListaPresenca.TurmaId == idTurma).ToList();
+
+                var lp = new List<ListaPresenca>();
+                lp = context.Set<ListaPresenca>().Where(t => t.TurmaId == idTurma).ToList();
+
+                foreach (var aluno in lAlunos)
+                {
+                    freq = new FrequenciaAlunos();
+                    freq.IdAluno = aluno.AlunoId;
+                    freq.Nome = aluno.Nome;
+                    freq.NomeCompleto = aluno.NomeCompleto;
+                    freq.Imagem = aluno.Imagem;
+                    freq.PresencasTotal = p.Count(x => x.AlunoId == aluno.AlunoId);
+                    freq.FaltasTotal = totalDias - freq.PresencasTotal;
+
+                    //List<ListaPresenca> g = lp.Select(x => x.Presenca.Where(z => z.AlunoId == aluno.AlunoId)).ToList();
+
+                    freq.ListaPresencaDia = new List<PresencaDia>();
+
+                    for (int i = 0; i < lp.Count; i++)
+                    {
+
+                        PresencaDia presencaDia = new PresencaDia();
+
+                        try
+                        {
+                            presencaDia.AlunoId = aluno.AlunoId;
+
+
+                            presencaDia.Presente = lp[i].Presenca.Select(x => x).Any(x => x.AlunoId == aluno.AlunoId) == true ? 1 : 0;
+
+                            Presenca presenca = lp[i].Presenca.Select(x => x).Where(x => x.AlunoId == aluno.AlunoId).FirstOrDefault();
+
+                            presencaDia.PresencaId = i;
+
+                            presencaDia.Dia = "" + presenca.ListaPresenca.Dia.ToString() + "-" + presenca.ListaPresenca.Mes + "-" + presenca.ListaPresenca.Ano;
+
+
+                        }
+                        catch (Exception e)
+                        {
+                            presencaDia.Dia = "";
+                        }
+
+
+                        freq.ListaPresencaDia.Add(presencaDia);
+
+                    }
+
+
+
+                    //freq.ListaData.Add();
+
+                    //freq.ListaData = 
+
+                    fa.Add(freq);
+
+                    //var playersPerTeam =
+                    //    from player in players
+                    //    group player by player.Team into playerGroup
+                    //    select new
+                    //    {
+                    //        Team = playerGroup.Key,
+                    //        Count = playerGroup.Count(),
+                    //    };
+
+                    //var t = l.Select(x => x.Presenca.Select(a => a.AlunoId == aluno.AlunoId)).ToList();
+
+                }
+
+                return fa;
+            }
         }
 
 
