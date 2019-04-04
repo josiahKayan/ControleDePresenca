@@ -16,5 +16,8 @@ namespace ControleDePresenca.API.ViewModels
 
         public DateTime DataNascimento { get; set; }
 
+        public string Imagem { get; set; }
+
+
     }
 }

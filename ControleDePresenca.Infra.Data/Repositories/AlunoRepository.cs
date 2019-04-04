@@ -151,7 +151,35 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         }
 
-        
+        public void AtualizaAluno(Aluno a, Usuario u  )
+        {
+
+            Aluno alunoUpdate = null;
+            Aluno aluno = null;
+
+            using (var context = new ControlePresencaContext())
+            {
+
+                alunoUpdate = context.Set<Aluno>().Include("Turma").Include("Usuario").Include("Tag").ToList().Where(x => x.UsuarioId == a.UsuarioId   ).FirstOrDefault();
+                
+            }
+
+            using (var context = new ControlePresencaContext())
+            {
+
+                //alunoUpdate.AlunoId = a.AlunoId;
+                alunoUpdate.Nome = a.Nome;
+                alunoUpdate.NomeCompleto = a.NomeCompleto;
+                alunoUpdate.DataNascimento = a.DataNascimento;
+                alunoUpdate.Imagem = a.Imagem;
+                alunoUpdate.Usuario = u;
+
+                context.Aluno.Attach(alunoUpdate);
+
+                context.SaveChanges();
+            }
+
+        }
 
         public void RemoveComUsuario(Aluno obj)
         {

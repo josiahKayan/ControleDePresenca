@@ -63,6 +63,31 @@ namespace ControleDePresenca.Infra.Data.Repositories
             }
         }
 
+
+        public void AtualizaProfessor(Professor p, Usuario u)
+        {
+            Professor professor = null;
+
+            using (var context = new ControlePresencaContext())
+            {
+                professor = context.Professor.Where(x => x.UsuarioId == p.UsuarioId).FirstOrDefault();
+            }
+
+            using (var context = new ControlePresencaContext())
+            {
+                
+                professor.Nome = p.Nome;
+                professor.NomeCompleto = p.NomeCompleto;
+                professor.DataNascimento = p.DataNascimento;
+                professor.Imagem = p.Imagem;
+                professor.Usuario = u;
+
+                context.Entry(professor).State = System.Data.Entity.EntityState.Modified;
+
+                context.SaveChanges();
+            }
+        }
+
         public void RemoveComUsuario(Professor obj)
         {
 

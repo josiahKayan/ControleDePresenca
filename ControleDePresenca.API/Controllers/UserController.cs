@@ -24,6 +24,8 @@ namespace ControleDePresenca.API.Controllers
         UsuarioRepository _usuario;
         ITurmaRepository _turma;
         AlunoRepository _aluno;
+        ProfessorRepository _professor;
+
 
 
         public UserController()
@@ -31,7 +33,7 @@ namespace ControleDePresenca.API.Controllers
             _usuario = new UsuarioRepository();
             _turma = new TurmaRepository();
             _aluno = new AlunoRepository();
-
+            _professor = new ProfessorRepository();
 
         }
 
@@ -166,6 +168,7 @@ namespace ControleDePresenca.API.Controllers
                     perfil.Nome = aluno.Nome;
                     perfil.NomeCompleto = aluno.NomeCompleto;
                     perfil.DataNascimento = aluno.DataNascimento;
+                    perfil.Imagem = aluno.Imagem;
 
                     return Request.CreateResponse(HttpStatusCode.OK, perfil);
 
@@ -179,6 +182,7 @@ namespace ControleDePresenca.API.Controllers
                     perfil.Nome = professor.Nome;
                     perfil.NomeCompleto = professor.NomeCompleto;
                     perfil.DataNascimento = professor.DataNascimento;
+                    perfil.Imagem = professor.Imagem;
 
                     return Request.CreateResponse(HttpStatusCode.OK, perfil);
 
@@ -200,6 +204,69 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
+
+        [HttpPost]
+        //[HttpGet]
+        [Route("UpdatePerfil/{id}")]
+        public HttpResponseMessage UpdatePerfil([FromBody] PerfilViewModel usuarioVm, string id)
+        {
+
+            try
+            {
+
+                var _professor = new ProfessorRepository();
+                var _aluno = new AlunoRepository();
+
+
+
+                var usuario = _usuario.GetEntityById(int.Parse(id));
+
+                if (usuario.Perfil == 0)
+                {
+                    var aluno = new Aluno();
+
+                    aluno.UsuarioId = usuario.UsuarioId;
+                    aluno.Nome = usuarioVm.Nome ;
+                    aluno.NomeCompleto = usuarioVm.NomeCompleto;
+                    aluno.DataNascimento = usuarioVm.DataNascimento;
+                    aluno.Imagem = usuarioVm.Imagem;
+
+                    _aluno.AtualizaAluno(aluno, usuario);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "Ok");
+
+                }
+                else if (usuario.Perfil == 1)
+                {
+
+                    var perfil = new Professor();
+                    perfil.UsuarioId = usuario.UsuarioId;
+                    perfil.Nome = usuarioVm.Nome;
+                    perfil.NomeCompleto = usuarioVm.NomeCompleto;
+                    perfil.DataNascimento = usuarioVm.DataNascimento;
+                    perfil.Imagem = usuarioVm.Imagem;
+
+                    _professor.AtualizaProfessor(perfil, usuario);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "Ok");
+
+
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, usuario);
+
+
+            }
+            catch (Exception e)
+            {
+
+                Log log = new Log();
+                log.Message = e.Message;
+                log.Status = "error";
+                return Request.CreateResponse(HttpStatusCode.OK, log);
+            }
+
+        }
 
 
         [HttpGet]
@@ -303,42 +370,12 @@ namespace ControleDePresenca.API.Controllers
         public HttpResponseMessage Ping()
         {
 
-            try
-            {
+            
+               
 
-                //Instancia notificação
-                var notificationFireBase = new NotificationFireBase();
-                var notification = new NotificationParams();
+                return Request.CreateResponse(HttpStatusCode.OK,"Funcionou");
 
-                //Inicia o objeto
-                notification.Title = "Nova lista de chamada";
-                notification.Body = "Atenção, o seu professor começou uma nova lista de chamada.";
-
-                var usuarios = _aluno.GetAlunosComUsuarioPorIdTurma(1);
-
-                var listaIdUsuarios = usuarios.Select(x => x.NotificacaoId).ToList();
-
-                listaIdUsuarios = listaIdUsuarios.Where(x => x != null).ToList();
-
-                //var listaIdUsuarios = usuarios.Select(x => x.Usuario.NotificacaoId).ToList();
-                //var usuarios = _aluno.GetAlunosComUsuarioPorIdTurma(1);
-                //var listaIdUsuarios = usuarios.Select(x => x.NotificacaoId).ToList();
-
-                if (listaIdUsuarios.Count > 0)
-                {
-                    notificationFireBase.SendMessage(notification, listaIdUsuarios);
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK);
-
-            }
-            catch (Exception e)
-            {
-
-                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
-
-
-            }
+           
 
 
 
