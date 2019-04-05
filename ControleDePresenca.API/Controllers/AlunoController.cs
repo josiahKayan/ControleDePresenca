@@ -51,6 +51,76 @@ namespace ControleDePresenca.API.Controllers
 
         }
 
+
+        [HttpGet]
+        [Route("alunos/peloid/{id}")]
+        public HttpResponseMessage GetAlunosPeloId( int id)
+        {
+
+            try
+            {
+
+                var listNaoPertencentes = _aluno.GetAlunosNaoPertencentesNessaTurma(id);
+                var listPertencentes = _aluno.GetAlunosNessaTurma(id);
+
+                List<AlunoViewModel> listaAlunos = new List<AlunoViewModel>();
+
+                foreach (var item in listNaoPertencentes)
+                {
+                    AlunoViewModel vm = new AlunoViewModel();
+
+                    vm.AlunoId = item.AlunoId;
+                    vm.Nome = item.Nome;
+                    vm.NomeCompleto = item.NomeCompleto;
+                    vm.Selected = false;
+
+                    listaAlunos.Add(vm);
+                }
+
+                foreach (var item in listPertencentes)
+                {
+                    AlunoViewModel vm = new AlunoViewModel();
+
+                    vm.AlunoId = item.AlunoId;
+                    vm.Nome = item.Nome;
+                    vm.NomeCompleto = item.NomeCompleto;
+                    vm.Selected = false;
+
+                    listaAlunos.Add(vm);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, listaAlunos);
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
+        [HttpGet]
+        [Route("ping/{id}")]
+        public HttpResponseMessage GetAlunosPing(int id)
+        {
+
+            try
+            {
+
+                
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
+
+
         [HttpPost]
         [Route("addaluno")]
         public HttpResponseMessage NewAluno([FromBody] AlunoViewModel alunoVm)

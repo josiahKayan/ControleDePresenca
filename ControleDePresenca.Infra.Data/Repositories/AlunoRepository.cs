@@ -86,6 +86,18 @@ namespace ControleDePresenca.Infra.Data.Repositories
             return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").ToList();
         }
 
+        public IEnumerable<Aluno> GetAlunosNessaTurma( int id)
+        {
+            var al = context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").Where( a => a.Turma.Any( t => t.TurmaId == id)).ToList() ;
+            return al;
+        }
+
+        public IEnumerable<Aluno> GetAlunosNaoPertencentesNessaTurma(int id)
+        {
+            var al = context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").Where(a => a.Turma.Any(t => t.TurmaId != id)).ToList();
+            return al;
+        }
+
         public Aluno GetAlunoByIdAllIncludes(int id)
         {
             return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").Include("Presenca").ToList().Find(x => x.AlunoId == id);
@@ -155,7 +167,7 @@ namespace ControleDePresenca.Infra.Data.Repositories
         {
 
             Aluno alunoUpdate = null;
-            Aluno aluno = null;
+            
 
             using (var context = new ControlePresencaContext())
             {
@@ -173,8 +185,13 @@ namespace ControleDePresenca.Infra.Data.Repositories
                 alunoUpdate.DataNascimento = a.DataNascimento;
                 alunoUpdate.Imagem = a.Imagem;
                 alunoUpdate.Usuario = u;
+                alunoUpdate.UsuarioId = alunoUpdate.UsuarioId;
+                alunoUpdate.Tag = alunoUpdate.Tag;
+                alunoUpdate.TagId = alunoUpdate.TagId;
+                alunoUpdate.Turma = alunoUpdate.Turma;
+                
 
-                context.Aluno.Attach(alunoUpdate);
+                context.Entry(alunoUpdate).State = System.Data.Entity.EntityState.Modified;
 
                 context.SaveChanges();
             }

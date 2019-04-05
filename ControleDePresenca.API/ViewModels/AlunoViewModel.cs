@@ -33,6 +33,7 @@ namespace ControleDePresenca.API.ViewModels
 
         public string Imagem { get; set; }
 
+        public bool Selected { get; set; }
 
     }
 }

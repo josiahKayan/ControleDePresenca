@@ -32,12 +32,14 @@ namespace ControleDePresenca.Domain.Entities
 
         public int TagId { get; set; }
 
-        public int UsuarioId { get; set; }
         /// <summary>
         /// atributo da classe Usuario
         /// </summary>
         [ForeignKey("UsuarioId")]
         public virtual Usuario Usuario { get; set; }
+
+        public int UsuarioId { get; set; }
+
 
         /// <summary>
         /// atributo da classe Turma

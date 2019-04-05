@@ -205,8 +205,8 @@ namespace ControleDePresenca.API.Controllers
         }
 
 
-        [HttpPost]
-        //[HttpGet]
+        //[HttpPost]
+        [HttpGet]
         [Route("UpdatePerfil/{id}")]
         public HttpResponseMessage UpdatePerfil([FromBody] PerfilViewModel usuarioVm, string id)
         {
@@ -226,7 +226,7 @@ namespace ControleDePresenca.API.Controllers
                     var aluno = new Aluno();
 
                     aluno.UsuarioId = usuario.UsuarioId;
-                    aluno.Nome = usuarioVm.Nome ;
+                    aluno.Nome = usuarioVm.Nome;
                     aluno.NomeCompleto = usuarioVm.NomeCompleto;
                     aluno.DataNascimento = usuarioVm.DataNascimento;
                     aluno.Imagem = usuarioVm.Imagem;
@@ -246,7 +246,7 @@ namespace ControleDePresenca.API.Controllers
                     perfil.DataNascimento = usuarioVm.DataNascimento;
                     perfil.Imagem = usuarioVm.Imagem;
 
-                    _professor.AtualizaProfessor(perfil, usuario);
+                    _professor.AtualizaProfessor(perfil,usuario);
 
                     return Request.CreateResponse(HttpStatusCode.OK, "Ok");
 
