@@ -120,26 +120,28 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public List<Turma> GetTurmasPeloUsuarioAlunoId(int id)
         {
-            var turma = context.Set<Turma>().Include("Curso").Include("Professor").Where(x => x.AlunoLista.Count > 0).ToList();
+            var turma = context.Set<Turma>().Include("Curso").Include("Professor").Where( t => t.AlunoLista.Any( x => x.UsuarioId == id) ).ToList();
 
-            List<Turma> t = null;
 
-            foreach (var item in turma)
-            {
 
-                var alunos = item.AlunoLista.Where(a => a.UsuarioId == id).ToList()   ;
+            //List<Turma> t = null;
 
-                if (  alunos.Count > 0       ) {
-                    t = new List<Turma>();
-                    t.Add(item);
-                }
-            }
+            //foreach (var item in turma)
+            //{
+
+            //    var alunos = item.AlunoLista.Where(a => a.UsuarioId == id).ToList()   ;
+
+            //    if (  alunos.Count > 0       ) {
+            //        t = new List<Turma>();
+            //        t.Add(item);
+            //    }
+            //}
 
 
             //var s = turma.Select( t => t ).ToList().Where(  t => t.AlunoLista.Select( a => a.UsuarioId == id ).FirstOrDefault() ).ToList()    ;
 
             //return s;
-            return t;
+            return turma;
 
         }
 

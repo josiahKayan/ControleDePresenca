@@ -24,6 +24,11 @@ namespace ControleDePresenca.Domain.Interfaces.Repositories
 
         void InsertPresenca(int idPresenca, int idTurma, int idUser);
 
+        void InsertPresencaQrCode(int idPresenca, int idTurma, int idUser);
+
+        void InsertPresencaRFID(int idPresenca, int idTurma, int idUser);
+
+        
 
     }
 }

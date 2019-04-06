@@ -15,8 +15,8 @@ namespace ControleDePresenca.Domain.Entities
 
         public Turma()
         {
-            this.AlunoLista = new List<Aluno>();
-            this.PresencaLista = new List<ListaPresenca>();
+            //this.AlunoLista = new List<Aluno>();
+            //this.PresencaLista = new List<ListaPresenca>();
         }
 
         public int TurmaId { get; set; }

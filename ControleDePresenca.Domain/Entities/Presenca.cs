@@ -34,5 +34,9 @@ namespace ControleDePresenca.Domain.Entities
         [ForeignKey("ListaPresencaId")]
         public virtual ListaPresenca ListaPresenca { get; set; }
 
+        public int IsRFID { get; set; }
+        public int IsQRCODE { get; set; }
+
+
     }
 }

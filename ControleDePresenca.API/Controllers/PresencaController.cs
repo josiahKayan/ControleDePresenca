@@ -19,12 +19,14 @@ namespace ControleDePresenca.API.Controllers
 
         IPresencaRepository _presenca;
         ITurmaRepository _turma;
+        TagRepository _tag;
 
 
         public PresencaController()
         {
             _presenca = new PresencaRepository();
             _turma = new TurmaRepository();
+            _tag = new TagRepository();
 
         }
 
@@ -79,7 +81,7 @@ namespace ControleDePresenca.API.Controllers
 
                 var aluno = _aluno.GetAlunoByUsuarioId(idUser);
 
-                _presenca.InsertPresenca( idPresenca,  idTurma, aluno.AlunoId);
+                _presenca.InsertPresencaQrCode( idPresenca,  idTurma, aluno.AlunoId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "OK");
 
@@ -90,6 +92,47 @@ namespace ControleDePresenca.API.Controllers
             }
 
         }
+
+
+        [HttpGet]
+        [Route("InsertPresencaRFID/{tagCode}")]
+        public HttpResponseMessage InsertPresenca(string tagCode)
+        {
+
+
+            try
+            {
+
+                var _tag = new TagRepository();
+
+                var _aluno = new AlunoRepository();
+
+                var _listaPresenca = new ListaPresencaRepository();
+
+                var aluno = _aluno.GetAlunoByTag(tagCode);
+
+                var tempo = DateTime.Now;
+
+                var listaPresenca = _listaPresenca.BuscaListaPrensecaPorData(tempo);
+
+                if (listaPresenca !=null) {
+                    _presenca.InsertPresencaRFID(listaPresenca.ListaPresencaId, listaPresenca.TurmaId, aluno.AlunoId);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "OK");
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, "Error!!, verifique o horário");
+                }
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
 
         [HttpGet]
         [Route("getGeneralList/{idTurma}")]

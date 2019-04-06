@@ -17,7 +17,14 @@ namespace ControleDePresenca.Infra.Data.Repositories
             return context.Set<ListaPresenca>().Include("Turma").Where( t => t.Turma.TurmaId == id    ).OrderByDescending(a => a.Ano).ThenByDescending( o => o.Mes  ).ThenByDescending( p => p.Dia ).ToList();
         }
 
-        
+
+        //BuscaListaPrensecaPorData
+
+        public ListaPresenca BuscaListaPrensecaPorData(DateTime tempo)
+        {
+            return context.Set<ListaPresenca>().Include("Turma").Where(lp => lp.Ativo == true && lp.Dia == tempo.Day && lp.Mes == tempo.Month && lp.Ano == tempo.Year  && lp.HoraEntrada <= tempo  ).FirstOrDefault();
+        }
+
 
     }
 }

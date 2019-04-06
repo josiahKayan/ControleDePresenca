@@ -86,6 +86,12 @@ namespace ControleDePresenca.Infra.Data.Repositories
             return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").ToList();
         }
 
+
+        public Aluno GetAlunoByTag( string code)
+        {
+            return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").ToList().Where(a => a.Tag.Code == code).FirstOrDefault() ;
+        }
+
         public IEnumerable<Aluno> GetAlunosNessaTurma( int id)
         {
             var al = context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").Where( a => a.Turma.Any( t => t.TurmaId == id)).ToList() ;

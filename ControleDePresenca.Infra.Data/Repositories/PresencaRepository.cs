@@ -107,6 +107,109 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         }
 
+
+
+        public void InsertPresencaQrCode(int idPresenca, int idTurma, int idUser)
+        {
+            var arrayWeek = new string[] { "domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado" };
+            var arrayMonth = new string[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
+
+            var dia = (int)DateTime.Now.DayOfWeek;
+
+            string nomeDia = arrayWeek[dia];
+            string nomeMes = arrayMonth[DateTime.Now.Month - 1];
+
+            Presenca p = new Presenca()
+            {
+                AlunoId = idUser,
+                HoraChegada = DateTime.Now,
+                NomeDia = nomeDia,
+                NomeMes = nomeMes,
+                ListaPresencaId = idPresenca,
+                IsRFID = 0,
+                IsQRCODE = 1
+
+            };
+
+            var presencaExistente = context.Presenca.Where(x => x.NomeDia == p.NomeDia && x.NomeMes == p.NomeMes && x.ListaPresencaId == idPresenca && x.AlunoId == p.AlunoId &&
+          x.HoraChegada.Hour == p.HoraChegada.Hour).ToList();
+
+            if (presencaExistente.Count <= 0)
+            {
+                context.Presenca.Add(p);
+                context.SaveChanges();
+
+            }
+
+
+
+            //var professor = context.Professor.Find(turma.ProfessorId);
+            //var curso = context.Cursos.Find(turma.CursoId);
+
+            //turma.Professor = professor;
+            //turma.Curso = curso;
+
+            //context.Professor.Attach(turma.Professor);
+            //context.Cursos.Attach(turma.Curso);
+
+            //context.Turmas.Add(turma);
+
+            //context.SaveChanges();
+
+        }
+
+
+        public void InsertPresencaRFID(int idPresenca, int idTurma, int idUser)
+        {
+            var arrayWeek = new string[] { "domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado" };
+            var arrayMonth = new string[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
+
+            var dia = (int)DateTime.Now.DayOfWeek;
+
+            string nomeDia = arrayWeek[dia];
+            string nomeMes = arrayMonth[DateTime.Now.Month - 1];
+
+            Presenca p = new Presenca()
+            {
+                AlunoId = idUser,
+                HoraChegada = DateTime.Now,
+                NomeDia = nomeDia,
+                NomeMes = nomeMes,
+                ListaPresencaId = idPresenca,
+                IsRFID = 1,
+                IsQRCODE = 0 
+
+
+            };
+
+            var presencaExistente = context.Presenca.Where(x => x.NomeDia == p.NomeDia && x.NomeMes == p.NomeMes && x.ListaPresencaId == idPresenca && x.AlunoId == p.AlunoId &&
+          x.HoraChegada.Hour == p.HoraChegada.Hour).ToList();
+
+            if (presencaExistente.Count <= 0)
+            {
+                context.Presenca.Add(p);
+                context.SaveChanges();
+
+            }
+
+
+
+            //var professor = context.Professor.Find(turma.ProfessorId);
+            //var curso = context.Cursos.Find(turma.CursoId);
+
+            //turma.Professor = professor;
+            //turma.Curso = curso;
+
+            //context.Professor.Attach(turma.Professor);
+            //context.Cursos.Attach(turma.Curso);
+
+            //context.Turmas.Add(turma);
+
+            //context.SaveChanges();
+
+        }
+
+
         public List<FrequenciaAlunos> GetFrequenciaAlunos(IEnumerable<Aluno> lAlunos, int idTurma, int totalDias, int iduser)
         {
 
