@@ -71,6 +71,7 @@ namespace ControleDePresenca.API.Controllers
 
                     vm.AlunoId = item.AlunoId;
                     vm.Nome = item.Nome;
+                    vm.TurmaId = id;
                     vm.NomeCompleto = item.NomeCompleto;
                     vm.Selected = false;
 
@@ -82,12 +83,15 @@ namespace ControleDePresenca.API.Controllers
                     AlunoViewModel vm = new AlunoViewModel();
 
                     vm.AlunoId = item.AlunoId;
+                    vm.TurmaId = id;
                     vm.Nome = item.Nome;
                     vm.NomeCompleto = item.NomeCompleto;
-                    vm.Selected = false;
+                    vm.Selected = true;
 
                     listaAlunos.Add(vm);
                 }
+
+              
 
                 return Request.CreateResponse(HttpStatusCode.OK, listaAlunos);
 
@@ -253,6 +257,61 @@ namespace ControleDePresenca.API.Controllers
             }
 
         }
+
+        [HttpPost]
+        [Route("update-aluno-turma/{id}")]
+        public HttpResponseMessage UpdateAlunoTurma([FromBody] List<AlunoViewModel> alunos, int id)
+        {
+
+            try
+            {
+
+
+                int turmaId = id;
+
+                List<int> listaSelecionados = alunos.Select(a => a.AlunoId).ToList();
+
+                _aluno.AddOuRemoveAlunoNaTurma(id, listaSelecionados);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "The object was updated");
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+            }
+
+        }
+
+        //[HttpGet]
+        //[Route("update-aluno-turma/{id}")]
+        //public HttpResponseMessage UpdateAlunoTurma( int id)
+        //{
+
+        //    try
+        //    {
+
+
+        //        int turmaId = 3;
+
+        //        List<int> listaSelecionados = new List<int>();
+
+        //        listaSelecionados.Add(3);
+        //        listaSelecionados.Add(4);
+
+
+        //        _aluno.AddOuRemoveAlunoNaTurma(id, listaSelecionados);
+
+        //        return Request.CreateResponse(HttpStatusCode.OK, "The object was updated");
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.OK, e.Message);
+        //    }
+
+        //}
+
 
     }
 }

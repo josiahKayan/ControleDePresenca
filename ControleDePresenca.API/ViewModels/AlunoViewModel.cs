@@ -31,6 +31,9 @@ namespace ControleDePresenca.API.ViewModels
         /// </summary>
         public  Turma Turma { get; set; }
 
+        public int TurmaId { get; set; }
+
+
         public string Imagem { get; set; }
 
         public bool Selected { get; set; }

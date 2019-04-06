@@ -205,8 +205,7 @@ namespace ControleDePresenca.API.Controllers
         }
 
 
-        //[HttpPost]
-        [HttpGet]
+        [HttpPost]
         [Route("UpdatePerfil/{id}")]
         public HttpResponseMessage UpdatePerfil([FromBody] PerfilViewModel usuarioVm, string id)
         {

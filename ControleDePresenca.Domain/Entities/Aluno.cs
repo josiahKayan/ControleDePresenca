@@ -15,7 +15,7 @@ namespace ControleDePresenca.Domain.Entities
 
         public Aluno()
         {
-            Usuario = new Usuario();
+            //Usuario = new Usuario();
         }
 
         public int AlunoId { get; set; }

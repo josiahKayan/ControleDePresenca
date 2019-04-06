@@ -94,8 +94,64 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public IEnumerable<Aluno> GetAlunosNaoPertencentesNessaTurma(int id)
         {
-            var al = context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").Where(a => a.Turma.Any(t => t.TurmaId != id)).ToList();
+            var al = context.Set<Aluno>().Include("Turma").ToList();
+
+
+            al = al.Where(a => a.Turma.Count == 0 || a.Turma.All( t => t.TurmaId != id)   ).ToList();
+
             return al;
+        }
+
+
+        public void AddOuRemoveAlunoNaTurma(int id , List<int>  listaIdSelecionados)
+        {
+
+            List<int> listaParaRemover = new List<int>();
+
+            //1.Verifico se ListFull esta em ListNew os que nao estiverem são selecionados para remoção.
+
+           //Todos os  aluno dessa turma
+           var todosAlunosDessaTurma = GetAlunosNessaTurma(id);
+
+            //Alunos Selecionados
+            var alunosSelecionados = context.Set<Aluno>().Include("Turma").Where(r => listaIdSelecionados.Contains(r.AlunoId)).ToList();
+
+            //Lista para Exclusão
+            var lsitaParaExclusão = todosAlunosDessaTurma.Distinct().Where(x => !alunosSelecionados.Any(e => x.AlunoId == e.AlunoId)).ToList();
+
+            //2.Vou andar contrário na lista e Vou checar se ListNew esta em ListFull, os que não estiverem serão adicionados.
+
+            //Lista para adicionar
+            var alunosParaAdicionar = alunosSelecionados.Distinct().Where(x => !todosAlunosDessaTurma.Any(e => x.AlunoId == e.AlunoId)).ToList();
+
+            Turma turma = null;
+
+           
+            turma = context.Turmas.Where(x => x.TurmaId == id).FirstOrDefault();
+
+            //Adição dos alunos na turma
+            foreach (var item in alunosParaAdicionar)
+            {
+
+                    turma.AlunoLista.Add(item);
+
+            }
+
+            foreach (var aluno in lsitaParaExclusão)
+            {
+                var contains = turma.AlunoLista.Contains( aluno);
+
+                if (contains)
+                {
+                    turma.AlunoLista.Remove(aluno);
+                }
+            }
+
+            context.Entry(turma).State = System.Data.Entity.EntityState.Modified;
+
+            context.SaveChanges();
+            
+
         }
 
         public Aluno GetAlunoByIdAllIncludes(int id)
