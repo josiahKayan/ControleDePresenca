@@ -89,7 +89,8 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public Aluno GetAlunoByTag( string code)
         {
-            return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").ToList().Where(a => a.Tag.Code == code).FirstOrDefault() ;
+            code = code.ToUpper();
+            return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").ToList().Where(a => a.Tag.Code.Equals(code)).FirstOrDefault() ;
         }
 
         public IEnumerable<Aluno> GetAlunosNessaTurma( int id)
@@ -215,9 +216,9 @@ namespace ControleDePresenca.Infra.Data.Repositories
                 aluno.NomeCompleto = a.NomeCompleto;
                 aluno.Idade = a.Idade;
                 aluno.DataNascimento = a.DataNascimento;
-                aluno.Tag = a.Tag;
+                //aluno.Tag = a.Tag;
                 //aluno.Turma = alunoVm.Turma;
-                aluno.Usuario = a.Usuario;
+                //aluno.Usuario = a.Usuario;
                 aluno.Imagem = a.Imagem;
                 
                 context.SaveChanges();

@@ -13,6 +13,7 @@ namespace ControleDePresenca.Domain.Entities
         public int AlunoId { get; set; }
         public string Dia { get; set; }
         public int Presente { get; set; }
+        public string HoraChegada { get; set; }
 
 
 

@@ -42,7 +42,9 @@ namespace ControleDePresenca.API.Controllers
 
                 var listCursos = _curso.GetAll();
 
-                return Request.CreateResponse(HttpStatusCode.OK, listCursos);
+                var l = listCursos.OrderBy(o => o.Nome);
+
+                return Request.CreateResponse(HttpStatusCode.OK, l);
 
             }
             catch (Exception e)
@@ -169,13 +171,17 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                Curso curso = _curso.GetEntityById(int.Parse(id));
+                Curso curso = new Curso();
 
                 curso.Nome = cursoVm.Nome;
                 curso.Descricao = cursoVm.Descricao;
                 curso.Ativo = cursoVm.Ativo;
-                curso.ProfessorLista = cursoVm.ProfessorLista;
-                _curso.Update(curso);
+                //curso.ProfessorLista = cursoVm.ProfessorLista;
+
+
+                var cCurso = new CursoRepository();
+
+                cCurso.UpdateCurso(curso, int.Parse( id ) );
 
                 return Request.CreateResponse(HttpStatusCode.OK, "The course was updated");
 

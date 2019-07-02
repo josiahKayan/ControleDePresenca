@@ -115,12 +115,12 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public List<Turma> GetTurmasPeloUsuarioId(int id)
         {
-            return context.Set<Turma>().Include("Curso").Include("Professor").ToList().Where(x => x.Professor.UsuarioId == id).ToList();
+            return context.Set<Turma>().ToList().Where(x => x.Professor.UsuarioId == id).ToList();
         }
 
         public List<Turma> GetTurmasPeloUsuarioAlunoId(int id)
         {
-            var turma = context.Set<Turma>().Include("Curso").Include("Professor").Where( t => t.AlunoLista.Any( x => x.UsuarioId == id) ).ToList();
+            var turma = context.Set<Turma>().Where( t => t.AlunoLista.Any( x => x.UsuarioId == id) ).ToList();
 
 
 

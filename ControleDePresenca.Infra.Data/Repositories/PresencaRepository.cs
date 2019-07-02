@@ -16,7 +16,9 @@ namespace ControleDePresenca.Infra.Data.Repositories
                 List<Presenca> l = new List<Presenca>();
                 l =  context.Set<Presenca>().Include("Aluno").Where( p => p.ListaPresencaId == id && p.AlunoId == aluno ).ToList()   ;
 
-                if(l.Count == 0 )
+                
+
+                if (l.Count == 0 )
                 {
 
                     Presenca p = new Presenca();
@@ -256,6 +258,8 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
                             presencaDia.Dia = "" + presenca.ListaPresenca.Dia.ToString() + "-" + presenca.ListaPresenca.Mes + "-" + presenca.ListaPresenca.Ano;
 
+                            presencaDia.HoraChegada = presenca.ListaPresenca.HoraEntrada.Hour + ":" + presenca.ListaPresenca.HoraEntrada.Minute;
+
 
                         }
                         catch (Exception e)
@@ -313,6 +317,7 @@ namespace ControleDePresenca.Infra.Data.Repositories
                     freq.Imagem = aluno.Imagem;
                     freq.PresencasTotal = p.Count(x => x.AlunoId == aluno.AlunoId);
                     freq.FaltasTotal = totalDias - freq.PresencasTotal;
+                    
 
                     //List<ListaPresenca> g = lp.Select(x => x.Presenca.Where(z => z.AlunoId == aluno.AlunoId)).ToList();
 
@@ -336,6 +341,7 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
                             presencaDia.Dia = "" + presenca.ListaPresenca.Dia.ToString() + "-" + presenca.ListaPresenca.Mes + "-" + presenca.ListaPresenca.Ano;
 
+                            presencaDia.HoraChegada = presenca.ListaPresenca.HoraEntrada.Hour + ":"+ presenca.ListaPresenca.HoraEntrada.Minute;
 
                         }
                         catch (Exception e)

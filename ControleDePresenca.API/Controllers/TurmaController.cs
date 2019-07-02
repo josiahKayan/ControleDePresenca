@@ -41,7 +41,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                var listTurmas = _turma.GetAll();
+                var listTurmas = _turma.GetAll().OrderBy( o => o.NomeTurma);
 
                 return Request.CreateResponse(HttpStatusCode.OK, listTurmas);
 
@@ -180,7 +180,7 @@ namespace ControleDePresenca.API.Controllers
 
                 }
 
-                return Request.CreateResponse(HttpStatusCode.OK, turma);
+                return Request.CreateResponse(HttpStatusCode.OK, turma.OrderBy( o => o.HoraInicial  ) );
 
             }
             catch (Exception e)

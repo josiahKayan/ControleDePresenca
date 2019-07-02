@@ -41,7 +41,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                var listTags = _tag.GetAll();
+                var listTags = _tag.GetAll().OrderBy( o => o.Code);
 
                 return Request.CreateResponse(HttpStatusCode.OK, listTags);
 
@@ -95,7 +95,7 @@ namespace ControleDePresenca.API.Controllers
         /// <response code="404">Curso not foundd</response>
         [HttpPost]
         [Route("addtag")]
-        public HttpResponseMessage NewCurso([FromBody] TagViewModel tagVm)
+        public HttpResponseMessage NewTag([FromBody] TagViewModel tagVm)
         {
 
             try
@@ -104,7 +104,7 @@ namespace ControleDePresenca.API.Controllers
                 Tag tag = new Tag();
 
                 tag.Code = tagVm.Code;
-                tag.Status = tagVm.Status;
+                tag.Status = 0;
                 _tag.Add(tag);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "Ok");

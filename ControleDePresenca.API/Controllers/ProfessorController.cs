@@ -38,7 +38,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                var listProfessores = _professor.GetAll();
+                var listProfessores = _professor.GetAll().OrderBy( o => o.NomeCompleto);
 
                 return Request.CreateResponse(HttpStatusCode.OK, listProfessores);
 

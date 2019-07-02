@@ -98,10 +98,12 @@ namespace ControleDePresenca.API.Controllers
         [Route("InsertPresencaRFID/{tagCode}")]
         public HttpResponseMessage InsertPresenca(string tagCode)
         {
-
-
+        
             try
             {
+
+                tagCode = tagCode.Replace(" ", "");
+
 
                 var _tag = new TagRepository();
 
@@ -188,7 +190,7 @@ namespace ControleDePresenca.API.Controllers
 
                 g.TotalDias = totalDias;
 
-                g.FrequenciaAlunos = _presenca.GetFrequenciaAlunos(alunosTurma, idTurma, totalDias,iduser);
+                g.FrequenciaAlunos = _presenca.GetFrequenciaAlunos(alunosTurma, idTurma, totalDias,iduser).OrderBy( o => o.NomeCompleto).ToList();
 
                 g.Datas = _presenca.GetListaDatas(alunosTurma, idTurma, totalDias);
 

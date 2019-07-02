@@ -39,7 +39,7 @@ namespace ControleDePresenca.API.Controllers
             try
             {
 
-                var listAlunos = _aluno.GetAll();
+                var listAlunos = _aluno.GetAll().OrderBy( o => o.NomeCompleto);
 
                 return Request.CreateResponse(HttpStatusCode.OK, listAlunos);
 
@@ -142,6 +142,7 @@ namespace ControleDePresenca.API.Controllers
                 aluno.Idade = int.Parse(alunoVm.Idade);
                 aluno.DataNascimento = alunoVm.DataNascimento;
                 aluno.Tag = alunoVm.Tag;
+                
                 //aluno.Turma.aalunoVm.Turma;
                 aluno.Usuario = alunoVm.Usuario;
                 //aluno.Imagem = alunoVm.Imagem;
@@ -151,6 +152,9 @@ namespace ControleDePresenca.API.Controllers
                 aluno.Tag = tag;
 
                 aluno.Tag.Status = 1;
+
+                _tag.EditarStatusTag(aluno.Tag);
+                
 
                 _aluno.addAluno(aluno);
 
@@ -214,6 +218,15 @@ namespace ControleDePresenca.API.Controllers
 
                 var aluno = _aluno.GetAlunoByIdIncludes(int.Parse(id));
 
+
+                _tag = new TagRepository();
+
+                var tag = _tag.GetEntityById(aluno.TagId);
+
+                tag.Status = 0;
+
+                _tag.Update(tag);
+
                 _aluno.Remove(aluno);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "The object was removed");
@@ -244,8 +257,34 @@ namespace ControleDePresenca.API.Controllers
                 //aluno.Turma = alunoVm.Turma;
                 aluno.Usuario = alunoVm.Usuario;
                 aluno.Imagem = alunoVm.Imagem;
-                    
-                
+
+                aluno.AlunoId = int.Parse(id);
+
+
+                //Atualiza a Tag antiga para DESABILITADA
+                var alunoTAG = new AlunoRepository();
+                var a = alunoTAG.GetAlunoByIdIncludes(int.Parse(id));
+                var _t = new TagRepository();
+                var t = _t.GetEntityById(a.TagId);
+                t.Status = 0;
+                _t.Update(t);
+                //////
+
+
+
+                Tag tag = null;
+                _tag = new TagRepository();
+
+                tag = _tag.SearchTagByCode(alunoVm.Tag.Code);
+
+                aluno.Tag = tag;
+
+                aluno.Tag.Status = 1;
+
+                _tag.EditarStatusTag(aluno.Tag);
+
+                aluno.Tag = null;
+
                 _aluno.UpdateAluno(aluno);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "The object was updated");
