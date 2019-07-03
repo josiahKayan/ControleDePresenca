@@ -90,7 +90,7 @@ namespace ControleDePresenca.Infra.Data.Repositories
         public Aluno GetAlunoByTag( string code)
         {
             code = code.ToUpper();
-            return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").ToList().Where(a => a.Tag.Code.Equals(code)).FirstOrDefault() ;
+            return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").Where(a => a.Tag.Code.Equals(code)).FirstOrDefault() ;
         }
 
         public IEnumerable<Aluno> GetAlunosNessaTurma( int id)
@@ -235,7 +235,7 @@ namespace ControleDePresenca.Infra.Data.Repositories
             using (var context = new ControlePresencaContext())
             {
 
-                alunoUpdate = context.Set<Aluno>().Include("Turma").Include("Usuario").Include("Tag").ToList().Where(x => x.UsuarioId == a.UsuarioId   ).FirstOrDefault();
+                alunoUpdate = context.Set<Aluno>().Include("Turma").Include("Usuario").Include("Tag").Where(x => x.UsuarioId == a.UsuarioId   ).FirstOrDefault();
                 
             }
 

@@ -80,19 +80,19 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public IEnumerable<Aluno> GetAlunoByTurmaId(int id)
         {
-            return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").ToList().Where(t => t.Turma.Any(a => a.TurmaId == id));
+            return context.Set<Aluno>().Include("Usuario").Include("Turma").Include("Tag").Where(t => t.Turma.Any(a => a.TurmaId == id));
         }
 
         public List<Turma> GetAlunosByTurmaId(int id)
         {
-            return context.Set<Turma>().Include("Curso").Include("Professor").Include("AlunoLista").ToList().Where(x => x.TurmaId == id).ToList();
+            return context.Set<Turma>().Include("Curso").Include("Professor").Include("AlunoLista").Where(x => x.TurmaId == id).ToList();
 
 
         }
 
         public List<Aluno> GetAlunosComUsuarioPorIdTurma(int id)
         {
-            var l =  context.Set<Aluno>().Include("Usuario").Include("Tag").ToList().Where(x => x.Turma.Select(t => t.TurmaId == id).FirstOrDefault()).ToList();
+            var l =  context.Set<Aluno>().Include("Usuario").Include("Tag").Where(x => x.Turma.Select(t => t.TurmaId == id).FirstOrDefault()).ToList();
 
             return l;
         }
@@ -100,22 +100,22 @@ namespace ControleDePresenca.Infra.Data.Repositories
 
         public List<Turma> GetTurmasPeloCursoId(int id)
         {
-            return context.Set<Turma>().Include("Curso").Include("Professor").ToList().Where(x => x.Curso.CursoId == id).ToList();
+            return context.Set<Turma>().Include("Curso").Include("Professor").Where(x => x.Curso.CursoId == id).ToList();
         }
 
         public List<Turma> GetTurmaPorProfessorId(int id)
         {
-            return context.Set<Turma>().Include("Curso").Include("Professor").ToList().Where(x => x.Professor.ProfessorId == id).ToList();
+            return context.Set<Turma>().Include("Curso").Include("Professor").Where(x => x.Professor.ProfessorId == id).ToList();
         }
 
         public List<Professor> GetTurmasPeloProfessorId(int id)
         {
-            return context.Set<Professor>().Include("TurmaLista").Include("Usuario").ToList().Where(x => x.ProfessorId == id).ToList();
+            return context.Set<Professor>().Include("TurmaLista").Include("Usuario").Where(x => x.ProfessorId == id).ToList();
         }
 
         public List<Turma> GetTurmasPeloUsuarioId(int id)
         {
-            return context.Set<Turma>().ToList().Where(x => x.Professor.UsuarioId == id).ToList();
+            return context.Set<Turma>().Where(x => x.Professor.UsuarioId == id).ToList();
         }
 
         public List<Turma> GetTurmasPeloUsuarioAlunoId(int id)
